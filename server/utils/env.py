@@ -6,3 +6,9 @@ MARIADB = {
   'db_name': 'recommender_system',
   'ssl': False
 }
+
+CRYPTO = {
+  'algorithm': 'HS256',
+  'secret_key': 'your-secret-key',
+  'access_token_expire_minutes': 30
+}
