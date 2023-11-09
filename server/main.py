@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
-from routes import router
 from models.db import db_connection
+from routes.auth import auth_router
+from routes.profile import profile_router
 
 # Lifecycle context
 @asynccontextmanager
@@ -12,4 +13,5 @@ async def lifecycle(app: FastAPI):
   db_connection.close()
 
 app = FastAPI(lifespan = lifecycle)
-app.include_router(router, prefix = "/api")
+app.include_router(auth_router, prefix = "/api/auth")
+app.include_router(profile_router, prefix = "/api/profile")

@@ -8,23 +8,23 @@ from utils.crypto import (
   create_access_token, decode_token
 )
 
-router = APIRouter()
+auth_router = APIRouter()
 
-@router.get("/")
+@auth_router.get("/")
 async def root():
   return {
     "swagger": "/docs",
     "redoc": "/redoc"
   }
 
-@router.get("/tags")
+@auth_router.get("/tags")
 async def fetch_tags():
   rows = Tags.select()
   return {
     'data': [{ 'id': row.id, 'name': row.name } for row in rows]
   }
 
-@router.post("/register", response_model = UserResponse)
+@auth_router.post("/register", response_model = UserResponse)
 async def register_user(user_data: UserRegistration):
   with db_connection.transaction():
     existing_user = Users.select().where(Users.email == user_data.email or Users.username == user_data.username).first()
@@ -48,7 +48,7 @@ async def register_user(user_data: UserRegistration):
   
   return new_user
 
-@router.post("/login")
+@auth_router.post("/login")
 async def login_user(credentials: UserLogin):
   user = Users.get_or_none(Users.email == credentials.email)
 
@@ -67,7 +67,7 @@ async def login_user(credentials: UserLogin):
   }
 
 # Test protected route
-@router.get("/protected")
+@auth_router.get("/protected")
 async def protected_route(current_user: dict = Depends(decode_token)):
   user_id = current_user["id"]
   is_admin = current_user["is_admin"]
