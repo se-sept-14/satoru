@@ -1,11 +1,12 @@
+from typing import Optional
 from pydantic import BaseModel
 
 # User's registration request schema
 class UserRegistration(BaseModel):
   email: str
   password: str
-  is_admin: int = None
-  profile: str = None
+  is_admin: Optional[int] = None
+  profile: Optional[str] = None
   username: str
 
 # User's registration response schema

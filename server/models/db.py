@@ -1,7 +1,7 @@
 from peewee import *
 from utils.env import MARIADB
 
-connection = MySQLDatabase(
+db_connection = MySQLDatabase(
   MARIADB['db_name'],
   user = MARIADB['user'],
   password = MARIADB['password'],
@@ -15,7 +15,7 @@ class Courses(Model):
   name = CharField()
 
   class Meta:
-    database = connection
+    database = db_connection
     table_name = 'courses'
 
 class Tags(Model):
@@ -23,7 +23,7 @@ class Tags(Model):
   name = CharField(unique = True)
 
   class Meta:
-    database = connection
+    database = db_connection
     table_name = 'tags'
 
 class CourseTagMap(Model):
@@ -40,7 +40,7 @@ class CourseTagMap(Model):
   )
 
   class Meta:
-    database = connection
+    database = db_connection
     table_name = 'course_tag_map'
 
 class Users(Model):
@@ -52,7 +52,7 @@ class Users(Model):
   username = CharField(unique = True)
 
   class Meta:
-    database = connection
+    database = db_connection
     table_name = 'users'
 
 class Reviews(Model):
@@ -71,7 +71,7 @@ class Reviews(Model):
   )
 
   class Meta:
-    database = connection
+    database = db_connection
     table_name = 'reviews'
 
 class ReviewTagMap(Model):
@@ -88,7 +88,7 @@ class ReviewTagMap(Model):
   )
 
   class Meta:
-    database = connection
+    database = db_connection
     table_name = 'review_tag_map'
 
 class UsersCoursesMap(Model):
@@ -105,5 +105,5 @@ class UsersCoursesMap(Model):
   )
 
   class Meta:
-    database = connection
+    database = db_connection
     table_name = 'users_courses_map'
