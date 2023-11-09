@@ -19,7 +19,7 @@
   - Or, just visit [http://localhost:5000/docs](http://127.0.0.1:5000/docs) to open Swagger and test the endpoints there
 
 ### **Endpoints to make**
-- A get endpoint to fetch student's profile
+- [x] A get endpoint to fetch student's profile
 - A post endpoint to update student's profile (takes in user id)
 - A post endpoint to create a review (takes in course id and user id)
 - A get endpoint to fetch all reviews
