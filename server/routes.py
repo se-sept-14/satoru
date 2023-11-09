@@ -1,12 +1,12 @@
 from peewee import fn
-from jose import JWTError, jwt
-from datetime import datetime, timedelta
 from fastapi import APIRouter, HTTPException, Depends
 
-from utils.env import CRYPTO
 from models.db import db_connection, Tags, Users
-from utils.crypto import pwd_context, oauth2_scheme
 from models.api import UserRegistration, UserResponse, UserLogin
+from utils.crypto import (
+  hash_password, verify_password,
+  create_access_token, decode_token
+)
 
 router = APIRouter()
 
@@ -36,7 +36,7 @@ async def register_user(user_data: UserRegistration):
     is_admin = Users.select().where(Users.is_admin == 1).count()
     user_data.is_admin = 1 if not is_admin else 0
 
-    hashed_pwd = pwd_context.hash(user_data.password)
+    hashed_pwd = hash_password(user_data.password)
 
     new_user = Users.create(
       email = user_data.email,
@@ -48,27 +48,11 @@ async def register_user(user_data: UserRegistration):
   
   return new_user
 
-def create_access_token(data: dict, expires_delta: timedelta = None):
-  to_encode = data.copy()
-  
-  if expires_delta:
-    expire = datetime.utcnow() + expires_delta
-  else:
-    expire = datetime.utcnow() + timedelta(minutes = 15)
-  
-
-  to_encode.update({
-    "exp": expire
-  })
-  encoded_jwt = jwt.encode(to_encode, CRYPTO['secret_key'], algorithm = CRYPTO['algorithm'])
-
-  return encoded_jwt
-
 @router.post("/login")
 async def login_user(credentials: UserLogin):
   user = Users.get_or_none(Users.email == credentials.email)
 
-  if user is None or not pwd_context.verify(credentials.password, user.password):
+  if user is None or not verify_password(credentials.password, user.password):
     raise HTTPException(status_code = 401, detail = "Incorrect email or password")
   
   access_token = create_access_token(data = {
@@ -81,22 +65,6 @@ async def login_user(credentials: UserLogin):
     "access_token": access_token,
     "token_type": "bearer"
   }
-
-def decode_token(token: str = Depends(oauth2_scheme)):
-  try:
-    payload = jwt.decode(token, CRYPTO['secret_key'], algorithms = CRYPTO['algorithm'])
-    user_id = payload.get("id")
-    is_admin = payload.get("is_admin")
-
-    if user_id is None or is_admin is None:
-      raise HTTPException(status_code = 403, details = "Invalid credentials")
-    
-    return {
-      "id": user_id,
-      "is_admin": is_admin
-    }
-  except JWTError:
-    raise HTTPException(status_code = 403, detail = "Invalid credentials")
 
 # Test protected route
 @router.get("/protected")
