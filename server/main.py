@@ -28,10 +28,8 @@ async def root():
 @app.get("/api/tags")
 async def fetch_tags():
   rows = Tags.select()
-  print(rows)
-
   return {
-    'data': [row.name for row in rows]
+    'data': [{ 'id': row.id, 'name': row.name } for row in rows]
   }
 
 @app.post("/api/register", response_model = UserResponse)
