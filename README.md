@@ -21,12 +21,12 @@
 ### **Endpoints to make**
 - A get endpoint to fetch student's profile
 - A post endpoint to update student's profile (takes in user id)
-- A post endpoint to create a review (takes in course id and user id)
-- A get endpoint to fetch all reviews
-- A delete endpoint to delete a review (takes in review id)
+- [Ananya]A post endpoint to create a review (takes in course id and user id)
+- [Ananya]A get endpoint to fetch all reviews
+- [Ananya]A delete endpoint to delete a review (takes in review id)
 - [Potential endpoint]() A put endpoint to edit the review
 - A get endpoint to generate recommendations (query params take in user id)
-- A post endpoint to search for courses
+- [Ananya]A post endpoint to search for courses (key word)
 - A post endpoint to search for reviews
   - Reviews of a particular course
   - Reviews in a particular timeframe [**created_at field is required in the reviews table**]
