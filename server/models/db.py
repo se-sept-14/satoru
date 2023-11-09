@@ -1,4 +1,5 @@
 from peewee import *
+from datetime import datetime
 from utils.env import MARIADB
 
 db_connection = MySQLDatabase(
@@ -13,6 +14,7 @@ class Courses(Model):
   id = AutoField(primary_key = True)
   metadata = TextField(null = True)
   name = CharField()
+  created_at = TimestampField(default = datetime.now)
 
   class Meta:
     database = db_connection
@@ -21,6 +23,7 @@ class Courses(Model):
 class Tags(Model):
   id = AutoField(primary_key = True)
   name = CharField(unique = True)
+  created_at = TimestampField(default = datetime.now)
 
   class Meta:
     database = db_connection
@@ -50,6 +53,7 @@ class Users(Model):
   password = CharField()
   profile = TextField(null = True)
   username = CharField(unique = True)
+  created_at = TimestampField(default = datetime.now)
 
   class Meta:
     database = db_connection
@@ -64,6 +68,7 @@ class Reviews(Model):
     model = Courses
   )
   ratings = IntegerField()
+  created_at = TimestampField(default = datetime.now)
   user = ForeignKeyField(
     column_name = 'user_id',
     field = 'id',
