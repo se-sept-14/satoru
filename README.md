@@ -19,9 +19,9 @@
   - Or, just visit [http://localhost:5000/docs](http://127.0.0.1:5000/docs) to open Swagger and test the endpoints there
 
 ### **Endpoints to make**
-- [x] [Kashif]() A get endpoint to fetch student's profile
-- [x] [Kashif]() A get endpoint to fetch all courses
-- [x] [Kashif]() A get endpoint to fetch course by given id
+- [x] [Kashif]() ~~A get endpoint to fetch student's profile~~
+- [x] [Kashif]() ~~A get endpoint to fetch all courses~~
+- [x] [Kashif]() ~~A get endpoint to fetch course by given id~~
 - A post endpoint to update student's profile (takes in user id)
 - A post endpoint to create a review (takes in course id and user id)
 - A get endpoint to fetch all reviews
@@ -33,7 +33,7 @@
   - Reviews of a particular course
   - Reviews in a particular timeframe [**created_at field is required in the reviews table**]
 - **ADMIN endpoints**
-- [x] [Kashif]() A post endpoint to add a course
+- [x] [Kashif]() ~~A post endpoint to add a course~~
 - A put endpoint to edit a course (takes in course id)
 - A delete endpoint to delete a course (takes in course id)
 - A put endpoint to update an existing student details (takes in user id)
