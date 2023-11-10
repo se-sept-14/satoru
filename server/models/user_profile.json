@@ -1,0 +1,44 @@
+[
+  {
+    "Q": "What is your learning preferences?",
+    "A": [
+      { "content": "Programming courses", "is_selected": false },
+      { "content": "Data science courses", "is_selected": true },
+      { "content": "Mix of both", "is_selected": false }
+    ]
+  },
+  {
+    "Q": "Your 3 favourite subjects (in order)",
+    "A": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "Q": "Number of hours you can devote in a week",
+    "A": 20
+  },
+  {
+    "Q": "Number of courses you're willing to take?",
+    "A": [
+      { "value": 1, "is_selected": false },
+      { "value": 2, "is_selected": false },
+      { "value": 3, "is_selected": true },
+      { "value": 4, "is_selected": false }
+    ]
+  },
+  {
+    "Q": "Your long-term career goals",
+    "A": ""
+  },
+  {
+    "Q": "When do you intend to complete this degree?",
+    "A": [
+      { "value": "September 2024 term", "date_time": "2024-09-01 23:59:59", "is_selected": false },
+      { "value": "January 2025 term", "date_time": "2025-01-01 23:59:59", "is_selected": true },
+      { "value": "May 2025 term", "date_time": "2025-05-01 23:59:59", "is_selected": false },
+      { "value": "September 2025 term", "date_time": "2025-09-01 23:59:59", "is_selected": false }
+    ]
+  }
+]

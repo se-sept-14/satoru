@@ -12,9 +12,17 @@ db_connection = MySQLDatabase(
 
 class Courses(Model):
   id = AutoField(primary_key = True)
-  metadata = TextField(null = True)
   name = CharField()
-  created_at = TimestampField(default = datetime.now)
+  code = TextField()
+  price = IntegerField()
+  credits = IntegerField()
+  description = TextField()
+  corerequisite = TextField()
+  prerequisites = TextField()
+  hours_per_week = TextField()
+  instructor_name = TextField()
+  instructor_picture = CharField()
+  created_at = DateTimeField(constraints = [SQL("DEFAULT current_timestamp()")])
 
   class Meta:
     database = db_connection
@@ -48,16 +56,48 @@ class CourseTagMap(Model):
 
 class Users(Model):
   id = AutoField(primary_key = True)
-  email = CharField(unique = True)
-  is_admin = IntegerField()
   password = CharField()
-  profile = TextField(null = True)
+  is_admin = IntegerField()
+  email = CharField(unique = True)
   username = CharField(unique = True)
   created_at = TimestampField(default = datetime.now)
 
   class Meta:
     database = db_connection
     table_name = 'users'
+
+class UserProfile(Model):
+    career_goals = TextField(null=True)
+    completion_deadline = TextField(null=True)
+    courses_willing_to_take = TextField(null=True)
+    hours_per_week = IntegerField(null=True)
+    learning_preferences = TextField(null=True)
+    user = ForeignKeyField(column_name='user_id', field='id', model=Users, null=True)
+
+    class Meta:
+        database = db_connection
+        table_name = 'user_profile'
+
+class FavoriteCoursesOrder(Model):
+  course = ForeignKeyField(
+    column_name = 'course_id',
+    field = 'id',
+    model = Courses
+  )
+  order_index = IntegerField(null = True)
+  user_profile = ForeignKeyField(
+    column_name = 'user_profile_id',
+    field = 'id',
+    model = UserProfile
+  )
+
+  class Meta:
+    database = db_connection
+    table_name = 'favorite_courses_order'
+    indexes = (
+      (('user_profile', 'course'), True),
+    )
+    primary_key = CompositeKey('course', 'user_profile')
 
 class Reviews(Model):
   id = AutoField(primary_key = True)
