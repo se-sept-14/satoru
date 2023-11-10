@@ -45,3 +45,17 @@ class CourseCreate(BaseModel):
   hours_per_week: str
   instructor_name: str
   instructor_picture: str
+  tags: List[str]
+
+# EDIT Course request schema
+class CourseEdit(BaseModel):
+  name: Optional[str] = None
+  code: Optional[str] = None
+  price: Optional[int] = None
+  credits: Optional[int] = None
+  description: Optional[str] = None
+  corerequisite: Optional[str] = None
+  prerequisites: Optional[str] = None
+  hours_per_week: Optional[str] = None
+  instructor_name: Optional[str] = None
+  instructor_picture: Optional[str] = None

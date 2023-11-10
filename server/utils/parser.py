@@ -13,6 +13,6 @@ def parse_course(course: Courses):
   data['hours_per_week'] = course.hours_per_week
   data['instructor_name'] = course.instructor_name
   data['instructor_picture'] = course.instructor_picture
-  data['created_at'] = course.created_at
+  data['created_at'] = str(course.created_at)
 
   return data
