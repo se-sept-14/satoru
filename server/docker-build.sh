@@ -6,4 +6,4 @@ if [ "$#" -ne 1 ]; then
 fi
 
 timestamp="$1"
-docker build -t "satoru-api:$timestamp" .
+docker build -t "satoru-api_$timestamp" .
