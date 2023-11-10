@@ -13,8 +13,16 @@ db_connection = MySQLDatabase(
 class Courses(Model):
   id = AutoField(primary_key = True)
   name = CharField()
-  metadata = TextField(null = True)
-  created_at = TimestampField(default = datetime.now)
+  code = TextField()
+  price = IntegerField()
+  credits = IntegerField()
+  description = TextField()
+  corerequisite = TextField()
+  prerequisites = TextField()
+  hours_per_week = TextField()
+  instructor_name = TextField()
+  instructor_picture = CharField()
+  created_at = DateTimeField(constraints = [SQL("DEFAULT current_timestamp()")])
 
   class Meta:
     database = db_connection

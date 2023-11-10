@@ -32,3 +32,16 @@ class UserProfileUpdate(BaseModel):
   completion_deadline: Optional[str] = None
   learning_preferences: Optional[str] = None
   courses_willing_to_take: Optional[str] = None
+
+# CREATE Course request schema
+class CourseCreate(BaseModel):
+  name: str
+  code: str
+  price: int
+  credits: int
+  description: str
+  corerequisite: str
+  prerequisites: str
+  hours_per_week: str
+  instructor_name: str
+  instructor_picture: str
