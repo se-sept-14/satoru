@@ -1,6 +1,11 @@
 ## 🚧 **Software Engineering Project (Group 14)**
 
 ### **To run the api server**
+**Docker way**
+- `cd server`
+- `sh deploy.sh` [Make sure Docker is installed on the system]()
+
+**Manual way**
 - `cd server`
 - [OPTIONAL]() Create an environment
   - On Windows Powershell
