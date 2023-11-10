@@ -27,4 +27,8 @@ class UserProfileUpdate(BaseModel):
   username: Optional[str] = None
   email: Optional[str] = None
   password: Optional[str] = None
-  profile: Optional[str] = None
+  career_goals: Optional[str] = None
+  hours_per_week: Optional[int] = None
+  completion_deadline: Optional[str] = None
+  learning_preferences: Optional[str] = None
+  courses_willing_to_take: Optional[str] = None

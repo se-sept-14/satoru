@@ -60,11 +60,11 @@ class Users(Model):
 
 class UserProfile(Model):
   id = AutoField(primary_key = True)
-  career_goals = TextField(null=True)
-  hours_per_week = IntegerField(null=True)
-  completion_deadline = TextField(null=True)
-  learning_preferences = TextField(null=True)
-  courses_willing_to_take = TextField(null=True)
+  career_goals = TextField(null = True)
+  hours_per_week = IntegerField(null = True)
+  completion_deadline = TextField(null = True)
+  learning_preferences = TextField(null = True)
+  courses_willing_to_take = TextField(null = True)
   user = ForeignKeyField(
     column_name = 'user_id',
     field = 'id',
