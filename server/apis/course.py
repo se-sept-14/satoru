@@ -143,3 +143,5 @@ async def edit_course(id: int, course_data: CourseCreate, current_user: dict = D
 
 
 
+
+
