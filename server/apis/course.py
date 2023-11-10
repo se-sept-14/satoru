@@ -83,3 +83,25 @@ async def create_course(course_data: CourseCreate, current_user: dict = Depends(
       "id": new_course.id,
     }
   }
+@course_router.delete("/delete/{id}")
+async def delete_course(id: int, current_user: dict = Depends(decode_token)):
+    # Check if the user is an admin
+    is_admin = current_user["is_admin"]
+    if not is_admin:
+        raise HTTPException(status_code=403, detail="You are not an admin")
+
+    try:
+        with db_connection.atomic():
+            # Retrieve the course by ID
+            course = Courses.get_or_none(Courses.id == id)
+
+            # If the course exists, delete it
+            if course:
+                course.delete_instance()
+                return {"message": f"Course with ID {id} deleted successfully", "id": id}
+            else:
+                raise HTTPException(status_code=404, detail=f"Course with ID {id} not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Something went wrong: {e}")
+
+
