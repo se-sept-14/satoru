@@ -3,7 +3,7 @@
 ### **To run the api server**
 **Docker way**
 - `cd server`
-- `sh deploy.sh` [Make sure Docker is installed on the system]()
+- `sh deploy.sh` [Make sure Docker is installed on the system](https://docs.docker.com/engine/install)
 
 **Manual way**
 - `cd server`
