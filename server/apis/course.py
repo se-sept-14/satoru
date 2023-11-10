@@ -1,4 +1,5 @@
 from models.api import CourseCreate
+from models.api import CourseEdit
 from utils.parser import parse_course
 from utils.crypto import decode_token
 from models.db import (
@@ -83,7 +84,7 @@ async def create_course(course_data: CourseCreate, current_user: dict = Depends(
       "id": new_course.id,
     }
   }
-@course_router.delete("/delete/{id}")
+@course_router.delete("/delete_course/{id}")
 async def delete_course(id: int, current_user: dict = Depends(decode_token)):
     # Check if the user is an admin
     is_admin = current_user["is_admin"]
@@ -104,8 +105,8 @@ async def delete_course(id: int, current_user: dict = Depends(decode_token)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Something went wrong: {e}")
 
-@course_router.put("/edit/{id}")
-async def edit_course(id: int, course_data: CourseCreate, current_user: dict = Depends(decode_token)):
+@course_router.put("/update_course/{id}")
+async def update_course(id: int, course_data: CourseEdit, current_user: dict = Depends(decode_token)):
     # Check if the user is an admin
     is_admin = current_user["is_admin"]
     if not is_admin:
@@ -118,27 +119,19 @@ async def edit_course(id: int, course_data: CourseCreate, current_user: dict = D
 
             # If the course exists, update its attributes
             if course:
-                course.name = course_data.name
-                course.code = course_data.code
-                course.price = course_data.price
-                course.credits = course_data.credits
-                course.description = course_data.description
-                course.corerequisite = course_data.corerequisite
-                course.prerequisites = course_data.prerequisites
-                course.hours_per_week = course_data.hours_per_week
-                course.instructor_name = course_data.instructor_name
-                course.instructor_picture = course_data.instructor_picture
+                # Update course attributes based on the provided data
+                for field, value in course_data.dict(exclude_unset=True).items():
+                    setattr(course, field, value)
 
                 # Save the changes to the database
                 course.save()
 
-                # The course instance has now been updated in the database
-
-                return {"message": f"Course with ID {id} updated successfully", "id": id}
+                return {"message": f"Course with ID {id} updated successfully", "updated_course_id": id}
             else:
                 raise HTTPException(status_code=404, detail=f"Course with ID {id} not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Something went wrong: {e}")
+
 
 
 
