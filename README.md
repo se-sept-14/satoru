@@ -31,9 +31,9 @@
   - Reviews of a particular course
   - Reviews in a particular timeframe [**created_at field is required in the reviews table**]
 - **ADMIN endpoints**
-- A post endpoint to add a course
-- A put endpoint to edit a course (takes in course id)
-- A delete endpoint to delete a course (takes in course id)
+- [Aarya]() A post endpoint to add a course
+- [Aarya]() A put endpoint to edit a course (takes in course id)
+- [Aarya]() A delete endpoint to delete a course (takes in course id)
 - A put endpoint to update an existing student details (takes in user id)
   - This can mark the student as alumni or not
 - A post endpoint to map a review to it's correct tag (takes in review id and tag id)
