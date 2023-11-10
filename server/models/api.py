@@ -24,9 +24,6 @@ class UserLogin(BaseModel):
 
 # User's profile update request schema
 class UserProfileUpdate(BaseModel):
-  username: Optional[str] = None
-  email: Optional[str] = None
-  password: Optional[str] = None
   career_goals: Optional[str] = None
   hours_per_week: Optional[int] = None
   completion_deadline: Optional[str] = None
@@ -59,3 +56,4 @@ class CourseEdit(BaseModel):
   hours_per_week: Optional[str] = None
   instructor_name: Optional[str] = None
   instructor_picture: Optional[str] = None
+
