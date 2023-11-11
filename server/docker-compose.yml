@@ -5,5 +5,7 @@ services:
     build: .
     container_name: satoru-api
     command: sh -c "uvicorn main:app --host 0.0.0.0 --port 5000"
+    env_file:
+      - .env
     ports:
       - 5000:5000
