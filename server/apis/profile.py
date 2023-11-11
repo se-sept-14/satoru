@@ -96,6 +96,8 @@ profile_router = APIRouter()
 
 # OAuth2PasswordBearer for token-based authentication
 
+from peewee import IntegrityError
+
 @profile_router.post("/")
 async def profile(
     profile_update: UserProfileUpdate,
@@ -103,21 +105,32 @@ async def profile(
 ):
     print(f"Decoded Token: {current_user}")
     print(f"Profile Update: {profile_update}")
-    
+
     try:
-        # Create user profile in the 'user_profile' table
-        UserProfile.create(
+        # Try to get the existing user profile, or create a new one if it doesn't exist
+        user_profile, created = UserProfile.get_or_create(
             user=current_user["id"],
-            hours_per_week= profile_update.hours_per_week,
-            learning_preferences= profile_update.learning_preferences,
-            courses_willing_to_take= profile_update.courses_willing_to_take,
-            career_goals= profile_update.career_goals,
-            completion_deadline= profile_update.completion_deadline,
+            defaults={
+                'hours_per_week': profile_update.hours_per_week,
+                'learning_preferences': profile_update.learning_preferences,
+                'courses_willing_to_take': profile_update.courses_willing_to_take,
+                'career_goals': profile_update.career_goals,
+                'completion_deadline': profile_update.completion_deadline,
+            }
         )
 
-    except DoesNotExist:
-        raise HTTPException(status_code=404, detail="User not found")
+        if not created:
+            # If the profile already exists, update the values
+            user_profile.hours_per_week = profile_update.hours_per_week
+            user_profile.learning_preferences = profile_update.learning_preferences
+            user_profile.courses_willing_to_take = profile_update.courses_willing_to_take
+            user_profile.career_goals = profile_update.career_goals
+            user_profile.completion_deadline = profile_update.completion_deadline
+            user_profile.save()
 
-    return {"message": "User profile created successfully"}
+    except IntegrityError:
+        raise HTTPException(status_code=400, detail="User profile creation failed due to integrity error")
+
+    return {"message": "User profile created or updated successfully"}
 
 

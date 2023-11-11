@@ -72,7 +72,7 @@ class UserProfile(Model):
     courses_willing_to_take = TextField(null=True)
     hours_per_week = IntegerField(null=True)
     learning_preferences = TextField(null=True)
-    user = ForeignKeyField(column_name='user_id', field='id', model=Users, null=True)
+    user = ForeignKeyField(column_name='user_id', field='id', model=Users, null=True, unique=True)
 
     class Meta:
         database = db_connection
