@@ -108,12 +108,13 @@ class Reviews(Model):
     model = Courses
   )
   ratings = IntegerField()
-  created_at = TimestampField(default = datetime.now)
+  created_at = DateTimeField(constraints=[SQL("DEFAULT current_timestamp()")])
   user = ForeignKeyField(
     column_name = 'user_id',
     field = 'id',
     model = Users
   )
+  is_flagged = IntegerField(constraints=[SQL("DEFAULT 0")], null = True)
 
   class Meta:
     database = db_connection
