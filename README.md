@@ -4,7 +4,7 @@
 - `cd server`
 - `sh deploy.sh` [Make sure Docker is installed on the system](https://docs.docker.com/engine/install)
 
-### **Endpoints to make**
+### **[Moved to Projects](https://github.com/orgs/se-sept-14-draft-work/projects/1) ~~Endpoints to make~~**
 - [x] [~~Kashif~~*Tejas*]() ~~A get endpoint to fetch student's profile~~
 - [x] [Kashif]() ~~A get endpoint to fetch all courses~~
 - [x] [Kashif]() ~~A get endpoint to fetch course by given id~~
