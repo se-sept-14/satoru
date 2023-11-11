@@ -5,11 +5,7 @@ FROM python:3.10.13-alpine3.18
 WORKDIR /server
 
 # Copy the required files and stuff
-COPY main.py /server/
-COPY apis/ /server/apis
-COPY utils/ /server/utils
-COPY models/ /server/models
-COPY requirements.txt /server/
+COPY . /server
 
 # Install the dependencies, read more at https://fastapi.tiangolo.com/deployment/docker
 RUN pip install --no-cache-dir --upgrade -r requirements.txt

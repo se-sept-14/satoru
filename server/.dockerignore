@@ -1,0 +1,10 @@
+.git/
+__pycache__/
+.venv/
+models/__pycache__/
+utils/__pycache__/
+.gitignore
+deploy.sh
+docker-build.sh
+run.sh
+Dockerfile
