@@ -1,5 +1,0 @@
-.git/
-__pycache__/
-.venv/
-.gitignore
-run.sh
