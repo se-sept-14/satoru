@@ -8,3 +8,4 @@ deploy.sh
 docker-build.sh
 run.sh
 Dockerfile
+docker-compose.yml
