@@ -1,5 +1,6 @@
 from typing import Optional, List, Union
 from pydantic import BaseModel, conint, constr
+from datetime import datetime
 
 # User's registration request schema
 class UserRegistration(BaseModel):
@@ -56,3 +57,8 @@ class CourseEdit(BaseModel):
   hours_per_week: Optional[str] = None
   instructor_name: Optional[str] = None
   instructor_picture: Optional[str] = None
+
+class ReviewsCreate(BaseModel):
+    content: Optional[str]
+    course_id: Optional[int]
+    ratings: Optional[int]

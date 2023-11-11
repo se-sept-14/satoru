@@ -85,7 +85,7 @@ class UserProfile(Model):
     courses_willing_to_take = TextField(null=True)
     hours_per_week = IntegerField(null=True)
     learning_preferences = TextField(null=True)
-    user = ForeignKeyField(column_name='user_id', field='id', model=Users, null=True)
+    user = ForeignKeyField(column_name='user_id', field='id', model=Users, null=True, unique=True)
 
     class Meta:
         database = db_connection
@@ -121,12 +121,13 @@ class Reviews(Model):
     model = Courses
   )
   ratings = IntegerField()
-  created_at = TimestampField(default = datetime.now)
+  created_at = DateTimeField(constraints=[SQL("DEFAULT current_timestamp()")])
   user = ForeignKeyField(
     column_name = 'user_id',
     field = 'id',
     model = Users
   )
+  is_flagged = IntegerField(constraints=[SQL("DEFAULT 0")], null = True)
 
   class Meta:
     database = db_connection
