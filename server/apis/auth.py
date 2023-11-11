@@ -1,7 +1,7 @@
 from peewee import fn
 from fastapi import APIRouter, HTTPException, Depends
 
-from models.db import db_connection, Tags, Users
+from models.db import db_connection, Users
 from models.api import UserRegistration, UserResponse, UserLogin
 from utils.crypto import (
   hash_password, verify_password,
@@ -9,20 +9,6 @@ from utils.crypto import (
 )
 
 auth_router = APIRouter()
-
-@auth_router.get("/")
-async def root():
-  return {
-    "swagger": "/docs",
-    "redoc": "/redoc"
-  }
-
-@auth_router.get("/tags")
-async def fetch_tags():
-  rows = Tags.select()
-  return {
-    'data': [{ 'id': row.id, 'name': row.name } for row in rows]
-  }
 
 @auth_router.post("/register", response_model = UserResponse)
 async def register_user(user_data: UserRegistration):
@@ -64,16 +50,4 @@ async def login_user(credentials: UserLogin):
   return {
     "access_token": access_token,
     "token_type": "bearer"
-  }
-
-# Test protected route
-@auth_router.get("/protected")
-async def protected_route(current_user: dict = Depends(decode_token)):
-  user_id = current_user["id"]
-  is_admin = current_user["is_admin"]
-
-  return {
-    "message": "This is a protected endpoint",
-    "id": user_id,
-    "is_admin": is_admin
   }

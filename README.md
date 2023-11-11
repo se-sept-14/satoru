@@ -1,29 +1,10 @@
 ## 🚧 **Software Engineering Project (Group 14)**
 
-### **To run the api server**
-**Docker way**
+### **To deploy the api using Docker**
 - `cd server`
 - `sh deploy.sh` [Make sure Docker is installed on the system](https://docs.docker.com/engine/install)
 
-**Manual way**
-- `cd server`
-- [OPTIONAL]() Create an environment
-  - On Windows Powershell
-    - `python -m venv .venv`
-    - `.venv\Scripts\activate`
-  - On Windows Git Bash or Linux or Mac
-    - `python3 -m venv .venv`
-    - `source .venv/bin/activate`
-- Install dependencies `pip install -r requirements.txt`
-- Run the api server
-  - On Windows Powershell
-    - `uvicorn main:app --port 5000 --reload`
-  - On Windows Git Bash or Linux or Mac
-    - `sh run.sh`
-- You can use something like Insomnia, Postman or ThunderClient to test APIs
-  - Or, just visit [http://localhost:5000/docs](http://127.0.0.1:5000/docs) to open Swagger and test the endpoints there
-
-### **Endpoints to make**
+### **[Moved to Projects](https://github.com/orgs/se-sept-14-draft-work/projects/1) ~~Endpoints to make~~**
 - [x] [~~Kashif~~*Tejas*]() ~~A get endpoint to fetch student's profile~~
 - [x] [Kashif]() ~~A get endpoint to fetch all courses~~
 - [x] [Kashif]() ~~A get endpoint to fetch course by given id~~

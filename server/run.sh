@@ -1,3 +1,3 @@
 #!/bin/bash
 
-uvicorn main:app --port 5000 --reload
+uvicorn main:app --reload

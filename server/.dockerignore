@@ -1,0 +1,11 @@
+.git/
+__pycache__/
+.venv/
+models/__pycache__/
+scripts/
+utils/__pycache__/
+.gitignore
+deploy.sh
+docker-compose.yml
+Dockerfile
+run.sh

@@ -1,6 +1,19 @@
+import os
+
 from peewee import *
 from datetime import datetime
-from utils.env import MARIADB
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+load_dotenv(dotenv_path)
+
+MARIADB = {
+  "db_name": os.getenv("MARIADB_DATABASE_NAME"),
+  "user": os.getenv("MARIADB_USER"),
+  "password": os.getenv("MARIADB_PASSWORD"),
+  "host": os.getenv("MARIADB_HOST"),
+  "port": int(os.getenv("MARIADB_PORT"))
+}
 
 db_connection = MySQLDatabase(
   MARIADB['db_name'],

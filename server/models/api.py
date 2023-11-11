@@ -62,4 +62,3 @@ class ReviewsCreate(BaseModel):
     content: Optional[str]
     course_id: Optional[int]
     ratings: Optional[int]
-   
