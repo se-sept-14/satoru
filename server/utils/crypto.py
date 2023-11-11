@@ -1,10 +1,19 @@
+import os
+from dotenv import load_dotenv
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
-from utils.env import CRYPTO
+dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+load_dotenv(dotenv_path)
+
+CRYPTO = {
+  "algorithm": os.getenv("CRYPTO_ALGORITHM"),
+  "secret_key": os.getenv("CRYPTO_SECRET_KEY"),
+  "access_token_expire_minutes": int(os.getenv("CRYPTO_ACCESS_TOKEN_EXPIRE_MINUTES"))
+}
 
 pwd_context = CryptContext(
   schemes = ["bcrypt"],

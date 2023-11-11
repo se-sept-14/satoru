@@ -56,4 +56,3 @@ class CourseEdit(BaseModel):
   hours_per_week: Optional[str] = None
   instructor_name: Optional[str] = None
   instructor_picture: Optional[str] = None
-

@@ -1,5 +1,4 @@
-from models.api import CourseCreate
-from models.api import CourseEdit
+from models.api import CourseEdit, CourseCreate
 from utils.parser import parse_course
 from utils.crypto import decode_token
 from models.db import (
@@ -30,7 +29,7 @@ async def get_course(id: int, current_user: dict = Depends(decode_token)):
     "data": data
   }
 
-@course_router.get("/")
+@course_router.get("/all")
 async def get_all_courses(current_user: dict = Depends(decode_token)):
   data = []
   courses = Courses.select()
@@ -131,10 +130,3 @@ async def update_course(id: int, course_data: CourseEdit, current_user: dict = D
                 raise HTTPException(status_code=404, detail=f"Course with ID {id} not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Something went wrong: {e}")
-
-
-
-
-
-
-
