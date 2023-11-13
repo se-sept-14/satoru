@@ -77,5 +77,31 @@
         </small>
       </div>
     </div>
+
+    <div class="flex flex-col mt-24 mb-20">
+      <h1 class="text-4xl font-bold w-2/3 mb-4">Get Personalized Course Recommendations Just For You</h1>
+
+      <div class="flex flex-row mt-12">
+        <div class="flex flex-col">
+          <i class="fa-solid fa-cube text-3xl"></i>
+          <p class="text-xl font-semibold mt-6">Explore a Diverse Selection of Courses</p>
+          <p class="mt-8 w-4/5">Our platform offers a wide range of courses to suit your interests and goals</p>
+          <div class="flex flex-row items-center mt-6 cursor-pointer text-blue-200">
+            <p class="hover:mr-2 underline underline-offset-2">Enroll</p>
+            <i class="fa-solid fa-chevron-right ml-2 hover:ml-4"></i>
+          </div>
+        </div>
+        
+        <div class="flex flex-col">
+          <i class="fa-solid fa-earth-asia text-3xl"></i>
+          <p class="text-xl font-semibold mt-6">Discover new opportunities with easy enrollment</p>
+          <p class="mt-8 w-4/5">Our enrollment process is simple and hassle-free, allowing you to start learning right away</p>
+          <div class="flex flex-row items-center mt-6 cursor-pointer text-blue-200">
+            <p class="hover:mr-2 underline underline-offset-2">Join</p>
+            <i class="fa-solid fa-chevron-right ml-2 hover:ml-4"></i>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
