@@ -143,7 +143,7 @@
       </div>
     </div>
 
-    <div class="flex flex-col mt-16 mb-8">
+    <div class="flex flex-col mt-16 mb-8 text-center">
       <h1 class="text-4xl font-bold">FAQs</h1>
       <p class="mt-4">
         Find answers to commonly asked questions about our service and how to
@@ -160,7 +160,7 @@
       </p>
 
       <hr class="my-8 border-t-2 border-gradient" />
-      <p class="text-lg font-semibold">is it free?</p>
+      <p class="text-lg font-semibold">Is it free?</p>
       <p class="mt-2">
         Yes, our service is completely free to use. We believe that access to
         quality education should be available to everyone, regardless of their
@@ -184,14 +184,105 @@
         contact form and we'll be glad to help
       </p>
 
-      <h1 class="mt-12 text-3xl font-semibold">Still have questions?</h1>
+      <h1 class="mt-16 text-3xl font-semibold">Still have questions?</h1>
       <p>Get in touch with us today</p>
 
       <button
-        class="border border-1 w-32 p-3 mt-4 rounded-md hover:bg-white hover:text-black hover:rounded-none"
+        class="border border-1 w-32 p-3 mt-4 rounded-md hover:bg-white hover:text-black hover:rounded-none self-center"
       >
         Contact Us
       </button>
+    </div>
+
+    <div class="flex flex-col mt-16 mb-8">
+      <h1 class="text-center text-4xl font-bold">Meet Our Team</h1>
+      <p class="text-center mt-2">Get to know the minds behind this platform</p>
+
+      <div class="flex flex-row mt-6">
+        <div class="basis-1/3 flex flex-col items-center">
+          <div
+            class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
+          >
+            <img
+              src="https://ifkash.vercel.app/assets/images/gojo.webp"
+              alt="Kashiful Haque"
+            />
+          </div>
+          <p class="font-semibold mt-2">Kashiful Haque</p>
+          <p class="text-sm font-light">Developer</p>
+          <p class="text-center text-sm mt-3 w-56">
+            Passionate about helping students achieve their full potential
+          </p>
+        </div>
+
+        <div class="basis-1/3 flex flex-col items-center">
+          <div
+            class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/99545773?v=4"
+              alt="Tejas Gajra"
+            />
+          </div>
+          <p class="font-semibold mt-2">Tejas Gajra</p>
+          <p class="text-sm font-light">Developer</p>
+          <p class="text-center text-sm mt-3 w-56">
+            Bringing innovative ideas to create a seamless user experience
+          </p>
+        </div>
+
+        <div class="basis-1/3 flex flex-col items-center">
+          <div
+            class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/91440435?v=4"
+              alt="Ananya Modugula"
+            />
+          </div>
+          <p class="font-semibold mt-2">Ananya Modugula</p>
+          <p class="text-sm font-light">Data Scientist</p>
+          <p class="text-center text-sm mt-3 w-56">
+            Transforming ideas into innovative features for an enhanced learning
+            experience
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-row justify-center mt-4">
+        <div class="basis-1/3 flex flex-col items-center">
+          <div
+            class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/126502243?v=4"
+              alt="Aarya Motiwala"
+            />
+          </div>
+          <p class="font-semibold mt-2">Aarya Motiwala</p>
+          <p class="text-sm font-light">Developer</p>
+          <p class="text-center text-sm mt-3 w-56">
+            Committed to creating a supportive and inclusive learning
+            environment
+          </p>
+        </div>
+
+        <div class="basis-1/3 flex flex-col items-center">
+          <div
+            class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/146165366?v=4"
+              alt="Md Farhan Reza"
+            />
+          </div>
+          <p class="font-semibold mt-2">Md Farhan Reza</p>
+          <p class="text-sm font-light">Developer</p>
+          <p class="text-center text-sm mt-3 w-56">
+            Passionate about inspiring students to pursue their educational
+            goals
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -201,3 +292,4 @@
   background: linear-gradient(to right, #ff00a9, #ff7e5f);
 }
 </style>
+Transforming ideas into innovative features for an enhanced learning experience
