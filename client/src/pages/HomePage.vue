@@ -123,7 +123,7 @@
     <div class="flex flex-col items-center mt-24 mb-12">
       <div class="flex flex-row">
         <i class="fa-solid fa-podcast text-2xl mr-2"></i>
-        <p class="text-2xl font-semibold">Company Name</p>
+        <p class="text-2xl font-semibold">Testimonials</p>
       </div>
       <p class="text-lg font-bold w-1/2 mt-8 text-center">
         I found the perfect course through this platform. It helped me discover
@@ -142,5 +142,62 @@
         </div>
       </div>
     </div>
+
+    <div class="flex flex-col mt-16 mb-8">
+      <h1 class="text-4xl font-bold">FAQs</h1>
+      <p class="mt-4">
+        Find answers to commonly asked questions about our service and how to
+        get started
+      </p>
+
+      <hr class="my-8 border-t-2 border-gradient" />
+      <p class="text-lg font-semibold">How does it work?</p>
+      <p class="mt-2">
+        Our website uses advanced algorithms to analyze your interests, academic
+        background and career goals to provide personalized course
+        recommendations. Simply create an account, answer a few questions and
+        let our system do the magic
+      </p>
+
+      <hr class="my-8 border-t-2 border-gradient" />
+      <p class="text-lg font-semibold">is it free?</p>
+      <p class="mt-2">
+        Yes, our service is completely free to use. We believe that access to
+        quality education should be available to everyone, regardless of their
+        financial situation
+      </p>
+
+      <hr class="my-8 border-t-2 border-gradient" />
+      <p class="text-lg font-semibold">How accurate are the recommendations?</p>
+      <p class="mt-2">
+        Our recommendations are based on a combination of Machine Learning
+        algorithms and user feedback. While we strive to provide the most
+        accurate suggestions, it's important to note that individual preferences
+        and goals may vary
+      </p>
+
+      <hr class="my-8 border-t-2 border-gradient" />
+      <p class="text-lg font-semibold">How can I contact support?</p>
+      <p class="mt-2">
+        If you have any other questions or need further assistance, our support
+        team is available 24/7. Simple reach out to us via email or through the
+        contact form and we'll be glad to help
+      </p>
+
+      <h1 class="mt-12 text-3xl font-semibold">Still have questions?</h1>
+      <p>Get in touch with us today</p>
+
+      <button
+        class="border border-1 w-32 p-3 mt-4 rounded-md hover:bg-white hover:text-black hover:rounded-none"
+      >
+        Contact Us
+      </button>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.border-gradient {
+  background: linear-gradient(to right, #ff00a9, #ff7e5f);
+}
+</style>
