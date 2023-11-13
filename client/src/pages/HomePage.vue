@@ -195,7 +195,7 @@
     </div>
 
     <div class="flex flex-col mt-16 mb-8">
-      <h1 class="text-center text-4xl font-bold">Meet Our Team</h1>
+      <h1 class="text-center text-4xl font-bold">Meet Our Team 14</h1>
       <p class="text-center mt-2">Get to know the minds behind this platform</p>
 
       <div class="flex flex-row mt-6">
@@ -284,6 +284,8 @@
         </div>
       </div>
     </div>
+
+    <div class="flex flex-row mt-16 mb-12"></div>
   </div>
 </template>
 
