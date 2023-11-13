@@ -130,6 +130,7 @@
         my passion and set me on the right path for my career
       </p>
       <div class="flex flex-row items-center mt-4">
+        <!-- The following avatar code was stolen from flowbite: https://flowbite.com/docs/components/avatar/ -->
         <div
           class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
         >
