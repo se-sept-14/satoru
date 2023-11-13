@@ -285,7 +285,36 @@
       </div>
     </div>
 
-    <div class="flex flex-row mt-16 mb-12"></div>
+    <div class="flex flex-row mt-24 mb-12">
+      <div class="basis-8/12 flex flex-col">
+        <h1 class="text-2xl font-semibold">Recommender System</h1>
+        <p class="text-md font-semibold mt-4">Address</p>
+        <p class="text-sm font-light">646 Hammes Wells, New Ty, NC 24138</p>
+        <p class="text-md font-semibold mt-8">Contact</p>
+        <p class="text-sm font-light">contact@recsys.ai</p>
+        <div class="flex flex-row mt-6">
+          <i
+            class="mx-1 cursor-pointer text-xl fa-brands fa-square-x-twitter"
+          ></i>
+          <i class="mx-1 cursor-pointer text-xl fa-brands fa-instagram"></i>
+          <i class="mx-1 cursor-pointer text-xl fa-brands fa-youtube"></i>
+          <i class="mx-1 cursor-pointer text-xl fa-brands fa-threads"></i>
+          <i class="mx-1 cursor-pointer text-xl fa-brands fa-linkedin"></i>
+        </div>
+      </div>
+
+      <div class="basis-4/12 flex flex-col">
+        <router-link to="/" class="my-2 cursor-pointer text-sm text-yellow-100"
+          >Discover courses</router-link
+        >
+        <router-link to="/" class="my-2 cursor-pointer text-sm text-yellow-100"
+          >My courses</router-link
+        >
+        <router-link to="/" class="my-2 cursor-pointer text-sm text-yellow-100"
+          >Recommendations</router-link
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -294,4 +323,3 @@
   background: linear-gradient(to right, #ff00a9, #ff7e5f);
 }
 </style>
-Transforming ideas into innovative features for an enhanced learning experience
