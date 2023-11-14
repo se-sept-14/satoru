@@ -1,24 +1,25 @@
 <template>
   <div class="container mx-auto mt-24 text-white w-6/12">
     <div class="flex flex-col text-center">
-      <h1 class="text-6xl font-bold">
-        Get Personalized Course Recommendations for Students
+      <h1 class="text-6xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">
+        <span class="gradient-text-1">Get Personalized Course</span><br />
+        <span class="gradient-text-2">Recommendations for Students</span>
       </h1>
-      <p class="mt-4 text-xl">
+      <p class="mt-4 text-xl xl:text-xl lg:text-lg md:text-md sm:text-sm">
         Welcome to our website, where you can discover the perfect courses for
         your educational journey
       </p>
 
       <div class="mt-12 flex flex-row justify-center">
         <button
-          class="mx-1 outline outline-1 p-4 hover:bg-white hover:text-black rounded-md"
+          class="mx-2 outline outline-1 px-6 py-4 text-lg hover:bg-white hover:text-black rounded-md"
         >
-          Login
+          Already a user? Login
         </button>
         <button
-          class="mx-1 outline outline-1 p-4 rounded-md bg-white text-black hover:shadow-lg hover:shadow-yellow-200/90"
+          class="mx-2 outline outline-1 px-6 py-4 text-lg rounded-md bg-white text-black hover:shadow-lg hover:shadow-yellow-200/90"
         >
-          Register
+          Get Started
         </button>
       </div>
     </div>
@@ -65,13 +66,17 @@
           >Photo by
           <a
             class="text-green-400"
-            href="https://unsplash.com/@sajadnori?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+            v-bind:href="unsplash.user"
+            target="_blank"
+            rel="noopener noreferrer"
             >Sajad Nori</a
           >
           on
           <a
             class="text-green-400"
-            href="https://unsplash.com/photos/person-holding-black-and-white-round-ornament-21mJd5NUGZU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+            v-bind:href="unsplash.image"
+            target="_blank"
+            rel="noopener noreferrer"
             >Unsplash</a
           >
         </small>
@@ -120,10 +125,10 @@
       </div>
     </div>
 
-    <div class="flex flex-col items-center mt-24 mb-12">
+    <div class="flex flex-col items-center mt-32 mb-12">
       <div class="flex flex-row">
-        <i class="fa-solid fa-podcast text-2xl mr-2"></i>
-        <p class="text-2xl font-semibold">Testimonials</p>
+        <i class="fa-solid fa-podcast text-3xl mr-2"></i>
+        <p class="text-3xl font-semibold">Testimonials</p>
       </div>
       <p class="text-lg font-bold w-1/2 mt-8 text-center">
         I found the perfect course through this platform. It helped me discover
@@ -143,7 +148,7 @@
       </div>
     </div>
 
-    <div class="flex flex-col mt-16 mb-8 text-center">
+    <div class="flex flex-col mt-28 mb-8 text-center">
       <h1 class="text-4xl font-bold">FAQs</h1>
       <p class="mt-4">
         Find answers to commonly asked questions about our service and how to
@@ -194,7 +199,7 @@
       </button>
     </div>
 
-    <div class="flex flex-col mt-16 mb-8">
+    <div class="flex flex-col mt-32 mb-24">
       <h1 class="text-center text-4xl font-bold">Meet Our Team 14</h1>
       <p class="text-center mt-2">Get to know the minds behind this platform</p>
 
@@ -285,7 +290,7 @@
       </div>
     </div>
 
-    <div class="flex flex-row mt-24 mb-12">
+    <div class="flex flex-row mt-32 mb-24">
       <div class="basis-8/12 flex flex-col">
         <h1 class="text-2xl font-semibold">Recommender System</h1>
         <p class="text-md font-semibold mt-4">Address</p>
@@ -318,8 +323,38 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: "HomePage",
+  data() {
+    return {
+      unsplash: {
+        user: "https://unsplash.com/@sajadnori",
+        image:
+          "https://unsplash.com/photos/person-holding-black-and-white-round-ornament-21mJd5NUGZU",
+      },
+    };
+  },
+};
+</script>
+
 <style scoped>
 .border-gradient {
   background: linear-gradient(to right, #ff00a9, #ff7e5f);
+}
+
+/* Vercel like Gradient text CSS stolen from https://dev.to/mohsenkamrani/create-a-gradient-text-effect-like-vercel-with-css-38g5 */
+.gradient-text-1 {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #007cf0, #00dfd8);
+}
+
+.gradient-text-2 {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(to right, #f7797d, #fbd786, #c6ffdd);
 }
 </style>
