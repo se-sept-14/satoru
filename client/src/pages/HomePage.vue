@@ -1,23 +1,27 @@
 <template>
-  <div class="container mx-auto mt-24 text-white w-6/12">
+  <div class="container mx-auto mt-24 text-white w-8/12">
     <div class="flex flex-col text-center">
-      <h1 class="text-6xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">
+      <h1
+        class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold"
+      >
         <span class="gradient-text-1">Get Personalized Course</span><br />
         <span class="gradient-text-2">Recommendations for Students</span>
       </h1>
-      <p class="mt-4 text-xl xl:text-xl lg:text-lg md:text-md sm:text-sm">
+      <p class="mt-4 text-md sm:text-md md:text-lg lg:text-xl xl:text-2xl">
         Welcome to our website, where you can discover the perfect courses for
         your educational journey
       </p>
 
-      <div class="mt-12 flex flex-row justify-center">
+      <div
+        class="mt-12 flex flex-col justify-center md:flex md:flex-row"
+      >
         <button
-          class="mx-2 outline outline-1 px-6 py-4 text-lg hover:bg-white hover:text-black rounded-md"
+          class="mx-2 outline outline-1 px-6 py-4 my-2 md:my-0 text-lg md:text-md sm:text-sm hover:bg-white hover:text-black rounded-md"
         >
           Already a user? Login
         </button>
         <button
-          class="mx-2 outline outline-1 px-6 py-4 text-lg rounded-md bg-white text-black hover:shadow-lg hover:shadow-yellow-200/90"
+          class="mx-2 outline outline-1 px-6 py-4 my-2 md:my-0 text-lg md:text-md sm:text-sm rounded-md bg-white text-black hover:shadow-lg hover:shadow-yellow-200/90"
         >
           Get Started
         </button>
