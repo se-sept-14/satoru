@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="invisible xl:visible sticky top-4 z-10 text-white p-3 mx-80 mt-4 rounded-xl shadow-lg shadow-slate-500/30 flex flex-row justify-center items-center"
+    class="collapse xl:visible sticky top-4 z-10 text-white p-3 mx-80 mt-4 rounded-xl shadow-lg shadow-slate-500/30 flex flex-row justify-center items-center"
     style="background-color: #00050d"
   >
     <router-link

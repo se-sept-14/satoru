@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto mt-24 text-white w-8/12">
+  <div class="container mx-auto mt-24 text-white w-3/5">
     <div class="flex flex-col text-center">
       <h1
         class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold"
@@ -12,9 +12,7 @@
         your educational journey
       </p>
 
-      <div
-        class="mt-12 flex flex-col justify-center md:flex md:flex-row"
-      >
+      <div class="mt-12 flex flex-col justify-center md:flex md:flex-row">
         <button
           class="mx-2 outline outline-1 px-6 py-4 my-2 md:my-0 text-lg md:text-md sm:text-sm hover:bg-white hover:text-black rounded-md"
         >
