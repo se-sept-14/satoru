@@ -29,8 +29,8 @@
     </div>
 
     <div class="flex flex-row mt-24">
-      <div class="basis-3/5 flex flex-col">
-        <h1 class="text-4xl font-semibold mb-4">
+      <div class="lg:basis-3/5 flex flex-col">
+        <h1 class="text-3xl lg:text-4xl font-semibold mb-4">
           Find the perfect courses for you
         </h1>
         <p class="mb-2">
@@ -38,15 +38,15 @@
           and academic goals to suggest the best courses for you
         </p>
 
-        <div class="flex flex-row mt-12">
-          <div class="flex flex-col">
+        <div class="flex flex-col lg:flex-row mt-12">
+          <div class="flex flex-col my-2 lg:my-0">
             <p class="text-lg font-bold mb-1">Personalized</p>
             <p>
               Get personalized course recommendations based on your interests
               and academic goals
             </p>
           </div>
-          <div class="flex flex-col">
+          <div class="flex flex-col my-2 lg:my-0">
             <p class="text-lg font-bold mb-1">Efficient</p>
             <p>
               Save time and effort by letting our intelligent systems find the
@@ -61,7 +61,7 @@
           Get started
         </button>
       </div>
-      <div class="basis-2/5 flex flex-col">
+      <div class="invisible lg:visible basis-2/5 flex flex-col">
         <img
           class="rounded-lg"
           src="@/assets/HomePage/landing-page-image.jpg"
@@ -88,12 +88,12 @@
     </div>
 
     <div class="flex flex-col mt-24 mb-20">
-      <h1 class="text-4xl font-bold w-2/3 mb-4">
+      <h1 class="text-3xl font-bold lg:w-2/3 lg:text-5xl mb-4">
         Get Personalized Course Recommendations Just For You
       </h1>
 
-      <div class="flex flex-row mt-12">
-        <div class="flex flex-col">
+      <div class="flex flex-col lg:flex-row mt-12">
+        <div class="flex flex-col my-4 lg:my-0">
           <i class="fa-solid fa-cube text-3xl"></i>
           <p class="text-xl font-semibold mt-6">
             Explore a Diverse Selection of Courses
@@ -110,7 +110,7 @@
           </div>
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col my-4 lg:my-0">
           <i class="fa-solid fa-earth-asia text-3xl"></i>
           <p class="text-xl font-semibold mt-6">
             Discover new opportunities with easy enrollment
@@ -129,7 +129,7 @@
       </div>
     </div>
 
-    <div class="flex flex-col items-center mt-32 mb-12">
+    <div class="collapse lg:visible flex flex-col items-center mt-32 mb-12">
       <div class="flex flex-row">
         <i class="fa-solid fa-podcast text-3xl mr-2"></i>
         <p class="text-3xl font-semibold">Testimonials</p>
