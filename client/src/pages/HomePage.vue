@@ -20,6 +20,7 @@
           Already a user? Login
         </router-link>
         <button
+          @click="goToRegisterPage"
           class="mx-2 outline outline-1 px-6 py-4 my-2 md:my-0 text-lg md:text-md sm:text-sm rounded-md bg-white text-black hover:shadow-lg hover:shadow-yellow-200/90"
         >
           Get Started
@@ -55,6 +56,7 @@
         </div>
 
         <button
+          @click="goToRegisterPage"
           class="outline outline-1 w-36 p-2 mt-8 rounded-md hover:rounded-none hover:bg-white hover:text-black"
         >
           Get started
@@ -104,7 +106,12 @@
           <div
             class="flex flex-row items-center mt-6 cursor-pointer text-blue-200"
           >
-            <p class="hover:mr-2 underline underline-offset-2">Enroll</p>
+            <p
+              @click="goToRegisterPage"
+              class="hover:mr-2 underline underline-offset-2"
+            >
+              Enroll
+            </p>
             <i class="fa-solid fa-chevron-right ml-2 hover:ml-4"></i>
           </div>
         </div>
@@ -121,7 +128,12 @@
           <div
             class="flex flex-row items-center mt-6 cursor-pointer text-blue-200"
           >
-            <p class="hover:mr-2 underline underline-offset-2">Join</p>
+            <p
+              @click="goToRegisterPage"
+              class="hover:mr-2 underline underline-offset-2"
+            >
+              Join
+            </p>
             <i class="fa-solid fa-chevron-right ml-2 hover:ml-4"></i>
           </div>
         </div>
@@ -315,6 +327,11 @@ export default {
           "https://unsplash.com/photos/person-holding-black-and-white-round-ornament-21mJd5NUGZU",
       },
     };
+  },
+  methods: {
+    goToRegisterPage() {
+      this.$router.push("/register");
+    },
   },
 };
 </script>

@@ -18,9 +18,21 @@
       >
     </div>
     <button
+      @click="goToRegisterPage"
       class="basis-1/6 bg-white text-black p-2 rounded-lg shadow-md hover:shadow-lg hover:shadow-yellow-200/90 hover:text-md"
     >
       Register
     </button>
   </nav>
 </template>
+
+<script>
+export default {
+  name: "NavbarComponent",
+  methods: {
+    goToRegisterPage() {
+      this.$router.push("/register");
+    },
+  },
+};
+</script>
