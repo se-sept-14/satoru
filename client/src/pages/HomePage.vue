@@ -127,29 +127,6 @@
       </div>
     </div>
 
-    <div class="collapse lg:visible flex flex-col items-center mt-32 mb-12">
-      <div class="flex flex-row">
-        <i class="fa-solid fa-podcast text-3xl mr-2"></i>
-        <p class="text-3xl font-semibold">Testimonials</p>
-      </div>
-      <p class="text-lg font-bold w-1/2 mt-8 text-center">
-        I found the perfect course through this platform. It helped me discover
-        my passion and set me on the right path for my career
-      </p>
-      <div class="flex flex-row items-center mt-4">
-        <!-- The following avatar code was stolen from flowbite: https://flowbite.com/docs/components/avatar/ -->
-        <div
-          class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
-        >
-          <span class="font-medium text-gray-600 dark:text-gray-300">JD</span>
-        </div>
-        <div class="flex flex-col">
-          <p class="font-semibold">John Doe</p>
-          <p class="font-light text-sm">Engineering Manager, Company Name</p>
-        </div>
-      </div>
-    </div>
-
     <div class="flex flex-col mt-28 mb-8 text-center">
       <h1 class="text-4xl font-bold">FAQs</h1>
       <p class="mt-4">
