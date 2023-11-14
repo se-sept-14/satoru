@@ -18,7 +18,12 @@ export default createRouter({
     {
       path: "/register",
       name: "RegisterPage",
-      component: () => import("@/pages/RegisterPage.vue")
-    }
+      component: () => import("@/pages/RegisterPage.vue"),
+    },
+    {
+      path: "/dashboard",
+      name: "DashboardPage",
+      component: () => import("@/pages/DashboardPage.vue"),
+    },
   ],
 });

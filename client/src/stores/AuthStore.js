@@ -8,9 +8,9 @@ export const useAuthStore = defineStore("authStore", {
       endpoints: {
         auth: {
           login: "/api/auth/login",
-          register: "/api/auth/register"
-        }
-      }
+          register: "/api/auth/register",
+        },
+      },
     },
     currentUser: {},
   }),
@@ -24,11 +24,26 @@ export const useAuthStore = defineStore("authStore", {
       const { email, password } = await userData;
       const payload = {
         email: email,
-        password: password
+        password: password,
       };
 
-      const { data } = await axios.post(`${this.api.server}${this.api.endpoints.auth.login}`, payload);
-      console.log(data);
+      try {
+        const { data } = await axios.post(
+          `${this.api.server}${this.api.endpoints.auth.login}`,
+          payload
+        );
+
+        if (data) {
+          const { access_token, token_type } = data;
+          this.currentUser["access_token"] = access_token;
+          this.currentUser["token_type"] = token_type;
+          localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+        }
+      } catch (err) {
+        console.error(err);
+      }
+
+      return this.currentUser;
     },
   },
 });

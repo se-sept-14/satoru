@@ -33,7 +33,11 @@
               required
               class="block w-full rounded-md border-0 py-1.5 px-1.5 bg-transparent text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 focus:rounded-none sm:text-sm sm:leading-6"
             />
-            <small class="text-sm font-light italic text-yellow-600" v-if="userDataError.email">Invalid email</small>
+            <small
+              class="text-sm font-light italic text-yellow-600"
+              v-if="userDataError.email"
+              >Invalid email</small
+            >
           </div>
         </div>
 
@@ -64,7 +68,11 @@
               required
               class="block w-full rounded-md border-0 py-1.5 px-1.5 bg-transparent text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 focus:rounded-none sm:text-sm sm:leading-6"
             />
-            <small class="text-sm font-light italic text-yellow-600" v-if="userDataError.password">Invalid password</small>
+            <small
+              class="text-sm font-light italic text-yellow-600"
+              v-if="userDataError.password"
+              >Invalid password</small
+            >
           </div>
         </div>
 
@@ -104,28 +112,32 @@ export default {
     return {
       userData: {
         email: "",
-        password: ""
+        password: "",
       },
       userDataError: {
         email: false,
-        password: false
-      }
+        password: false,
+      },
     };
   },
   methods: {
-    login(e) {
+    async login(e) {
       e.preventDefault(); // Prevents the default behaviour of submit button (to refresh the page)
 
-      if(this.userData.email.length == 0) {
+      if (this.userData.email.length == 0) {
         this.userDataError.email = true;
       }
 
-      if(this.userData.password.length == 0) {
+      if (this.userData.password.length == 0) {
         this.userDataError.password = true;
       }
 
-      if(!this.userDataError.email && !this.userDataError.password) {
-        this.authStore.login(this.userData);
+      if (!this.userDataError.email && !this.userDataError.password) {
+        const user = await this.authStore.login(this.userData);
+
+        if (user && user.access_token.length != 0) {
+          this.$router.push("/dashboard");
+        }
       }
     },
     clearEmailError() {
@@ -133,7 +145,7 @@ export default {
     },
     clearPasswordError() {
       this.userDataError.password = false;
-    }
+    },
   },
 };
 </script>
