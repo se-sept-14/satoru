@@ -10,9 +10,10 @@ export default createRouter({
       name: "HomePage",
       component: HomePage,
     },
-    // {
-    //   path: "/about",
-    //   component: () => import("@/views/About.vue"),
-    // }
+    {
+      path: "/login",
+      name: "LoginPage",
+      component: () => import("@/pages/LoginPage.vue"),
+    },
   ],
 });

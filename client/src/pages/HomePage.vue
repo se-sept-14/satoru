@@ -13,11 +13,12 @@
       </p>
 
       <div class="mt-12 flex flex-col justify-center md:flex md:flex-row">
-        <button
+        <router-link
+          to="/login"
           class="mx-2 outline outline-1 px-6 py-4 my-2 md:my-0 text-lg md:text-md sm:text-sm hover:bg-white hover:text-black rounded-md"
         >
           Already a user? Login
-        </button>
+        </router-link>
         <button
           class="mx-2 outline outline-1 px-6 py-4 my-2 md:my-0 text-lg md:text-md sm:text-sm rounded-md bg-white text-black hover:shadow-lg hover:shadow-yellow-200/90"
         >
