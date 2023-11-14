@@ -1,15 +1,15 @@
 <template>
   <nav
-    class="collapse xl:visible sticky top-4 z-10 text-white p-3 mx-80 mt-4 rounded-xl shadow-lg shadow-slate-500/30 flex flex-row justify-center items-center"
+    class="lg:sticky top-4 z-10 text-white p-3 lg:mx-80 lg:mt-4 lg:rounded-xl lg:shadow-lg lg:shadow-slate-500/30 flex flex-row justify-center items-center"
     style="background-color: #00050d"
   >
     <router-link
-      class="basis-1/4 font-sans text-lg cursor-pointer font-medium hover:font-bold mx-2"
+      class="basis-1/2 lg:basis-1/4 font-sans text-lg cursor-pointer font-medium hover:font-bold mx-2"
       to="/"
       >recommender system</router-link
     >
-    <div class="basis-1/2 flex flex-row">
-      <router-link to="/" class="mx-3 hover:underline"
+    <div class="collapse lg:visible basis-1/2 flex flex-row">
+      <router-link to="/" class="collapse lg:visible mx-3 hover:underline"
         >Discover Courses</router-link
       >
       <router-link to="/" class="mx-3 hover:underline">My Courses</router-link>
