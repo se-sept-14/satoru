@@ -203,12 +203,12 @@
       </button>
     </div>
 
-    <div class="flex flex-col mt-32 mb-24">
+    <div class="flex flex-col mt-28 mb-24">
       <h1 class="text-center text-4xl font-bold">Meet Our Team 14</h1>
       <p class="text-center mt-2">Get to know the minds behind this platform</p>
 
-      <div class="flex flex-row mt-6">
-        <div class="basis-1/3 flex flex-col items-center">
+      <div class="flex flex-col lg:flex-row my-6">
+        <div class="basis-1/3 flex flex-col items-center my-4 lg:my-0">
           <div
             class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
           >
@@ -224,7 +224,7 @@
           </p>
         </div>
 
-        <div class="basis-1/3 flex flex-col items-center">
+        <div class="basis-1/3 flex flex-col items-center my-4 lg:my-0">
           <div
             class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
           >
@@ -240,7 +240,7 @@
           </p>
         </div>
 
-        <div class="basis-1/3 flex flex-col items-center">
+        <div class="basis-1/3 flex flex-col items-center my-4 lg:my-0">
           <div
             class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
           >
@@ -257,8 +257,9 @@
           </p>
         </div>
       </div>
-      <div class="flex flex-row justify-center mt-4">
-        <div class="basis-1/3 flex flex-col items-center">
+
+      <div class="flex flex-col lg:flex-row justify-center">
+        <div class="basis-1/3 flex flex-col items-center my-4 lg:my-0">
           <div
             class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
           >
@@ -275,7 +276,7 @@
           </p>
         </div>
 
-        <div class="basis-1/3 flex flex-col items-center">
+        <div class="basis-1/3 flex flex-col items-center my-4 lg:my-0">
           <div
             class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
           >
@@ -294,7 +295,7 @@
       </div>
     </div>
 
-    <div class="flex flex-row mt-32 mb-24">
+    <div class="flex flex-col lg:flex-row mt-32 mb-24">
       <div class="basis-8/12 flex flex-col">
         <h1 class="text-2xl font-semibold">Recommender System</h1>
         <p class="text-md font-semibold mt-4">Address</p>
