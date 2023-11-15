@@ -25,5 +25,4 @@
 - A put endpoint to update an existing student details (takes in user id)
   - This can mark the student as alumni or not
 - A post endpoint to map a review to it's correct tag (takes in review id and tag id)
-- A put endpoint to flag a review
 - A delete endpoint to delete a flagged review (takes in review id) [**make a db column called "flagged"**]
