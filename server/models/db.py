@@ -1,7 +1,7 @@
 import os
+from datetime import datetime
 
 from peewee import *
-from datetime import datetime
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
@@ -81,16 +81,16 @@ class Users(Model):
     table_name = 'users'
 
 class UserProfile(Model):
-    career_goals = TextField(null=True)
-    completion_deadline = TextField(null=True)
-    courses_willing_to_take = TextField(null=True)
-    hours_per_week = IntegerField(null=True)
-    learning_preferences = TextField(null=True)
-    user = ForeignKeyField(column_name='user_id', field='id', model=Users, null=True, unique=True)
+  career_goals = TextField(null=True)
+  completion_deadline = TextField(null=True)
+  courses_willing_to_take = TextField(null=True)
+  hours_per_week = IntegerField(null=True)
+  learning_preferences = TextField(null=True)
+  user = ForeignKeyField(column_name='user_id', field='id', model=Users, null=True, unique=True)
 
-    class Meta:
-        database = db_connection
-        table_name = 'user_profile'
+  class Meta:
+    database = db_connection
+    table_name = 'user_profile'
 
 class FavoriteCoursesOrder(Model):
   course = ForeignKeyField(

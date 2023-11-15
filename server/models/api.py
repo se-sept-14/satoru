@@ -2,7 +2,7 @@ from typing import Optional, List, Union
 from pydantic import BaseModel, conint, constr
 from datetime import datetime
 
-# User's registration request schema
+# Create user request schema
 class UserRegistration(BaseModel):
   email: str
   password: str
@@ -10,7 +10,7 @@ class UserRegistration(BaseModel):
   profile: Optional[str] = None
   username: str
 
-# User's registration response schema
+# Create user response schema
 class UserResponse(BaseModel):
   id: int
   email: str
