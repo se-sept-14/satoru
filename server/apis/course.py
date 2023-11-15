@@ -162,3 +162,6 @@ async def search_course(search_query: SearchQuery, current_user: dict = Depends(
   return {
     "data": results
   }
+
+
+
