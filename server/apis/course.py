@@ -14,6 +14,7 @@ from fastapi import (
   APIRouter,
   HTTPException
 )
+from playhouse.shortcuts import model_to_dict
 
 course_router = APIRouter()
 
@@ -137,17 +138,26 @@ async def update_course(id: int, course_data: CourseEdit, current_user: dict = D
 @course_router.post("/search")
 async def search_course(search_query: SearchQuery, current_user: dict = Depends(decode_token)):
   results = []
+  unique_course_ids = set() # Set to keep track of duplicate entries
 
   courses = Courses.select().where(
     Courses.name ** f"%{search_query.query}%" | Courses.description ** f"%{search_query.query}%"
   )
+
+  tags = Tags.select().where(
+    Tags.name ** f"%{search_query.query}%"
+  )
+
   for course in courses:
-    results.append({
-      "id": course.id,
-      "name": course.name,
-      "code": course.code,
-      "instructor_name": course.instructor_name
-    })
+    unique_course_ids.add(course.id)
+    results.append(model_to_dict(course))
+
+  for tag in tags:
+    course_tag_maps = CourseTagMap.select().where(CourseTagMap.tag_id == tag.id).prefetch(Courses)
+    for ctm in course_tag_maps:
+      if ctm.course.id not in unique_course_ids:
+        unique_course_ids.add(ctm.course.id)
+        results.append(model_to_dict(ctm.course))
 
   return {
     "data": results
