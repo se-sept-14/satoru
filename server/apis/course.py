@@ -1,6 +1,9 @@
-from models.api import CourseEdit, CourseCreate
 from utils.parser import parse_course
 from utils.crypto import decode_token
+from models.api import (
+  SearchQuery,
+  CourseEdit, CourseCreate
+)
 from models.db import (
   db_connection,
   Courses, Tags, CourseTagMap
@@ -130,3 +133,22 @@ async def update_course(id: int, course_data: CourseEdit, current_user: dict = D
                 raise HTTPException(status_code=404, detail=f"Course with ID {id} not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Something went wrong: {e}")
+
+@course_router.post("/search")
+async def search_course(search_query: SearchQuery, current_user: dict = Depends(decode_token)):
+  results = []
+
+  courses = Courses.select().where(
+    Courses.name ** f"%{search_query.query}%" | Courses.description ** f"%{search_query.query}%"
+  )
+  for course in courses:
+    results.append({
+      "id": course.id,
+      "name": course.name,
+      "code": course.code,
+      "instructor_name": course.instructor_name
+    })
+
+  return {
+    "data": results
+  }
