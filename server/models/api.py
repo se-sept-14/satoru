@@ -66,3 +66,6 @@ class ReviewsCreate(BaseModel):
 class ReviewTagMapCreate(BaseModel):
   review_id: int
   tag_id: int
+
+class SearchQuery(BaseModel):
+  query: str
