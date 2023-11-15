@@ -71,6 +71,7 @@ class Users(Model):
   id = AutoField(primary_key = True)
   password = CharField()
   is_admin = IntegerField()
+  is_alumni = IntegerField()
   email = CharField(unique = True)
   username = CharField(unique = True)
   created_at = TimestampField(default = datetime.now)
