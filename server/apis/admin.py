@@ -50,23 +50,27 @@ async def get_all_students(current_user: dict = Depends(decode_token)):
 #     student.save()
 #     return {"message": "Status of the student changed successfully"}
 
-@admin_router.put("/alumni/{user_id}")
+@admin_router.get("/alumni/{user_id}")
 async def make_alumni(user_id: int, current_user: dict = Depends(decode_token)):
-    is_admin = current_user["is_admin"]
-    if not is_admin:
-        raise HTTPException(status_code=403, detail="You are not an admin")
-    try:
-        student = Users.get_by_id(user_id)
-    except Users.DoesNotExist:
-        raise HTTPException(status_code=404, detail="User not found")
-    if student.is_admin == 1:
-        raise HTTPException(status_code=403, detail="Admin cannot be alumni")
-    if student.is_alumni == 1:
-        return {"message": "Student is already an alumni"}
-    print(student)
-    print(type(student.is_alumni))
+  is_admin = current_user["is_admin"]
+  if not is_admin:
+    raise HTTPException(status_code = 403, detail = "You are not an admin")
+  
+  try:
+    student = Users.get_or_none(Users.id == user_id)
+    if not student:
+      return HTTPException(status_code = 404, detail = f"User with ID {user_id} does not exist")
+    
+    if student.is_alumni:
+      return HTTPException(status_code = 419, detail = f"Student is already an alumni")
+    
+    # Toggle the alumni status of the student
+    query = Users.update(is_alumni = True).where(Users.id == user_id)
+    query.execute()
+  except Exception as e:
+    raise HTTPException(status_code = 500, detail = f"{str(e)}")
 
-    # student.is_alumni = 1 if student.is_alumni == 0 else 0
-    student.is_alumni = 1 - student.is_alumni
-    student.save()
-    return {"message": "Status of the student changed successfully"}
+  return {
+    "id": user_id,
+    "message": "Student is now an alumni 🎉"
+  }
