@@ -20,6 +20,16 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
         return {"message": "Review created successfully", "review_id": review_instance.id}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@review_router.get("/all")
+async def get_all_reviews():
+    try:
+        reviews = Reviews.select().dicts()
+        return {"reviews": list(reviews)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
     
 @review_router.post("/flag/{review_id}")
 async def flag_review(review_id: int, current_user: dict = Depends(decode_token)):
@@ -60,3 +70,4 @@ async def delete_review(review_id: int, current_user: dict = Depends(decode_toke
         raise HTTPException(status_code=404, detail="Review not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
