@@ -21,7 +21,7 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/reviews")
+@review_router.get("/all")
 async def get_all_reviews():
     try:
         # Assuming Reviews is a SQLAlchemy model
@@ -31,21 +31,3 @@ async def get_all_reviews():
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.delete("/delete/{review_id}")
-async def delete_review(review_id: int, current_user: dict = Depends(decode_token)):
-    try:
-        # Assuming Reviews is a SQLAlchemy model
-        review = Reviews.get(id=review_id)
-
-        # Check if the user trying to delete the review is the owner
-        if review.user != current_user["id"]:
-            raise HTTPException(status_code=403, detail="You don't have permission to delete this review")
-
-        # Delete the review
-        review.delete_instance()
-
-        return {"message": "Review deleted successfully"}
-    except Reviews.DoesNotExist:
-        raise HTTPException(status_code=404, detail="Review not found")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
