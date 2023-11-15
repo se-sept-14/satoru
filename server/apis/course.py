@@ -2,12 +2,15 @@ from utils.crypto import decode_token
 from utils.parser import parse_course
 from models.api import SearchQuery, CourseEdit, CourseCreate
 from models.db import (
-  db_connection,
+  db_connection, fn,
   Courses, Tags, CourseTagMap
 )
 
 from playhouse.shortcuts import model_to_dict
-from fastapi import Depends, APIRouter, HTTPException
+from fastapi import (
+  Depends, Path,
+  APIRouter, HTTPException
+)
 
 course_router = APIRouter()
 
@@ -156,3 +159,24 @@ async def search_course(search_query: SearchQuery, current_user: dict = Depends(
   return {
     "data": results
   }
+
+
+@course_router.get("/recommend/{num_courses}")
+async def recommend_course(
+  num_courses: int = Path(..., title = "Number of courses", lt = 5),
+  current_user: dict = Depends(decode_token)
+):
+  num_courses = max(1, min(4, num_courses))
+  try:
+    recommended_courses = Courses.select().order_by(fn.Rand()).limit(num_courses)
+    data = []
+
+    for course in recommended_courses:
+      course_data = parse_course(course)
+      data.append(course_data)
+
+    return {
+      "data": data
+    }
+  except Exception as e:
+    raise HTTPException(status_code = 500, detail = f"{str(e)}")
