@@ -24,7 +24,6 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
 @review_router.get("/all")
 async def get_all_reviews():
     try:
-        # Assuming Reviews is a SQLAlchemy model
         reviews = Reviews.select().dicts()
         return {"reviews": list(reviews)}
     except Exception as e:
