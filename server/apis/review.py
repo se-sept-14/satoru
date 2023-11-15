@@ -37,7 +37,7 @@ async def get_all_reviews():
     raise HTTPException(status_code = 500, detail = str(e))
 
     
-@review_router.post("/flag/{review_id}")
+@review_router.get("/flag/{review_id}")
 async def flag_review(review_id: int, current_user: dict = Depends(decode_token)):
   try:
     review = Reviews.get_by_id(review_id)
