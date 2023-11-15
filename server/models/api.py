@@ -62,3 +62,7 @@ class ReviewsCreate(BaseModel):
     content: Optional[str]
     course_id: Optional[int]
     ratings: Optional[int]
+
+class ReviewTagMapCreate(BaseModel):
+  review_id: int
+  tag_id: int
