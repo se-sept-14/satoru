@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer
 from utils.crypto import hash_password, decode_token
 from peewee import DoesNotExist
 from models.api import ReviewsCreate, ReviewTagMapCreate
-from models.db import Reviews, Tags, ReviewTagMap, DoesNotExist
+from models.db import Reviews, Tags, ReviewTagMap, DoesNotExist, db_connection
 
 review_router = APIRouter()
 
