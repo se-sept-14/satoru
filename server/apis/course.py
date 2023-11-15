@@ -83,7 +83,7 @@ async def create_course(course_data: CourseCreate, current_user: dict = Depends(
       "id": new_course.id,
     }
   }
-@course_router.delete("/delete_course/{id}")
+@course_router.delete("/{id}")
 async def delete_course(id: int, current_user: dict = Depends(decode_token)):
     # Check if the user is an admin
     is_admin = current_user["is_admin"]
@@ -104,7 +104,7 @@ async def delete_course(id: int, current_user: dict = Depends(decode_token)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Something went wrong: {e}")
 
-@course_router.put("/update_course/{id}")
+@course_router.put("/{id}")
 async def update_course(id: int, course_data: CourseEdit, current_user: dict = Depends(decode_token)):
     # Check if the user is an admin
     is_admin = current_user["is_admin"]
