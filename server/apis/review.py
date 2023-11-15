@@ -19,7 +19,7 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
     )
 
     return {
-      "id": review_instance.id,
+      "data": { "id": review_instance.id },
       "message": "Review created successfully ✔️"
     }
   except Exception as e:

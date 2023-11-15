@@ -95,7 +95,7 @@ async def delete_course(id: int, current_user: dict = Depends(decode_token)):
       if course:
         course.delete_instance()
         return {
-          "id": id,
+          "data": { "id": id },
           "message": f"Course with ID {id} deleted successfully 🗑️"
         }
       else:
@@ -120,7 +120,7 @@ async def update_course(id: int, course_data: CourseEdit, current_user: dict = D
 
         course.save()
         return {
-          "id": id,
+          "data": { "id": id },
           "message": f"Course with ID {id} updated successfully ✔️"
         }
       else:

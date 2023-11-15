@@ -17,12 +17,14 @@ async def profile(current_user: dict = Depends(decode_token)):
     raise HTTPException(status_code = 404, detail = "User profile not found 🚫")
 
   return {
-    "id": user_profile.user_id,
-    "career_goals": user_profile.career_goals,
-    "hours_per_week": user_profile.hours_per_week,
-    "completion_deadline": user_profile.completion_deadline,
-    "learning_preferences": user_profile.learning_preferences,
-    "courses_willing_to_take": user_profile.courses_willing_to_take
+    "data": {
+      "id": user_profile.user_id,
+      "career_goals": user_profile.career_goals,
+      "hours_per_week": user_profile.hours_per_week,
+      "completion_deadline": user_profile.completion_deadline,
+      "learning_preferences": user_profile.learning_preferences,
+      "courses_willing_to_take": user_profile.courses_willing_to_take
+    }
   }
 
 

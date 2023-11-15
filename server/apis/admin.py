@@ -53,6 +53,6 @@ async def make_alumni(user_id: int, current_user: dict = Depends(decode_token)):
     raise HTTPException(status_code = 500, detail = f"{str(e)}")
 
   return {
-    "id": user_id,
+    "data": { "id": user_id },
     "message": "Student is now an alumni 🎓"
   }
