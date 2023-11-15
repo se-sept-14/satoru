@@ -2,6 +2,7 @@ from models.db import Courses
 
 def parse_course(course: Courses):
   data = {}
+  
   data['id'] = course.id
   data['name'] = course.name
   data['code'] = course.code
