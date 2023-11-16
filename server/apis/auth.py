@@ -26,7 +26,6 @@ async def register_user(user_data: UserRegistration):
       email = user_data.email,
       password = hashed_pwd,
       is_admin = user_data.is_admin,
-      profile = "{}" if not user_data.profile else user_data.profile,
       username = user_data.username
     )
   

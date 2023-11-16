@@ -6,16 +6,14 @@ from datetime import datetime
 class UserRegistration(BaseModel):
   email: str
   password: str
-  is_admin: Optional[int] = None
-  profile: Optional[str] = None
   username: str
+  is_admin: Optional[int] = None
 
 # Create user response schema
 class UserResponse(BaseModel):
   id: int
   email: str
   is_admin: int
-  profile: str
   username: str
 
 # User's profile update request schema
