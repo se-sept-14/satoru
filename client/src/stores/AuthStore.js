@@ -40,7 +40,9 @@ export const useAuthStore = defineStore("authStore", {
           localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
         }
       } catch (err) {
-        console.error(err);
+        if(err.response.status == 401) {
+          return null;
+        }
       }
 
       return this.currentUser;
