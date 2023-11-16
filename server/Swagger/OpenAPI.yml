@@ -1,0 +1,788 @@
+openapi: 3.0.1
+info:
+  title: SE-Sept-14 API
+  description: API endpoints for Recommender System project of Group 14
+  version: 0.1.0
+tags:
+  - name: Auth
+    description: Authentication Management API
+  - name: Course
+    description: Course Management API
+  - name: Review
+    description: Review Management API
+  - name: Profile
+    description: Profile Management API
+  - name: Admin
+    description: Admin API to manage Students
+  - name: Tags
+    description: Tags API for search
+paths:
+  /api/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Create a new user
+      operationId: register_user_api_auth_register_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      operationId: login_user_api_auth_login_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/course/id/{id}:
+    get:
+      tags:
+        - Course
+      summary: Get Course
+      operationId: get_course_api_course_id__id__get
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/course/all:
+    get:
+      tags:
+        - Course
+      summary: Get All Courses
+      operationId: get_all_courses_api_course_all_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+  /api/course/:
+    post:
+      tags:
+        - Course
+      summary: Create Course
+      operationId: create_course_api_course__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /api/course/{id}:
+    delete:
+      tags:
+        - Course
+      summary: Delete Course
+      operationId: delete_course_api_course__id__delete
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+        - Course
+      summary: Update Course
+      operationId: update_course_api_course__id__put
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseEdit'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/course/search:
+    post:
+      tags:
+        - Course
+      summary: Search Course
+      operationId: search_course_api_course_search_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchQuery'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /api/course/recommend/{num_courses}:
+    get:
+      tags:
+        - Course
+      summary: Recommend Course
+      operationId: recommend_course_api_course_recommend__num_courses__get
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: num_courses
+          in: path
+          required: true
+          schema:
+            type: integer
+            exclusiveMaximum: true
+            maximum: 5
+            title: Number of courses
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/review/:
+    post:
+      tags:
+        - Review
+      summary: Create Review
+      operationId: create_review_api_review__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewsCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /api/review/all:
+    get:
+      tags:
+        - Review
+      summary: Get All Reviews
+      operationId: get_all_reviews_api_review_all_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /api/review/flag/{review_id}:
+    get:
+      tags:
+        - Review
+      summary: Flag Review
+      operationId: flag_review_api_review_flag__review_id__get
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: review_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Review Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/review/{review_id}:
+    put:
+      tags:
+        - Review
+      summary: Edit Review
+      operationId: edit_review_api_review__review_id__put
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: review_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Review Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewsCreate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+        - Review
+      summary: Delete Review
+      operationId: delete_review_api_review__review_id__delete
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: review_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Review Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/review/tag:
+    post:
+      tags:
+        - Review
+      summary: Tag Review
+      operationId: tag_review_api_review_tag_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewTagMapCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /api/profile/:
+    get:
+      tags:
+        - Profile
+      summary: Profile
+      operationId: profile_api_profile__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+    post:
+      tags:
+        - Profile
+      summary: Profile
+      operationId: profile_api_profile__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /api/admin/all-students:
+    get:
+      tags:
+        - Admin
+      summary: Get All Students
+      operationId: get_all_students_api_admin_all_students_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+  /api/admin/alumni/{user_id}:
+    get:
+      tags:
+        - Admin
+      summary: Make Alumni
+      operationId: make_alumni_api_admin_alumni__user_id__get
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: User Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/tags/search:
+    post:
+      tags:
+        - Tags
+      summary: Search Tags
+      operationId: search_tags_api_tags_search_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchQuery'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+components:
+  schemas:
+    CourseCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+        code:
+          type: string
+          title: Code
+        price:
+          type: integer
+          title: Price
+        credits:
+          type: integer
+          title: Credits
+        description:
+          type: string
+          title: Description
+        corerequisite:
+          type: string
+          title: Corerequisite
+        prerequisites:
+          type: string
+          title: Prerequisites
+        hours_per_week:
+          type: string
+          title: Hours Per Week
+        instructor_name:
+          type: string
+          title: Instructor Name
+        instructor_picture:
+          type: string
+          title: Instructor Picture
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+      type: object
+      required:
+        - name
+        - code
+        - price
+        - credits
+        - description
+        - corerequisite
+        - prerequisites
+        - hours_per_week
+        - instructor_name
+        - instructor_picture
+        - tags
+      title: CourseCreate
+    CourseEdit:
+      properties:
+        name:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Name
+        code:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Code
+        price:
+          anyOf:
+            - type: integer
+            - nullable: true
+          title: Price
+        credits:
+          anyOf:
+            - type: integer
+            - nullable: true
+          title: Credits
+        description:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Description
+        corerequisite:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Corerequisite
+        prerequisites:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Prerequisites
+        hours_per_week:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Hours Per Week
+        instructor_name:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Instructor Name
+        instructor_picture:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Instructor Picture
+      type: object
+      title: CourseEdit
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ReviewTagMapCreate:
+      properties:
+        review_id:
+          type: integer
+          title: Review Id
+        tag_id:
+          type: integer
+          title: Tag Id
+      type: object
+      required:
+        - review_id
+        - tag_id
+      title: ReviewTagMapCreate
+    ReviewsCreate:
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Content
+        course_id:
+          anyOf:
+            - type: integer
+            - nullable: true
+          title: Course Id
+        ratings:
+          anyOf:
+            - type: integer
+            - nullable: true
+          title: Ratings
+      type: object
+      required:
+        - content
+        - course_id
+        - ratings
+      title: ReviewsCreate
+    SearchQuery:
+      properties:
+        query:
+          type: string
+          title: Query
+      type: object
+      required:
+        - query
+      title: SearchQuery
+    UserLogin:
+      properties:
+        email:
+          type: string
+          title: Email
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+        - email
+        - password
+      title: UserLogin
+    UserProfileUpdate:
+      properties:
+        career_goals:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Career Goals
+        hours_per_week:
+          anyOf:
+            - type: integer
+            - nullable: true
+          title: Hours Per Week
+        completion_deadline:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Completion Deadline
+        learning_preferences:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Learning Preferences
+        courses_willing_to_take:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Courses Willing To Take
+      type: object
+      title: UserProfileUpdate
+    UserRegistration:
+      properties:
+        email:
+          type: string
+          title: Email
+        password:
+          type: string
+          title: Password
+        is_admin:
+          anyOf:
+            - type: integer
+            - nullable: true
+          title: Is Admin
+        profile:
+          anyOf:
+            - type: string
+            - nullable: true
+          title: Profile
+        username:
+          type: string
+          title: Username
+      type: object
+      required:
+        - email
+        - password
+        - username
+      title: UserRegistration
+    UserResponse:
+      properties:
+        id:
+          type: integer
+          title: Id
+        email:
+          type: string
+          title: Email
+        is_admin:
+          type: integer
+          title: Is Admin
+        profile:
+          type: string
+          title: Profile
+        username:
+          type: string
+          title: Username
+      type: object
+      required:
+        - id
+        - email
+        - is_admin
+        - profile
+        - username
+      title: UserResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+  securitySchemes:
+    OAuth2PasswordBearer:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/auth/login
