@@ -35,18 +35,21 @@ async def register_user(user_data: UserRegistration):
 
 @auth_router.post("/login")
 async def login_user(username: Annotated[str, Form()], password: Annotated[str, Form()]):
-  user = Users.get_or_none(Users.username == username)
+  try:
+    user = Users.get_or_none(Users.username == username)
 
-  if user is None or not verify_password(password, user.password):
-    raise HTTPException(status_code = 401, detail = "Incorrect email or password 🚫")
-  
-  access_token = create_access_token(data = {
-    "id": user.id,
-    "email": user.email,
-    "is_admin": user.is_admin
-  })
+    if user is None or not verify_password(password, user.password):
+      raise HTTPException(status_code = 401, detail = "Incorrect email or password 🚫")
+    
+    access_token = create_access_token(data = {
+      "id": user.id,
+      "email": user.email,
+      "is_admin": user.is_admin
+    })
 
-  return {
-    "access_token": access_token,
-    "token_type": "Bearer"
-  }
+    return {
+      "access_token": access_token,
+      "token_type": "Bearer"
+    }
+  except Exception as e:
+    raise HTTPException(status_code = 500, detail = f"{str(e)}")
