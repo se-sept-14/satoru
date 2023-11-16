@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
-from jose import JWTError, jwt
 from datetime import datetime, timedelta
+
+from jose import JWTError, jwt
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
@@ -25,8 +26,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl = "/api/auth/login")
 def hash_password(password: str):
   return pwd_context.hash(password)
 
+
 def verify_password(incoming_password: str, original_password: str):
   return pwd_context.verify(incoming_password, original_password)
+
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
   to_encode = data.copy()
@@ -35,14 +38,11 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     expire = datetime.utcnow() + expires_delta
   else:
     expire = datetime.utcnow() + timedelta(minutes = CRYPTO['access_token_expire_minutes'])
-  
 
-  to_encode.update({
-    "exp": expire
-  })
+  to_encode.update({ "exp": expire })
   encoded_jwt = jwt.encode(to_encode, CRYPTO['secret_key'], algorithm = CRYPTO['algorithm'])
-
   return encoded_jwt
+
 
 def decode_token(token: str = Depends(oauth2_scheme)):
   try:

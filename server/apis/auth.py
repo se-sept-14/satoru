@@ -1,14 +1,11 @@
-from peewee import fn
-from fastapi import APIRouter, HTTPException, Depends
-
 from models.db import db_connection, Users
 from models.api import UserRegistration, UserResponse, UserLogin
-from utils.crypto import (
-  hash_password, verify_password,
-  create_access_token, decode_token
-)
+from utils.crypto import hash_password, verify_password, create_access_token
+
+from fastapi import APIRouter, HTTPException
 
 auth_router = APIRouter()
+
 
 @auth_router.post("/register", response_model = UserResponse)
 async def register_user(user_data: UserRegistration):
@@ -16,7 +13,7 @@ async def register_user(user_data: UserRegistration):
     existing_user = Users.select().where(Users.email == user_data.email or Users.username == user_data.username).first()
 
     if existing_user:
-      raise HTTPException(status_code = 400, detail = "Email or Username already in use")
+      raise HTTPException(status_code = 400, detail = "Email or Username already in use ⚠️")
     
     # Check if there is an admin user in the db or not
     is_admin = Users.select().where(Users.is_admin == 1).count()
@@ -34,12 +31,13 @@ async def register_user(user_data: UserRegistration):
   
   return new_user
 
+
 @auth_router.post("/login")
 async def login_user(credentials: UserLogin):
   user = Users.get_or_none(Users.email == credentials.email)
 
   if user is None or not verify_password(credentials.password, user.password):
-    raise HTTPException(status_code = 401, detail = "Incorrect email or password")
+    raise HTTPException(status_code = 401, detail = "Incorrect email or password 🚫")
   
   access_token = create_access_token(data = {
     "id": user.id,
@@ -49,5 +47,5 @@ async def login_user(credentials: UserLogin):
 
   return {
     "access_token": access_token,
-    "token_type": "bearer"
+    "token_type": "Bearer"
   }
