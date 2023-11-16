@@ -1,8 +1,9 @@
 from models.db import db_connection, Users
-from models.api import UserRegistration, UserResponse, UserLogin
+from models.api import UserRegistration, UserResponse
 from utils.crypto import hash_password, verify_password, create_access_token
 
-from fastapi import APIRouter, HTTPException
+from typing_extensions import Annotated
+from fastapi import Form, APIRouter, HTTPException
 
 auth_router = APIRouter()
 
@@ -33,10 +34,10 @@ async def register_user(user_data: UserRegistration):
 
 
 @auth_router.post("/login")
-async def login_user(credentials: UserLogin):
-  user = Users.get_or_none(Users.email == credentials.email)
+async def login_user(username: Annotated[str, Form()], password: Annotated[str, Form()]):
+  user = Users.get_or_none(Users.username == username)
 
-  if user is None or not verify_password(credentials.password, user.password):
+  if user is None or not verify_password(password, user.password):
     raise HTTPException(status_code = 401, detail = "Incorrect email or password 🚫")
   
   access_token = create_access_token(data = {

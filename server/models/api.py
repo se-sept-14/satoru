@@ -17,11 +17,6 @@ class UserResponse(BaseModel):
   is_admin: int
   profile: str
   username: str
-  
-# User's login request schema
-class UserLogin(BaseModel):
-  email: str
-  password: str
 
 # User's profile update request schema
 class UserProfileUpdate(BaseModel):
