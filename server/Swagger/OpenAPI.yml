@@ -401,7 +401,7 @@ paths:
     get:
       tags:
         - Profile
-      summary: Profile
+      summary: Get a user's Profile
       operationId: profile_api_profile__get
       responses:
         '200':
@@ -414,7 +414,7 @@ paths:
     post:
       tags:
         - Profile
-      summary: Profile
+      summary: Create/Update a user's profile
       operationId: profile_api_profile__post
       requestBody:
         content:
@@ -454,7 +454,7 @@ paths:
     get:
       tags:
         - Admin
-      summary: Make Alumni
+      summary: Make student an Alumni
       operationId: make_alumni_api_admin_alumni__user_id__get
       security:
         - OAuth2PasswordBearer: []
