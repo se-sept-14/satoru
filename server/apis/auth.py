@@ -28,8 +28,24 @@ async def register_user(user_data: UserRegistration):
       is_admin = user_data.is_admin,
       username = user_data.username
     )
-  
-  return new_user
+
+    # Log in the user after successful registration
+    access_token = create_access_token(
+      data = {
+        "id": new_user.id,
+        "email": new_user.email,
+        "is_admin": new_user.is_admin,
+      }
+    )
+
+  return {
+    "id": new_user.id,
+    "email": new_user.email,
+    "is_admin": new_user.is_admin,
+    "username": new_user.username,
+    "access_token": access_token,
+    "token_type": "Bearer",
+  }
 
 
 @auth_router.post("/login")
