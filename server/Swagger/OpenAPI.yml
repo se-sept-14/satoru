@@ -1,8 +1,375 @@
 openapi: 3.0.1
 info:
-  title: SE-Sept-14 API
-  description: API endpoints for Recommender System project of Group 14
+  title: SE-Sept-14 Recommender System API
+  description: |
+    <h1>Components of this app</h1>
+    <ul>
+      <li>
+        <p><a href="https://fastapi.tiangolo.com" target="_blank" rel="noopener noreferrer">FastAPI</a> for RESTful API endpoints</p>
+      </li>
+      <li>
+        <p><a href="https://mariadb.org" target="_blank" rel="noopener noreferrer">MariaDB</a> as the Relational SQL Database</p>
+      </li>
+      <li>
+        <p><a href="https://github.com/coleifer/peewee" target="_blank" rel="noopener noreferrer">Peewee ORM</a> for Database models, connection and queries</p>
+      </li>
+      <li>
+        <p><a href="https://www.docker.com" target="_blank" rel="noopener noreferrer">Docker</a> for deployment</p>
+      </li>
+    </ul>
+    
+    <br>
+    <h2>Courses table schema</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>id</td>
+          <td>Integer</td>
+          <td>Primary Key, Auto Increment, Not Null, Unique</td>
+        </tr>
+        <tr>
+          <td>name</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>code</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>price</td>
+          <td>Integer</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>credits</td>
+          <td>Integer</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>description</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>corerequisite</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>prerequisites</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>hours_per_week</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>instructor_name</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>instructor_picture</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>created_at</td>
+          <td>Timestamp</td>
+          <td>Not Null, DEFAULT <code>current_timestamp()</code></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <br>
+    <h2>Tags table schema</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>id</td>
+          <td>Integer</td>
+          <td>Primary Key, Auto Increment, Not Null, Unique</td>
+        </tr>
+        <tr>
+          <td>name</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>created_at</td>
+          <td>Timestamp</td>
+          <td>Not Null, DEFAULT <code>current_timestamp()</code></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <br>
+    <h2>Course Tag Map table schema</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>id</td>
+          <td>Integer</td>
+          <td>Primary Key, Auto Increment, Not Null, Unique</td>
+        </tr>
+        <tr>
+          <td>course_id</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Courses.id)</td>
+        </tr>
+        <tr>
+          <td>tag_id</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Tags.id)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <br>
+    <h2>Users table schema</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>id</td>
+          <td>Integer</td>
+          <td>Primary Key, Auto Increment, Not Null, Unique</td>
+        </tr>
+        <tr>
+          <td>password</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>is_admin</td>
+          <td>Boolean</td>
+          <td>Not Null, DEFAULT <code>false</code></td>
+        </tr>
+        <tr>
+          <td>is_alumni</td>
+          <td>Boolean</td>
+          <td>Not Null, DEFAULT <code>false</code></td>
+        </tr>
+        <tr>
+          <td>password</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>email</td>
+          <td>Text</td>
+          <td>Not Null, Unique</td>
+        </tr>
+        <tr>
+          <td>username</td>
+          <td>Text</td>
+          <td>Not Null, Unique</td>
+        </tr>
+        <tr>
+          <td>created_at</td>
+          <td>Timestamp</td>
+          <td>Not Null, DEFAULT <code>current_timestamp()</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <br>
+    <h2>User profile table schema</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>career_goals</td>
+          <td>Text</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>completion_deadline</td>
+          <td>Text</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>courses_willing_to_take</td>
+          <td>Text</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>hours_per_week</td>
+          <td>Integer</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>learning_preferences</td>
+          <td>Text</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Users.id)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <br>
+    <h2>Favorite Courses Order table schema</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>course</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Courses.id)</td>
+        </tr>
+        <tr>
+          <td>order_index</td>
+          <td>Integer</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>user_profile</td>
+          <td>Text</td>
+          <td>Not Null, Foreign Key (UserProfile.id)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <br>
+    <h2>Reviews table schema</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>id</td>
+          <td>Integer</td>
+          <td>Primary Key, Auto Increment, Not Null, Unique</td>
+        </tr>
+        <tr>
+          <td>content</td>
+          <td>Text</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>course</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Courses.id)</td>
+        </tr>
+        <tr>
+          <td>ratings</td>
+          <td>Integer</td>
+          <td>Not Null</td>
+        </tr>
+        <tr>
+          <td>created_at</td>
+          <td>Timestamp</td>
+          <td>Not Null, DEFAULT <code>current_timestamp()</code></td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Users.id)</code></td>
+        </tr>
+        <tr>
+          <td>is_flagged</td>
+          <td>Boolean</td>
+          <td>Not Null, DEFAULT <code>false</code></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <br>
+    <h2>Review Tag Map table schema</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>id</td>
+          <td>Integer</td>
+          <td>Primary Key, Auto Increment, Not Null, Unique</td>
+        </tr>
+        <tr>
+          <td>review</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Reviews.id)</td>
+        </tr>
+        <tr>
+          <td>tag</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Tags.id)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <br>
+    <h2>User Course Map table schema</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>id</td>
+          <td>Integer</td>
+          <td>Primary Key, Auto Increment, Not Null, Unique</td>
+        </tr>
+        <tr>
+          <td>course</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Courses.id)</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>Integer</td>
+          <td>Not Null, Foreign Key (Users.id)</td>
+        </tr>
+      </tbody>
+    </table>
   version: 0.1.0
+servers:
+  - url: https://api.pickmycourse.online
+  - url: http://127.0.0.1:8000
+  - url: http://127.0.0.1:5000
 tags:
   - name: Auth
     description: Authentication Management API
@@ -50,9 +417,19 @@ paths:
       operationId: login_user_api_auth_login_post
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserLogin'
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: The username for login
+                password:
+                  type: string
+                  description: The password for login
+              required:
+                - username
+                - password
         required: true
       responses:
         '200':
@@ -397,6 +774,33 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
       security:
         - OAuth2PasswordBearer: []
+  /api/review/flagged/{review_id}:
+    delete:
+      tags:
+        - Review
+      summary: Delete Flagged Review
+      operationId: delete_flagged_review_api_review_flagged__review_id__delete
+      security:
+        - OAuth2PasswordBearer: []
+      parameters:
+        - name: review_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            title: Review Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /api/profile/:
     get:
       tags:
@@ -714,16 +1118,6 @@ components:
         password:
           type: string
           title: Password
-        is_admin:
-          anyOf:
-            - type: integer
-            - nullable: true
-          title: Is Admin
-        profile:
-          anyOf:
-            - type: string
-            - nullable: true
-          title: Profile
         username:
           type: string
           title: Username
@@ -744,19 +1138,23 @@ components:
         is_admin:
           type: integer
           title: Is Admin
-        profile:
-          type: string
-          title: Profile
         username:
           type: string
           title: Username
+        access_token:
+          type: string
+          title: Access Token
+        token_type:
+          type: string
+          title: Token Type
       type: object
       required:
         - id
         - email
         - is_admin
-        - profile
         - username
+        - access_token
+        - token_type
       title: UserResponse
     ValidationError:
       properties:

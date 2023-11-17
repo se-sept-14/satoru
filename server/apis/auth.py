@@ -18,14 +18,14 @@ async def register_user(user_data: UserRegistration):
     
     # Check if there is an admin user in the db or not
     is_admin = Users.select().where(Users.is_admin == 1).count()
-    user_data.is_admin = 1 if not is_admin else 0
+    is_admin = 1 if not is_admin else 0
 
     hashed_pwd = hash_password(user_data.password)
 
     new_user = Users.create(
       email = user_data.email,
       password = hashed_pwd,
-      is_admin = user_data.is_admin,
+      is_admin = is_admin,
       username = user_data.username
     )
 

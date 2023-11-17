@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
@@ -29,7 +31,8 @@ app.include_router(profile_router, prefix = "/api/profile")
 app.include_router(admin_router, prefix = "/api/admin")
 app.include_router(tags_router, prefix = "/api/tags")
 
-app.mount("/", StaticFiles(directory = "dist", html = True))
+if os.path.exists("dist"):
+  app.mount("/", StaticFiles(directory = "dist", html = True))
 
 app.add_middleware(
   CORSMiddleware,
