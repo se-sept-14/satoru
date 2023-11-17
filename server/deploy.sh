@@ -13,7 +13,7 @@ echo "Building vite for prod ..."
 cd ../client
 npm install
 npm run build
-mv dist ../server
+mv -f dist ../server
 cd ../server
 
 # Deploy the current version
