@@ -14,8 +14,9 @@ info:
         <p><a href="https://github.com/coleifer/peewee" target="_blank" rel="noopener noreferrer">Peewee ORM</a> for Database models, connection and queries</p>
       </li>
       <li>
-        <p><a href="https://www.docker.com" target="_blank" rel="noopener noreferrer">Docker</a> for deployment</p>
+        <p><a href="https://www.docker.com" target="_blank" rel="noopener noreferrer">Docker</a> for deployment on <a href="https://aws.amazon.com/lightsail" target="_blank" rel="noopener noreferrer">AWS Lightsail VM</a></p>
       </li>
+      <li><a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer">Cloudflare</a> for DNS Management</li>
     </ul>
     
     <br>
@@ -368,8 +369,7 @@ info:
   version: 0.1.0
 servers:
   - url: https://api.pickmycourse.online
-  - url: http://127.0.0.1:8000
-  - url: http://127.0.0.1:5000
+  - url: http://18.136.102.74
 tags:
   - name: Auth
     description: Authentication Management API
