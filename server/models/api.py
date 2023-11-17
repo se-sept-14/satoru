@@ -6,7 +6,6 @@ class UserRegistration(BaseModel):
   email: str
   password: str
   username: str
-  is_admin: Optional[int] = None
 
 # Create user response schema
 class UserResponse(BaseModel):
