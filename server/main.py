@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from apis.auth import auth_router
@@ -27,6 +28,8 @@ app.include_router(review_router, prefix = "/api/review")
 app.include_router(profile_router, prefix = "/api/profile")
 app.include_router(admin_router, prefix = "/api/admin")
 app.include_router(tags_router, prefix = "/api/tags")
+
+app.mount("/", StaticFiles(directory = "dist", html = True))
 
 app.add_middleware(
   CORSMiddleware,
