@@ -8,6 +8,9 @@ docker compose down
 echo "Delete old docker image ..."
 docker image rm server-api:latest
 
+# Remove existing dist folder inside server
+rm -rf dist
+
 # Build vite application
 echo "Building vite for prod ..."
 cd ../client
