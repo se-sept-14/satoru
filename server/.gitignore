@@ -2,6 +2,7 @@
 .env/
 env/
 venv/
+dist/
 __pycache__/
 routes/__pycache__/
 
