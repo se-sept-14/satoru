@@ -10,9 +10,9 @@
 
 ## 💻 **Web app details**
 
-| 🌱 Environment  | 🔗 URL                                |
-|-----------------|---------------------------------------|
-| 📱 Vue frontend |[WIP](https://pickmycourse.vercel.app) |
+| 🌱 Environment  | 🔗 URL                                                    |
+|-----------------|-----------------------------------------------------------|
+| 📱 Vue frontend |[pickmycourse.vercel.app](https://pickmycourse.vercel.app) |
 
 ## **To deploy the api using Docker**
 - `cd server`
