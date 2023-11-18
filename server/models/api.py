@@ -1,13 +1,10 @@
-from typing import Optional, List, Union
-from pydantic import BaseModel, conint, constr
-from datetime import datetime
+from pydantic import BaseModel
+from typing import Optional, List
 
 # Create user request schema
 class UserRegistration(BaseModel):
   email: str
   password: str
-  is_admin: Optional[int] = None
-  profile: Optional[str] = None
   username: str
 
 # Create user response schema
@@ -15,13 +12,9 @@ class UserResponse(BaseModel):
   id: int
   email: str
   is_admin: int
-  profile: str
   username: str
-  
-# User's login request schema
-class UserLogin(BaseModel):
-  email: str
-  password: str
+  access_token: str
+  token_type: str
 
 # User's profile update request schema
 class UserProfileUpdate(BaseModel):
