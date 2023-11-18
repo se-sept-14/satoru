@@ -127,16 +127,19 @@ export default {
       if (this.userData.email.length == 0) {
         this.userDataError.email = true;
       }
-
+      
       if (this.userData.password.length == 0) {
         this.userDataError.password = true;
       }
-
+      
       if (!this.userDataError.email && !this.userDataError.password) {
         const user = await this.authStore.login(this.userData);
 
         if (user && user.access_token.length != 0) {
           this.$router.push("/dashboard");
+        } else {
+          this.userDataError.email = true;
+          this.userDataError.password = true;
         }
       }
     },
