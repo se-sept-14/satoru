@@ -1,11 +1,11 @@
-from pydantic import BaseModel
 from typing import Optional, List
+from pydantic import BaseModel, EmailStr, constr
 
 # Create user request schema
 class UserRegistration(BaseModel):
-  email: str
-  password: str
-  username: str
+  email: EmailStr
+  username: constr(min_length = 4, max_length = 32)
+  password: constr(min_length = 4, max_length = 32)
 
 # Create user response schema
 class UserResponse(BaseModel):
@@ -52,9 +52,9 @@ class CourseEdit(BaseModel):
   instructor_picture: Optional[str] = None
 
 class ReviewsCreate(BaseModel):
-    content: Optional[str]
-    course_id: Optional[int]
-    ratings: Optional[int]
+  content: Optional[str]
+  course_id: Optional[int]
+  ratings: Optional[int]
 
 class ReviewTagMapCreate(BaseModel):
   review_id: int
