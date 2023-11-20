@@ -5,6 +5,17 @@ from peewee import *
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+required_env_vars = [
+  "MARIADB_DATABASE_NAME",
+  "MARIADB_USER",
+  "MARIADB_PASSWORD",
+  "MARIADB_HOST",
+  "MARIADB_PORT"
+]
+for var in required_env_vars:
+  if not os.getenv(var):
+    raise EnvironmentError(f"Missing required environment variable: {var}")
+
 load_dotenv(dotenv_path)
 
 MARIADB = {
