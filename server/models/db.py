@@ -5,176 +5,136 @@ from peewee import *
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+load_dotenv(dotenv_path)
 required_env_vars = [
-  "MARIADB_DATABASE_NAME",
-  "MARIADB_USER",
-  "MARIADB_PASSWORD",
   "MARIADB_HOST",
-  "MARIADB_PORT"
+  "MARIADB_USER",
+  "MARIADB_PORT",
+  "MARIADB_PASSWORD",
+  "MARIADB_DATABASE_NAME"
 ]
 for var in required_env_vars:
   if not os.getenv(var):
     raise EnvironmentError(f"Missing required environment variable: {var}")
 
-load_dotenv(dotenv_path)
 
 MARIADB = {
-  "db_name": os.getenv("MARIADB_DATABASE_NAME"),
-  "user": os.getenv("MARIADB_USER"),
-  "password": os.getenv("MARIADB_PASSWORD"),
   "host": os.getenv("MARIADB_HOST"),
-  "port": int(os.getenv("MARIADB_PORT"))
+  "user": os.getenv("MARIADB_USER"),
+  "port": int(os.getenv("MARIADB_PORT")),
+  "password": os.getenv("MARIADB_PASSWORD"),
+  "db_name": os.getenv("MARIADB_DATABASE_NAME")
 }
 
 db_connection = MySQLDatabase(
   MARIADB['db_name'],
   user = MARIADB['user'],
-  password = MARIADB['password'],
   host = MARIADB['host'],
-  port = MARIADB['port']
+  port = MARIADB['port'],
+  password = MARIADB['password']
 )
 
 class Courses(Model):
-  id = AutoField(primary_key = True)
-  name = CharField()
-  code = TextField()
-  price = IntegerField()
-  credits = IntegerField()
-  description = TextField()
-  corerequisite = TextField()
-  prerequisites = TextField()
-  hours_per_week = TextField()
-  instructor_name = TextField()
-  instructor_picture = CharField()
-  created_at = DateTimeField(constraints = [SQL("DEFAULT current_timestamp()")])
+  id: AutoField = AutoField(primary_key = True)
+  name: CharField = CharField()
+  code: TextField = TextField()
+  price: IntegerField = IntegerField()
+  credits: IntegerField = IntegerField()
+  description: TextField = TextField()
+  corerequisite: TextField = TextField()
+  prerequisites: TextField = TextField()
+  hours_per_week: TextField = TextField()
+  instructor_name: TextField = TextField()
+  instructor_picture: CharField = CharField()
+  created_at: DateTimeField = DateTimeField(constraints = [SQL("DEFAULT current_timestamp()")])
 
   class Meta:
-    database = db_connection
-    table_name = 'courses'
+    database: MySQLDatabase = db_connection
+    table_name: str = 'courses'
 
 class Tags(Model):
-  id = AutoField(primary_key = True)
-  name = CharField(unique = True)
-  created_at = TimestampField(default = datetime.now)
+  id: AutoField = AutoField(primary_key = True)
+  name: CharField = CharField(unique = True)
+  created_at: TimestampField = TimestampField(default = datetime.now)
 
   class Meta:
-    database = db_connection
-    table_name = 'tags'
+    database: MySQLDatabase = db_connection
+    table_name: str = 'tags'
 
 class CourseTagMap(Model):
-  id = AutoField(primary_key = True)
-  course = ForeignKeyField(
-    column_name = 'course_id',
-    field = 'id',
-    model = Courses
-  )
-  tag = ForeignKeyField(
-    column_name = 'tag_id',
-    field = 'id',
-    model = Tags
-  )
+  id: AutoField = AutoField(primary_key = True)
+  course: ForeignKeyField = ForeignKeyField(column_name = 'course_id', field = 'id', model = Courses)
+  tag: ForeignKeyField = ForeignKeyField(column_name = 'tag_id', field = 'id', model = Tags)
 
   class Meta:
-    database = db_connection
-    table_name = 'course_tag_map'
+    database: MySQLDatabase = db_connection
+    table_name: str = 'course_tag_map'
 
 class Users(Model):
-  id = AutoField(primary_key = True)
-  password = CharField()
-  is_admin = IntegerField()
-  is_alumni = IntegerField()
-  email = CharField(unique = True)
-  username = CharField(unique = True)
-  created_at = TimestampField(default = datetime.now)
+  id: AutoField = AutoField(primary_key = True)
+  password: CharField = CharField()
+  is_admin: IntegerField = IntegerField()
+  is_alumni: IntegerField = IntegerField()
+  email: CharField = CharField(unique = True)
+  username: CharField = CharField(unique = True)
+  created_at: TimestampField = TimestampField(default = datetime.now)
 
   class Meta:
-    database = db_connection
-    table_name = 'users'
+    database: MySQLDatabase = db_connection
+    table_name: str = 'users'
 
 class UserProfile(Model):
-  career_goals = TextField(null=True)
-  completion_deadline = TextField(null=True)
-  courses_willing_to_take = TextField(null=True)
-  hours_per_week = IntegerField(null=True)
-  learning_preferences = TextField(null=True)
-  user = ForeignKeyField(column_name='user_id', field='id', model=Users, null=True, unique=True)
+  career_goals: TextField = TextField(null=True)
+  completion_deadline: TextField = TextField(null=True)
+  courses_willing_to_take: TextField = TextField(null=True)
+  hours_per_week: IntegerField = IntegerField(null=True)
+  learning_preferences: TextField = TextField(null=True)
+  user: ForeignKeyField = ForeignKeyField(column_name = 'user_id', field = 'id', model = Users, null = True, unique = True)
 
   class Meta:
-    database = db_connection
-    table_name = 'user_profile'
+    database: MySQLDatabase = db_connection
+    table_name: str = 'user_profile'
 
 class FavoriteCoursesOrder(Model):
-  course = ForeignKeyField(
-    column_name = 'course_id',
-    field = 'id',
-    model = Courses
-  )
-  order_index = IntegerField(null = True)
-  user_profile = ForeignKeyField(
-    column_name = 'user_profile_id',
-    field = 'id',
-    model = UserProfile
-  )
+  course: ForeignKeyField = ForeignKeyField(column_name = 'course_id', field = 'id', model = Courses)
+  order_index: IntegerField = IntegerField(null = True)
+  user_profile: ForeignKeyField = ForeignKeyField(column_name = 'user_profile_id', field = 'id', model = UserProfile)
 
   class Meta:
-    database = db_connection
-    table_name = 'favorite_courses_order'
-    indexes = (
+    database: MySQLDatabase = db_connection
+    table_name: str = 'favorite_courses_order'
+    indexes: tuple = (
       (('user_profile', 'course'), True),
     )
-    primary_key = CompositeKey('course', 'user_profile')
+    primary_key: CompositeKey = CompositeKey('course', 'user_profile')
 
 class Reviews(Model):
-  id = AutoField(primary_key = True)
-  content = CharField()
-  course = ForeignKeyField(
-    column_name = 'course_id',
-    field = 'id',
-    model = Courses
-  )
-  ratings = IntegerField()
-  created_at = DateTimeField(constraints=[SQL("DEFAULT current_timestamp()")])
-  user = ForeignKeyField(
-    column_name = 'user_id',
-    field = 'id',
-    model = Users
-  )
-  is_flagged = IntegerField(constraints=[SQL("DEFAULT 0")], null = True)
+  id: AutoField = AutoField(primary_key = True)
+  content: CharField = CharField()
+  course: ForeignKeyField = ForeignKeyField(column_name = 'course_id', field = 'id', model = Courses)
+  ratings: IntegerField = IntegerField()
+  created_at: DateTimeField = DateTimeField(constraints=[SQL("DEFAULT current_timestamp()")])
+  user: ForeignKeyField = ForeignKeyField(column_name = 'user_id', field = 'id', model = Users)
+  is_flagged: IntegerField = IntegerField(constraints=[SQL("DEFAULT 0")], null = True)
 
   class Meta:
-    database = db_connection
-    table_name = 'reviews'
+    database: MySQLDatabase = db_connection
+    table_name: str = 'reviews'
 
 class ReviewTagMap(Model):
-  id = AutoField(primary_key = True)
-  review = ForeignKeyField(
-    column_name = 'review_id',
-    field = 'id',
-    model = Reviews
-  )
-  tag = ForeignKeyField(
-    column_name = 'tag_id',
-    field = 'id',
-    model = Tags
-  )
+  id: AutoField = AutoField(primary_key = True)
+  review: ForeignKeyField = ForeignKeyField(column_name = 'review_id', field = 'id', model = Reviews)
+  tag: ForeignKeyField = ForeignKeyField(column_name = 'tag_id', field = 'id', model = Tags)
 
   class Meta:
-    database = db_connection
-    table_name = 'review_tag_map'
+    database: MySQLDatabase = db_connection
+    table_name: str = 'review_tag_map'
 
 class UsersCoursesMap(Model):
-  id = AutoField(primary_key = True)
-  course = ForeignKeyField(
-    column_name = 'course_id',
-    field = 'id',
-    model = Courses
-  )
-  user = ForeignKeyField(
-    column_name = 'user_id',
-    field = 'id',
-    model = Users
-  )
+  id: AutoField = AutoField(primary_key = True)
+  course: ForeignKeyField = ForeignKeyField(column_name = 'course_id', field = 'id', model = Courses)
+  user: ForeignKeyField = ForeignKeyField(column_name = 'user_id', field = 'id', model = Users)
 
   class Meta:
-    database = db_connection
-    table_name = 'users_courses_map'
+    database: MySQLDatabase = db_connection
+    table_name: str = 'users_courses_map'

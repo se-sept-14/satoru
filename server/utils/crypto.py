@@ -14,11 +14,10 @@ required_env_vars = [
   "CRYPTO_SECRET_KEY",
   "CRYPTO_ACCESS_TOKEN_EXPIRE_MINUTES"
 ]
-
+load_dotenv(dotenv_path)
 for var in required_env_vars:
   if not os.getenv(var):
     raise EnvironmentError(f"Missing required environment")
-load_dotenv(dotenv_path)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl = "/api/auth/login")
 pwd_context = CryptContext(schemes = ["bcrypt"], deprecated = "auto")
