@@ -16,22 +16,22 @@ CRYPTO = {
   "access_token_expire_minutes": int(os.getenv("CRYPTO_ACCESS_TOKEN_EXPIRE_MINUTES"))
 }
 
-pwd_context = CryptContext(
-  schemes = ["bcrypt"],
-  deprecated = "auto"
-)
+pwd_context = CryptContext(schemes = ["bcrypt"], deprecated = "auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl = "/api/auth/login")
 
 def hash_password(password: str):
+  """Hash a given password string"""
   return pwd_context.hash(password)
 
 
 def verify_password(incoming_password: str, original_password: str):
+  """Verify the incoming password string against the hashed password string"""
   return pwd_context.verify(incoming_password, original_password)
 
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
+  """Create an access_token with optional expiration"""
   to_encode = data.copy()
   
   if expires_delta:
@@ -45,6 +45,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
 
 
 def decode_token(token: str = Depends(oauth2_scheme)):
+  """Decode and verify the JWT and return user info if it is valid"""
   try:
     payload = jwt.decode(token, CRYPTO['secret_key'], algorithms = CRYPTO['algorithm'])
     user_id = payload.get("id")
