@@ -16,6 +16,11 @@ class UserResponse(BaseModel):
   access_token: str
   token_type: str
 
+# Login user schema
+class UserLogin(BaseModel):
+  access_token: str
+  token_type: str
+
 # User's profile update request schema
 class UserProfileUpdate(BaseModel):
   career_goals: Optional[str] = None
