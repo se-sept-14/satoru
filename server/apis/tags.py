@@ -5,9 +5,9 @@ from models.db import Tags
 from models.api import SearchQuery
 from utils.crypto import decode_token
 
-tags_router = APIRouter()
+tags_router = APIRouter(tags = ["Tags 🔖"])
 
-@tags_router.post("/search")
+@tags_router.post("/search", summary = "Search for tags 🔎")
 async def search_tags(search_query: SearchQuery, current_user: dict = Depends(decode_token)):
   if not search_query.query:
     raise HTTPException(status_code = 400, detail = "Search query empty")
