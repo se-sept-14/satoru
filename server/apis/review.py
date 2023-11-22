@@ -27,7 +27,7 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
 
 
 @review_router.get("/all")
-async def get_all_reviews():
+async def get_all_reviews(current_user: dict = Depends(decode_token)):
   try:
     reviews = Reviews.select().dicts()
     return {

@@ -1,9 +1,9 @@
 from models.db import db_connection, Users, DoesNotExist
 from models.api import UserRegistration, UserResponse, UserLogin
-from utils.crypto import hash_password, verify_password, create_access_token
+from utils.crypto import hash_password, verify_password, create_access_token, decode_token, JWTError
 
 from typing_extensions import Annotated
-from fastapi import Form, APIRouter, HTTPException
+from fastapi import Form, APIRouter, HTTPException, Depends
 
 auth_router = APIRouter()
 
@@ -72,3 +72,40 @@ async def login_user(username: Annotated[str, Form()], password: Annotated[str, 
     raise HTTPException(status_code = 401, detail = "User not found 🚫")
   except Exception as e:
     raise HTTPException(status_code = 500, detail = f"{str(e)}")
+
+
+@auth_router.post("/change-password")
+async def change_password(
+  current_password: str = Form(..., description = "Current Password"),
+  new_password: str = Form(..., description = "New Password"),
+  current_user: dict = Depends(decode_token)
+):
+  credentials_exception = HTTPException(status_code = 401, detail = "Failed to validate credentials")
+
+  try:
+    user_id: int = current_user["id"]
+
+    if user_id is None:
+      raise credentials_exception
+  except HTTPException as exc:
+    raise exc
+  except JWTError:
+    raise credentials_exception
+  
+  user = Users.get_or_none(Users.id == user_id)
+  if user is None:
+    raise HTTPException(status_code = 401, detail = "User not found or invalid credentials")
+  
+  if not verify_password(current_password, user.password):
+    raise HTTPException(status_code = 401, detail = "Incorrect current password 🚫")
+  
+  if verify_password(current_password, user.password):
+    raise HTTPException(status_code = 400, detail = "New password cannot be the same as old password")
+  
+  new_hashed_password = hash_password(new_password)
+
+  with db_connection.transaction():
+    user.password = new_hashed_password
+    user.save()
+  
+  return { "message": "Password changed successfully" }
