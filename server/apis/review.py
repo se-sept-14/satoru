@@ -4,7 +4,6 @@ from models.api import ReviewsCreate, ReviewTagMapCreate
 from models.db import Reviews, Tags, ReviewTagMap, DoesNotExist, db_connection
 
 from detoxify import Detoxify
-from peewee import DoesNotExist
 from fastapi import APIRouter, Depends, HTTPException
 
 from dotenv import load_dotenv
