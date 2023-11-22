@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from detoxify import Detoxify
 from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 
 from apis.auth import auth_router
 from apis.tags import tags_router
@@ -33,7 +32,3 @@ app.include_router(profile_router, prefix = "/api/profile")
 
 if os.path.exists("dist"):
   app.mount("/", StaticFiles(directory = "dist", html = True))
-
-# Allowed origins
-origins = ["*"]
-app.add_middleware(CORSMiddleware, allow_origins = origins, allow_credentials = True, allow_methods = "*", allow_headers = "*")

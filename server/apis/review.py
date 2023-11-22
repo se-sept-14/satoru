@@ -1,5 +1,6 @@
 import os
 from utils.crypto import decode_token
+from utils.parser import parse_review_inference
 from models.api import ReviewsCreate, ReviewTagMapCreate
 from models.db import Reviews, Tags, ReviewTagMap, DoesNotExist, db_connection
 
@@ -24,8 +25,9 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
     flag = False
 
     toxicity = model.predict(review.content)
-    for key in toxicity:
-      if toxicity[key] >= os.getenv("TOXICITY_THRESHOLD"):
+    inference = parse_review_inference(toxicity)
+    for key in inference:
+      if inference[key] >= float(os.getenv("TOXICITY_THRESHOLD")):
         flag = True
 
     review_instance = Reviews.create(
@@ -37,8 +39,11 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
     )
 
     return {
-      "data": { "id": review_instance.id },
-      "message": "Review created successfully ✔️"
+      "message": "Review created successfully ✔️",
+      "data": {
+        "id": review_instance.id,
+        "profanity_check": inference
+      }
     }
   except Exception as e:
     raise HTTPException(status_code = 500, detail = str(e))
