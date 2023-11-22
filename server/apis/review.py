@@ -2,6 +2,7 @@ from utils.crypto import decode_token
 from models.api import ReviewsCreate, ReviewTagMapCreate
 from models.db import Reviews, Tags, ReviewTagMap, DoesNotExist, db_connection
 
+from detoxify import Detoxify
 from peewee import DoesNotExist
 from fastapi import APIRouter, Depends, HTTPException
 
@@ -11,11 +12,20 @@ review_router = APIRouter()
 @review_router.post("/")
 async def create_review(review: ReviewsCreate, current_user: dict = Depends(decode_token)):
   try:
+    model = Detoxify("unbiased-small")
+    flag = False
+
+    toxicity = model.predict(review.content)
+    for key in toxicity:
+      if toxicity[key] >= 0.5:
+        flag = True
+
     review_instance = Reviews.create(
       content = review.content,
       course = review.course_id,
       ratings = review.ratings,
-      user = current_user["id"]
+      user = current_user["id"],
+      is_flagged = flag
     )
 
     return {
@@ -35,7 +45,8 @@ async def get_all_reviews(current_user: dict = Depends(decode_token)):
     }
   except Exception as e:
     raise HTTPException(status_code = 500, detail = str(e))
-    
+
+
 @review_router.post("/flag/{review_id}")
 async def flag_review(review_id: int, current_user: dict = Depends(decode_token)):
     try:
@@ -48,7 +59,8 @@ async def flag_review(review_id: int, current_user: dict = Depends(decode_token)
         raise HTTPException(status_code=404, detail="Review not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
+
 @review_router.put("/{review_id}")
 async def edit_review(review_id: int, review: ReviewsCreate, current_user: dict = Depends(decode_token)):
     try:
@@ -63,7 +75,8 @@ async def edit_review(review_id: int, review: ReviewsCreate, current_user: dict 
         raise HTTPException(status_code=404, detail="Review not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
+
 @review_router.delete("/{review_id}")
 async def delete_review(review_id: int, current_user: dict = Depends(decode_token)):
     try:
@@ -80,6 +93,7 @@ async def delete_review(review_id: int, current_user: dict = Depends(decode_toke
         raise HTTPException(status_code=404, detail="Review not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @review_router.delete("/flagged/{review_id}")
 async def delete_flagged_review(review_id: int, current_user: dict = Depends(decode_token)):
@@ -101,6 +115,7 @@ async def delete_flagged_review(review_id: int, current_user: dict = Depends(dec
         raise HTTPException(status_code=404, detail="Review not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @review_router.post("/tag")
 async def tag_review(review_tag: ReviewTagMapCreate, current_user: dict = Depends(decode_token)):
