@@ -1,9 +1,9 @@
 import os
 
 from fastapi import FastAPI
+from detoxify import Detoxify
 from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 
 from apis.auth import auth_router
 from apis.tags import tags_router
@@ -16,9 +16,11 @@ from apis.profile import profile_router
 # Lifecycle context
 @asynccontextmanager
 async def lifecycle(app: FastAPI):
-  db_connection.connect()
-  yield
-  db_connection.close()
+  try:
+    db_connection.connect()
+    yield
+  finally:
+    db_connection.close()
 
 app = FastAPI(lifespan = lifecycle)
 app.include_router(auth_router, prefix = "/api/auth")
@@ -30,7 +32,3 @@ app.include_router(profile_router, prefix = "/api/profile")
 
 if os.path.exists("dist"):
   app.mount("/", StaticFiles(directory = "dist", html = True))
-
-# Allowed origins
-origins = ["*"]
-app.add_middleware(CORSMiddleware, allow_origins = origins, allow_credentials = True, allow_methods = "*", allow_headers = "*")
