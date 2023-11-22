@@ -3,10 +3,10 @@ from utils.crypto import decode_token
 
 from fastapi import APIRouter, HTTPException, Depends
 
-admin_router = APIRouter()
+admin_router = APIRouter(tags = ["Admin 🤵"])
 
 
-@admin_router.get("/all-students")
+@admin_router.get("/all-students", summary = "Fetch a list of all students 🧑‍🤝‍🧑")
 async def get_all_students(current_user: dict = Depends(decode_token)):
   # Check if the current user is an admin
   is_admin = current_user["is_admin"]
@@ -33,7 +33,7 @@ async def get_all_students(current_user: dict = Depends(decode_token)):
     raise HTTPException(status_code = 500, detail = f"{e}")
 
 
-@admin_router.get("/alumni/{user_id}")
+@admin_router.get("/alumni/{user_id}", summary = "Make a student alumni 🎓")
 async def make_alumni(user_id: int, current_user: dict = Depends(decode_token)):
   is_admin = current_user["is_admin"]
   if not is_admin:
