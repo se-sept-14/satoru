@@ -1,3 +1,4 @@
+import os
 from utils.crypto import decode_token
 from models.api import ReviewsCreate, ReviewTagMapCreate
 from models.db import Reviews, Tags, ReviewTagMap, DoesNotExist, db_connection
@@ -5,6 +6,14 @@ from models.db import Reviews, Tags, ReviewTagMap, DoesNotExist, db_connection
 from detoxify import Detoxify
 from peewee import DoesNotExist
 from fastapi import APIRouter, Depends, HTTPException
+
+from dotenv import load_dotenv
+dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+load_dotenv(dotenv_path)
+required_env_vars = ["TOXICITY_THRESHOLD"]
+for var in required_env_vars:
+  if not os.getenv(var):
+    raise EnvironmentError(f"Missing required environment variable: {var}")
 
 review_router = APIRouter()
 
@@ -17,7 +26,7 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
 
     toxicity = model.predict(review.content)
     for key in toxicity:
-      if toxicity[key] >= 0.5:
+      if toxicity[key] >= os.getenv("TOXICITY_THRESHOLD"):
         flag = True
 
     review_instance = Reviews.create(
