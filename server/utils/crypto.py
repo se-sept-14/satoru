@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
-from jose import jwt
+from jose import jwt, JWTError
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
