@@ -48,7 +48,7 @@ async def register_user(user_data: UserRegistration) -> UserResponse:
 
 
 @auth_router.post("/login", response_model = UserLogin, summary = "Login a user 🔑")
-async def login_user(username: Annotated[str, Form()], password: Annotated[str, Form()]) -> UserLogin:
+async def login_user(username: Annotated[str, Form()], password: Annotated[str, Form()]):
   if not username or not password:
     raise HTTPException(status_code = 400, detail = "Username and Password are required ⚠️")
 
