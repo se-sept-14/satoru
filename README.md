@@ -14,7 +14,7 @@
 |-----------------|-----------------------------------------------------------|
 | 📱 Vue frontend |[pickmycourse.vercel.app](https://pickmycourse.vercel.app) |
 
-## **To deploy the api using Docker**
+## 💫 **To deploy the API using Docker**
 - Well it goes without saying, make sure you have [Docker installed on your system](https://docs.docker.com/engine/install)
 - `cd server`
 - `cp .env.example .env`
