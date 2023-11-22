@@ -1,6 +1,19 @@
 from typing import Optional, List
 from pydantic import BaseModel, EmailStr, constr
 
+"""Pydantic models for admin endpoints"""
+# /all-students Student data object
+class StudentData(BaseModel):
+  id: int
+  email: str
+  username: str
+  is_alumni: bool
+  created_at: str
+
+# List of Student data object
+class AllStudentData(BaseModel):
+  data: List[StudentData]
+
 # Create user request schema
 class UserRegistration(BaseModel):
   email: EmailStr

@@ -1,34 +1,33 @@
 from models.db import Users
 from utils.crypto import decode_token
+from models.api import StudentData, AllStudentData
 
 from fastapi import APIRouter, HTTPException, Depends
 
 admin_router = APIRouter(tags = ["Admin 🤵"])
 
 
-@admin_router.get("/all-students", summary = "Fetch a list of all students 🧑‍🤝‍🧑")
-async def get_all_students(current_user: dict = Depends(decode_token)):
-  # Check if the current user is an admin
-  is_admin = current_user["is_admin"]
+@admin_router.get("/all-students", summary = "Fetch a list of all students 🧑‍🤝‍🧑", response_model = AllStudentData)
+async def get_all_students(current_user: dict = Depends(decode_token)) -> AllStudentData:
+  is_admin = current_user["is_admin"] # Check if the current user is an admin
   if not is_admin:
     raise HTTPException(status_code = 403, detail = "You are not an admin ⛔")
 
   try:
-    # Fetch all users who are not admins
+    # Fetch all users who are not admin
     students = Users.select().where(Users.is_admin == 0)
 
     # Construct a list of student data
     students_data = [
       {
         "id": student.id,
-        "username": student.username,
         "email": student.email,
-        "created_at": student.created_at,
+        "username": student.username,
+        "is_alumni": student.is_alumni,
+        "created_at": str(student.created_at)
       } for student in students
     ]
-
     return { "data": students_data }
-
   except Exception as e:
     raise HTTPException(status_code = 500, detail = f"{e}")
 
