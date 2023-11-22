@@ -5,10 +5,10 @@ from utils.crypto import hash_password, verify_password, create_access_token, de
 from typing_extensions import Annotated
 from fastapi import Form, APIRouter, HTTPException, Depends
 
-auth_router = APIRouter()
+auth_router = APIRouter(tags = ["Auth 🔐"])
 
 
-@auth_router.post("/register", response_model = UserResponse)
+@auth_router.post("/register", response_model = UserResponse, summary = "Register a new user 👤")
 async def register_user(user_data: UserRegistration) -> UserResponse:
   with db_connection.transaction():
     existing_user = Users.get_or_none((Users.email == user_data.email) | (Users.username == user_data.username))
@@ -47,7 +47,7 @@ async def register_user(user_data: UserRegistration) -> UserResponse:
   }
 
 
-@auth_router.post("/login", response_model = UserLogin)
+@auth_router.post("/login", response_model = UserLogin, summary = "Login a user 🔑")
 async def login_user(username: Annotated[str, Form()], password: Annotated[str, Form()]) -> UserLogin:
   if not username or not password:
     raise HTTPException(status_code = 400, detail = "Username and Password are required ⚠️")
@@ -74,7 +74,7 @@ async def login_user(username: Annotated[str, Form()], password: Annotated[str, 
     raise HTTPException(status_code = 500, detail = f"{str(e)}")
 
 
-@auth_router.post("/change-password")
+@auth_router.post("/change-password", summary = "Change password of current user 🔓")
 async def change_password(
   current_password: str = Form(..., description = "Current Password"),
   new_password: str = Form(..., description = "New Password"),
