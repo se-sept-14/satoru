@@ -14,6 +14,15 @@ class StudentData(BaseModel):
 class AllStudentData(BaseModel):
   data: List[StudentData]
 
+# /alumni/{id} User id object
+class UserId(BaseModel):
+  id: int
+
+# /alumni/{id} response object
+class AlumniResponse(BaseModel):
+  data: UserId
+  message: str
+
 # Create user request schema
 class UserRegistration(BaseModel):
   email: EmailStr
