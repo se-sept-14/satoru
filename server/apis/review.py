@@ -15,10 +15,10 @@ for var in required_env_vars:
   if not os.getenv(var):
     raise EnvironmentError(f"Missing required environment variable: {var}")
 
-review_router = APIRouter()
+review_router = APIRouter(tags = ["Review ✨"])
 
 
-@review_router.post("/")
+@review_router.post("/", summary = "Create a review ⭐")
 async def create_review(review: ReviewsCreate, current_user: dict = Depends(decode_token)):
   try:
     model = Detoxify("unbiased-small")
@@ -49,7 +49,7 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
     raise HTTPException(status_code = 500, detail = str(e))
 
 
-@review_router.get("/all")
+@review_router.get("/all", summary = "Fetch a list of all review 🚀")
 async def get_all_reviews(current_user: dict = Depends(decode_token)):
   try:
     reviews = Reviews.select().dicts()
@@ -60,7 +60,7 @@ async def get_all_reviews(current_user: dict = Depends(decode_token)):
     raise HTTPException(status_code = 500, detail = str(e))
 
 
-@review_router.post("/flag/{review_id}")
+@review_router.post("/flag/{review_id}", summary = "Flag a review 🏳️")
 async def flag_review(review_id: int, current_user: dict = Depends(decode_token)):
     try:
         review = Reviews.get_by_id(review_id)
@@ -74,7 +74,7 @@ async def flag_review(review_id: int, current_user: dict = Depends(decode_token)
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@review_router.put("/{review_id}")
+@review_router.put("/{review_id}", summary = "Edit a review 📝")
 async def edit_review(review_id: int, review: ReviewsCreate, current_user: dict = Depends(decode_token)):
     try:
         review_instance = Reviews.get_by_id(review_id)
@@ -90,7 +90,7 @@ async def edit_review(review_id: int, review: ReviewsCreate, current_user: dict 
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@review_router.delete("/{review_id}")
+@review_router.delete("/{review_id}", summary = "Delete a review 🗑️")
 async def delete_review(review_id: int, current_user: dict = Depends(decode_token)):
     try:
         with db_connection.atomic():
@@ -108,7 +108,7 @@ async def delete_review(review_id: int, current_user: dict = Depends(decode_toke
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@review_router.delete("/flagged/{review_id}")
+@review_router.delete("/flagged/{review_id}", summary = "Delete a flagged review 🚮")
 async def delete_flagged_review(review_id: int, current_user: dict = Depends(decode_token)):
     try:
         print(type(current_user["is_admin"]))
@@ -130,7 +130,7 @@ async def delete_flagged_review(review_id: int, current_user: dict = Depends(dec
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@review_router.post("/tag")
+@review_router.post("/tag", summary = "Add tag to a review 🏷️")
 async def tag_review(review_tag: ReviewTagMapCreate, current_user: dict = Depends(decode_token)):
   try:
     is_admin = current_user["is_admin"]
