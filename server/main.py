@@ -24,7 +24,7 @@ async def lifecycle(app: FastAPI):
   finally:
     db_connection.close()
 
-app = FastAPI(lifespan = lifecycle)
+app = FastAPI(lifespan = lifecycle, redoc_url = None)
 app.include_router(auth_router, prefix = "/api/auth")
 app.include_router(tags_router, prefix = "/api/tags")
 app.include_router(admin_router, prefix = "/api/admin")
@@ -40,16 +40,11 @@ def custom_openapi():
     return app.openapi_schema
 
   openapi_schema = get_openapi(
-    title = "SE-Sept-14 Recommender System API 🚀",
-    version = "1.0.1",
-    description = description,
-    routes = app.routes,
+    title = "SE-Sept-14 Recommender System API 🚀", version = "1.0.1",
+    description = description, routes = app.routes,
   )
-  openapi_schema["info"]["x-logo"] = {
-    "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png"
-  }
+  openapi_schema["info"]["x-logo"] = { "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" }
   app.openapi_schema = openapi_schema
-
   return app.openapi_schema
 
 app.openapi = custom_openapi
