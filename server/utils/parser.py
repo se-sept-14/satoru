@@ -1,6 +1,10 @@
+from typing import Any, Dict
 from models.db import Courses
 
-def parse_course(course: Courses):
+def parse_course(course: Courses) -> Dict[str, Any]:
+  if course is None:
+    raise ValueError("Input 'course' cannot be None")
+
   data = {}
   
   data['id'] = course.id
