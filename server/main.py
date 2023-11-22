@@ -1,9 +1,9 @@
 import os
 
 from fastapi import FastAPI
-from detoxify import Detoxify
 from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
+from fastapi.openapi.utils import get_openapi
 
 from apis.auth import auth_router
 from apis.tags import tags_router
@@ -12,6 +12,8 @@ from apis.admin import admin_router
 from apis.course import course_router
 from apis.review import review_router
 from apis.profile import profile_router
+
+from utils.openapi import description
 
 # Lifecycle context
 @asynccontextmanager
@@ -32,3 +34,22 @@ app.include_router(profile_router, prefix = "/api/profile")
 
 if os.path.exists("dist"):
   app.mount("/", StaticFiles(directory = "dist", html = True))
+
+def custom_openapi():
+  if app.openapi_schema:
+    return app.openapi_schema
+
+  openapi_schema = get_openapi(
+    title = "SE-Sept-14 Recommender System API 🚀",
+    version = "1.0.1",
+    description = description,
+    routes = app.routes,
+  )
+  openapi_schema["info"]["x-logo"] = {
+    "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png"
+  }
+  app.openapi_schema = openapi_schema
+
+  return app.openapi_schema
+
+app.openapi = custom_openapi
