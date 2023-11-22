@@ -5,10 +5,10 @@ from models.db import UserProfile
 from utils.crypto import decode_token
 from models.api import UserProfileUpdate
 
-profile_router = APIRouter()
+profile_router = APIRouter(tags = ["Profile 👤"])
 
 
-@profile_router.get("/")
+@profile_router.get("/", summary = "Fetch profile of a user 🗣️")
 async def profile(current_user: dict = Depends(decode_token)):
   try:
     user_profile = UserProfile.get(UserProfile.user == current_user["id"])
@@ -28,7 +28,7 @@ async def profile(current_user: dict = Depends(decode_token)):
   }
 
 
-@profile_router.post("/")
+@profile_router.post("/", summary = "Create/Update profile of a user 👥")
 async def profile(profile_update: UserProfileUpdate, current_user: dict = Depends(decode_token)):
   try:
     user_profile, created = UserProfile.get_or_create(
