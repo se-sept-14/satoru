@@ -12,10 +12,10 @@ from fastapi import (
   APIRouter, HTTPException
 )
 
-course_router = APIRouter()
+course_router = APIRouter(tags = ["Course 📚"])
 
 
-@course_router.get("/id/{id}")
+@course_router.get("/id/{id}", summary = "Fetch a course by ID 🪪")
 async def get_course(id: int, current_user: dict = Depends(decode_token)):
   course = Courses.get_or_none(Courses.id == id)
   data = parse_course(course) if course is not None else {}
@@ -31,7 +31,7 @@ async def get_course(id: int, current_user: dict = Depends(decode_token)):
   }
 
 
-@course_router.get("/all")
+@course_router.get("/all", summary = "Fetch all the courses 📚")
 async def get_all_courses(current_user: dict = Depends(decode_token)):
   data = []
   courses = Courses.select()
@@ -50,7 +50,7 @@ async def get_all_courses(current_user: dict = Depends(decode_token)):
   }
 
 
-@course_router.post("/")
+@course_router.post("/", summary = "Add a new course 📖")
 async def create_course(course_data: CourseCreate, current_user: dict = Depends(decode_token)):
   is_admin = current_user["is_admin"]
   if not is_admin:
@@ -85,7 +85,7 @@ async def create_course(course_data: CourseCreate, current_user: dict = Depends(
   }
 
 
-@course_router.delete("/{id}")
+@course_router.delete("/{id}", summary = "Delete a course 🗑️")
 async def delete_course(id: int, current_user: dict = Depends(decode_token)):
   is_admin = current_user["is_admin"]
   if not is_admin:
@@ -107,7 +107,7 @@ async def delete_course(id: int, current_user: dict = Depends(decode_token)):
     raise HTTPException(status_code = 500, detail = f"{e}")
 
 
-@course_router.put("/{id}")
+@course_router.put("/{id}", summary = "Modify an existing course 📝")
 async def update_course(id: int, course_data: CourseEdit, current_user: dict = Depends(decode_token)):
   is_admin = current_user["is_admin"]
   if not is_admin:
@@ -132,7 +132,7 @@ async def update_course(id: int, course_data: CourseEdit, current_user: dict = D
     raise HTTPException(status_code = 500, detail = f"{e}")
 
 
-@course_router.post("/search")
+@course_router.post("/search", summary = "Search for a course 🔍")
 async def search_course(search_query: SearchQuery, current_user: dict = Depends(decode_token)):
   results = []
   unique_course_ids = set() # Set to keep track of duplicate entries
@@ -161,7 +161,7 @@ async def search_course(search_query: SearchQuery, current_user: dict = Depends(
   }
 
 
-@course_router.get("/recommend/{num_courses}")
+@course_router.get("/recommend/{num_courses}", summary = "Get recommended courses ⚙️")
 async def recommend_course(
   num_courses: int = Path(..., title = "Number of courses", lt = 5),
   current_user: dict = Depends(decode_token)
