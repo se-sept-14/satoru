@@ -43,7 +43,6 @@ def custom_openapi():
     title = "SE-Sept-14 Recommender System API 🚀", version = "1.0.1",
     description = description, routes = app.routes,
   )
-  openapi_schema["info"]["x-logo"] = { "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" }
   app.openapi_schema = openapi_schema
   return app.openapi_schema
 
