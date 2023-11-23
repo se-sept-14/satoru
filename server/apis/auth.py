@@ -52,26 +52,23 @@ async def login_user(username: Annotated[str, Form()], password: Annotated[str, 
   if not username or not password:
     raise HTTPException(status_code = 400, detail = "Username and Password are required ⚠️")
 
-  try:
-    user = Users.get_or_none(Users.username == username)
+  user = Users.get_or_none(Users.username == username)
+  if user is None:
+    raise HTTPException(status_code = 404, detail = "User not found 👀")
+  
+  if not verify_password(password, user.password):
+    raise HTTPException(status_code = 401, detail = "Incorrect email and password 🚫")
 
-    if user is None or not verify_password(password, user.password):
-      raise HTTPException(status_code = 401, detail = "Incorrect email or password 🚫")
-    
-    access_token = create_access_token(data = {
-      "id": user.id,
-      "email": user.email,
-      "is_admin": user.is_admin
-    })
+  access_token = create_access_token(data = {
+    "id": user.id,
+    "email": user.email,
+    "is_admin": user.is_admin
+  })
 
-    return {
-      "access_token": access_token,
-      "token_type": "Bearer"
-    }
-  except DoesNotExist:
-    raise HTTPException(status_code = 401, detail = "User not found 🚫")
-  except Exception as e:
-    raise HTTPException(status_code = 500, detail = f"{str(e)}")
+  return {
+    "access_token": access_token,
+    "token_type": "Bearer"
+  }
 
 
 @auth_router.post("/change-password", summary = "Change password of current user 🔓")
