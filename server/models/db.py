@@ -74,7 +74,6 @@ class Users(Model):
   id: AutoField = AutoField(primary_key = True)
   password: CharField = CharField()
   is_admin: IntegerField = IntegerField()
-  is_alumni: IntegerField = IntegerField()
   email: CharField = CharField(unique = True)
   username: CharField = CharField(unique = True)
   created_at: TimestampField = TimestampField(default = datetime.now)
@@ -83,22 +82,22 @@ class Users(Model):
     database: MySQLDatabase = db_connection
     table_name: str = 'users'
 
-class UserProfile(Model):
-  career_goals: TextField = TextField(null=True)
-  completion_deadline: TextField = TextField(null=True)
-  courses_willing_to_take: TextField = TextField(null=True)
-  hours_per_week: IntegerField = IntegerField(null=True)
-  learning_preferences: TextField = TextField(null=True)
+class StudentProfile(Model):
+  career_goals: TextField = TextField(null = True)
+  completion_deadline: TextField = TextField(null = True)
+  courses_willing_to_take: TextField = TextField(null = True)
+  hours_per_week: IntegerField = IntegerField(null = True)
+  learning_preferences: TextField = TextField(null = True)
   user: ForeignKeyField = ForeignKeyField(column_name = 'user_id', field = 'id', model = Users, null = True, unique = True)
 
   class Meta:
     database: MySQLDatabase = db_connection
-    table_name: str = 'user_profile'
+    table_name: str = 'student_profile'
 
 class FavoriteCoursesOrder(Model):
   course: ForeignKeyField = ForeignKeyField(column_name = 'course_id', field = 'id', model = Courses)
   order_index: IntegerField = IntegerField(null = True)
-  user_profile: ForeignKeyField = ForeignKeyField(column_name = 'user_profile_id', field = 'id', model = UserProfile)
+  user_profile: ForeignKeyField = ForeignKeyField(column_name = 'user_profile_id', field = 'id', model = StudentProfile)
 
   class Meta:
     database: MySQLDatabase = db_connection
@@ -107,6 +106,14 @@ class FavoriteCoursesOrder(Model):
       (('user_profile', 'course'), True),
     )
     primary_key: CompositeKey = CompositeKey('course', 'user_profile')
+
+class Levels(Model):
+  id: AutoField = AutoField(primary_key = True)
+  name = TextField()
+
+  class Meta:
+    database: MySQLDatabase = db_connection
+    table_name: str = 'levels'
 
 class Reviews(Model):
   id: AutoField = AutoField(primary_key = True)
@@ -130,11 +137,42 @@ class ReviewTagMap(Model):
     database: MySQLDatabase = db_connection
     table_name: str = 'review_tag_map'
 
-class UsersCoursesMap(Model):
+class Students(Model):
+  id: AutoField = AutoField(primary_key = True)
+  category: TextField = TextField()
+  dob: DateField = DateField()
+  email: TextField = TextField()
+  gender: TextField = TextField()
+  id_card_no: TextField = TextField()
+  name: TextField = TextField()
+  profile_picture_url: CharField = CharField()
+  pwd: IntegerField = IntegerField()  # Person-with-disability (not password)
+  roll_no: CharField = CharField()
+  student_email: TextField = TextField()
+  user: ForeignKeyField = ForeignKeyField(column_name = 'user_id', field = 'id', model = Users)
+
+  class Meta:
+    database: MySQLDatabase = db_connection
+    table_name: str = 'students'
+
+class StudentAboutMe(Model):
+  id: AutoField = AutoField(primary_key = True)
+  address: TextField = TextField(null = True)
+  contact_no: TextField = TextField(null = True)
+  is_alumni: IntegerField = IntegerField(constraints=[SQL("DEFAULT 0")])
+  level: ForeignKeyField = ForeignKeyField(column_name = 'level', field = 'id', model = Levels)
+  student: ForeignKeyField = ForeignKeyField(column_name = 'student_id', field = 'id', model = Students)
+  term = TextField()
+
+  class Meta:
+    database: MySQLDatabase = db_connection
+    table_name: str = 'student_about_me'
+
+class StudentCourseMap(Model):
   id: AutoField = AutoField(primary_key = True)
   course: ForeignKeyField = ForeignKeyField(column_name = 'course_id', field = 'id', model = Courses)
   user: ForeignKeyField = ForeignKeyField(column_name = 'user_id', field = 'id', model = Users)
 
   class Meta:
     database: MySQLDatabase = db_connection
-    table_name: str = 'users_courses_map'
+    table_name: str = 'student_course_map'

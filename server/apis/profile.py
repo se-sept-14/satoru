@@ -1,7 +1,7 @@
 from peewee import IntegrityError, DoesNotExist
 from fastapi import APIRouter, Depends, HTTPException
 
-from models.db import UserProfile
+from models.db import StudentProfile
 from utils.crypto import decode_token
 from models.api import UserProfileUpdate
 
@@ -11,7 +11,7 @@ profile_router = APIRouter(tags = ["Profile 👤"])
 @profile_router.get("/", summary = "Fetch profile of a user 🗣️")
 async def profile(current_user: dict = Depends(decode_token)):
   try:
-    user_profile = UserProfile.get(UserProfile.user == current_user["id"])
+    user_profile = StudentProfile.get(StudentProfile.user == current_user["id"])
 
   except DoesNotExist:
     raise HTTPException(status_code = 404, detail = "User profile not found 🚫")
@@ -31,7 +31,7 @@ async def profile(current_user: dict = Depends(decode_token)):
 @profile_router.post("/", summary = "Create/Update profile of a user 👥")
 async def profile(profile_update: UserProfileUpdate, current_user: dict = Depends(decode_token)):
   try:
-    user_profile, created = UserProfile.get_or_create(
+    user_profile, created = StudentProfile.get_or_create(
       user = current_user["id"],
       defaults = {
         'hours_per_week': profile_update.hours_per_week,
