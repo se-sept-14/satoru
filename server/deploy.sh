@@ -8,6 +8,12 @@ docker compose down
 echo "Delete old docker image ..."
 docker image rm server-api:latest
 
+# Checkout the `main` branch
+git checkout main
+
+# Pull the changes from main
+git pull
+
 # Remove existing dist folder inside server
 rm -rf dist
 
