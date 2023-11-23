@@ -10,11 +10,12 @@ tags_router = APIRouter(tags = ["Tags 🔖"])
 @tags_router.post("/search", summary = "Search for tags 🔎")
 async def search_tags(search_query: SearchQuery, current_user: dict = Depends(decode_token)):
   if not search_query.query:
-    raise HTTPException(status_code = 400, detail = "Search query empty")
+    raise HTTPException(status_code = 400, detail = "Search query empty 🗅")
 
   results = []
   try:
-    tags = Tags.select().where(Tags.name ** f"%{search_query.query}%")
+    query = search_query.query.strip()
+    tags = Tags.select().where(Tags.name ** f"%{query}%")
     for tag in tags:
       results.append(model_to_dict(tag))
   except Exception as e:
