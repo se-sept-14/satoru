@@ -141,7 +141,6 @@ class Students(Model):
   id: AutoField = AutoField(primary_key = True)
   category: TextField = TextField()
   dob: DateField = DateField()
-  email: TextField = TextField()
   gender: TextField = TextField()
   name: TextField = TextField()
   profile_picture_url: CharField = CharField()
