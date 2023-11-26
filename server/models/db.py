@@ -143,7 +143,6 @@ class Students(Model):
   dob: DateField = DateField()
   email: TextField = TextField()
   gender: TextField = TextField()
-  id_card_no: TextField = TextField()
   name: TextField = TextField()
   profile_picture_url: CharField = CharField()
   pwd: IntegerField = IntegerField()  # Person-with-disability (not password)

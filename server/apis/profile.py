@@ -1,9 +1,9 @@
 from peewee import IntegrityError, DoesNotExist
 from fastapi import APIRouter, Depends, HTTPException
 
-from models.db import StudentProfile
+from models.db import StudentProfile,Students,StudentAboutMe,Levels
 from utils.crypto import decode_token
-from models.api import UserProfileUpdate
+from models.api import StudentProfileUpdate,StudentUpdate,StudentAboutMeUpdate,LevelUpdate
 
 profile_router = APIRouter(tags = ["Profile 👤"])
 
@@ -11,6 +11,8 @@ profile_router = APIRouter(tags = ["Profile 👤"])
 @profile_router.get("/", summary = "Fetch profile of a user 🗣️")
 async def profile(current_user: dict = Depends(decode_token)):
   try:
+    user_profile = StudentProfile.get(StudentProfile.user == current_user["id"])
+    user_profile = StudentProfile.get(StudentProfile.user == current_user["id"])
     user_profile = StudentProfile.get(StudentProfile.user == current_user["id"])
 
   except DoesNotExist:
@@ -28,31 +30,59 @@ async def profile(current_user: dict = Depends(decode_token)):
   }
 
 
-@profile_router.post("/", summary = "Create/Update profile of a user 👥")
-async def profile(profile_update: UserProfileUpdate, current_user: dict = Depends(decode_token)):
-  try:
-    user_profile, created = StudentProfile.get_or_create(
-      user = current_user["id"],
-      defaults = {
-        'hours_per_week': profile_update.hours_per_week,
-        'learning_preferences': profile_update.learning_preferences,
-        'courses_willing_to_take': profile_update.courses_willing_to_take,
-        'career_goals': profile_update.career_goals,
-        'completion_deadline': profile_update.completion_deadline,
-      }
-    )
 
-    if not created:
-      user_profile.hours_per_week = profile_update.hours_per_week
-      user_profile.learning_preferences = profile_update.learning_preferences
-      user_profile.courses_willing_to_take = profile_update.courses_willing_to_take
-      user_profile.career_goals = profile_update.career_goals
-      user_profile.completion_deadline = profile_update.completion_deadline
+@profile_router.post("/", summary="Create/Update profile of a user 👥")
+async def profile(
 
-      user_profile.save()
-  except IntegrityError:
-    raise HTTPException(status_code = 400, detail = "User profile creation failed due to integrity error ⚠️")
+    level_update: LevelUpdate,
+    student_update: StudentUpdate,
+    student_about_me_update: StudentAboutMeUpdate,
+    student_profile_update: StudentProfileUpdate,
+    current_user: dict = Depends(decode_token)
+):
+    try:
+        user=current_user["id"]
+        # Update or create level entry
+        level = Levels.get_or_none(
+            id=level_update.id,
+        )
 
-  return {
-    "message": "User profile created or updated successfully ✔️"
-  }
+        # Update or create student entry
+        student,created = Students.get_or_create(
+          category=student_update.category,
+          dob=student_update.dob,
+          email=student_update.email,
+          gender=student_update.gender,
+          name=student_update.name,
+          profile_picture_url=student_update.profile_picture_url,
+          pwd=student_update.pwd,
+          roll_no=student_update.roll_no,
+          student_email=student_update.student_email,
+          user=user,
+        )
+
+        # Update or create student_about_me entry
+        student_about_me,created = StudentAboutMe.get_or_create(
+          address=student_about_me_update.address,
+          contact_no=student_about_me_update.contact_no,
+          is_alumni=student_about_me_update.is_alumni,
+          level=level.id if level else None,  # use level.id instead of level
+          student=student.id if student else None,  # use student.id instead of student
+          term=student_about_me_update.term,
+        )
+
+        # Update or create student_profile entry
+        student_profile = StudentProfile.get_or_create(
+            career_goals=student_profile_update.career_goals,
+            completion_deadline=student_profile_update.completion_deadline,
+            courses_willing_to_take=student_profile_update.courses_willing_to_take,
+            hours_per_week=student_profile_update.hours_per_week,
+            learning_preferences=student_profile_update.learning_preferences,
+            user=user,
+        )
+    except IntegrityError:
+        raise HTTPException(status_code=400, detail="Profile creation/update failed due to integrity error ⚠️")
+
+    return {
+        "message": "Profile created or updated successfully ✔️"
+    }
