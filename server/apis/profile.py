@@ -12,8 +12,8 @@ profile_router = APIRouter(tags = ["Profile 👤"])
 async def profile(current_user: dict = Depends(decode_token)):
   try:
     user_profile = StudentProfile.get(StudentProfile.user == current_user["id"])
-    user_profile = StudentProfile.get(StudentProfile.user == current_user["id"])
-    user_profile = StudentProfile.get(StudentProfile.user == current_user["id"])
+    about_me = StudentAboutMe.get(StudentAboutMe.id == current_user["id"])
+    student_info = Students.get(Students.user == current_user["id"])
 
   except DoesNotExist:
     raise HTTPException(status_code = 404, detail = "User profile not found 🚫")
@@ -25,7 +25,24 @@ async def profile(current_user: dict = Depends(decode_token)):
       "hours_per_week": user_profile.hours_per_week,
       "completion_deadline": user_profile.completion_deadline,
       "learning_preferences": user_profile.learning_preferences,
-      "courses_willing_to_take": user_profile.courses_willing_to_take
+      "courses_willing_to_take": user_profile.courses_willing_to_take,
+
+      "address": about_me.address,
+      "contact_no": about_me.contact_no,
+      "is_alumni": about_me.is_alumni,
+      "level": about_me.level,
+      "term": about_me.term,
+
+      "category": student_info.category,
+      "dob": student_info.dob,
+      "email": student_info.email,
+      "gender":student_info.gender,
+      "name": student_info.name,
+      "profile_picture_url": student_info.profile_picture_url,
+      "pwd": student_info.pwd,
+      "roll_no": student_info.roll_no,
+      "student_email": student_info.student_email,
+      
     }
   }
 
