@@ -104,4 +104,4 @@ class ReviewTagMapCreate(BaseModel):
   tag_id: int
 
 class SearchQuery(BaseModel):
-  query: str
+  query: str = Field(..., min_length = 1)

@@ -37,8 +37,6 @@ async def get_course(id: int, current_user: dict = Depends(decode_token)):
 async def get_all_courses(current_user: dict = Depends(decode_token)):
   data = []
   courses = Courses.select()
-  if course is None:
-    return { "data": data }
 
   for course in courses:
     course_data = model_to_dict(course) if course is not None else {}
@@ -164,11 +162,7 @@ async def search_course(search_query: SearchQuery, current_user: dict = Depends(
 
 
 @course_router.get("/recommend/{num_courses}", summary = "Get recommended courses ⚙️")
-async def recommend_course(
-  num_courses: int = Path(..., title = "Number of courses", lt = 5),
-  current_user: dict = Depends(decode_token)
-):
-  num_courses = max(1, min(4, num_courses))
+async def recommend_course(num_courses: int = Path(..., gt = 0, le = 4), current_user: dict = Depends(decode_token)):
   try:
     recommended_courses = Courses.select().order_by(fn.Rand()).limit(num_courses)
     data = []
