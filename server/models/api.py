@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional, List
 from pydantic import BaseModel, EmailStr, constr
 
@@ -43,13 +44,28 @@ class UserLogin(BaseModel):
   access_token: str
   token_type: str
 
+class StudentUpdate(BaseModel):
+  category: Optional[str] = None
+  dob: Optional[date] = None
+  gender: Optional[str] = None
+  name: Optional[str] = None
+  profile_picture_url: Optional[str] = None
+  pwd: Optional[int] = None
+  roll_no: Optional[str] = None
+
+class StudentAboutMeUpdate(BaseModel):
+  address: Optional[str] = None
+  contact_no: Optional[str] = None
+  level: Optional[int] = None
+  term: Optional[str] = None
+
 # User's profile update request schema
-class UserProfileUpdate(BaseModel):
+class StudentProfileUpdate(BaseModel):
   career_goals: Optional[str] = None
-  hours_per_week: Optional[int] = None
   completion_deadline: Optional[str] = None
-  learning_preferences: Optional[str] = None
   courses_willing_to_take: Optional[str] = None
+  hours_per_week: Optional[int] = None
+  learning_preferences: Optional[str] = None
 
 # CREATE Course request schema
 class CourseCreate(BaseModel):

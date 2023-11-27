@@ -141,9 +141,7 @@ class Students(Model):
   id: AutoField = AutoField(primary_key = True)
   category: TextField = TextField()
   dob: DateField = DateField()
-  email: TextField = TextField()
   gender: TextField = TextField()
-  id_card_no: TextField = TextField()
   name: TextField = TextField()
   profile_picture_url: CharField = CharField()
   pwd: IntegerField = IntegerField()  # Person-with-disability (not password)
@@ -161,7 +159,7 @@ class StudentAboutMe(Model):
   contact_no: TextField = TextField(null = True)
   is_alumni: IntegerField = IntegerField(constraints=[SQL("DEFAULT 0")])
   level: ForeignKeyField = ForeignKeyField(column_name = 'level', field = 'id', model = Levels)
-  student: ForeignKeyField = ForeignKeyField(column_name = 'student_id', field = 'id', model = Students)
+  user: ForeignKeyField = ForeignKeyField(column_name = 'user_id', field = 'id', model = Users)
   term = TextField()
 
   class Meta:
