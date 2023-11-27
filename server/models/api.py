@@ -1,6 +1,6 @@
 from datetime import date
 from typing import Optional, List
-from pydantic import BaseModel, EmailStr, constr
+from pydantic import BaseModel, Field, EmailStr, constr
 
 """Pydantic models for admin endpoints"""
 # /all-students Student data object
@@ -95,9 +95,9 @@ class CourseEdit(BaseModel):
   instructor_picture: Optional[str] = None
 
 class ReviewsCreate(BaseModel):
-  content: Optional[str]
-  course_id: Optional[int]
-  ratings: Optional[int]
+  content: str
+  course_id: int
+  ratings: int = Field(..., gt = 0, le = 1) # Rating should be in the range 1-10
 
 class ReviewTagMapCreate(BaseModel):
   review_id: int

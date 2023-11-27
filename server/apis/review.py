@@ -2,7 +2,7 @@ import os
 from utils.crypto import decode_token
 from utils.parser import parse_review_inference
 from models.api import ReviewsCreate, ReviewTagMapCreate
-from models.db import Reviews, Tags, ReviewTagMap, DoesNotExist, db_connection
+from models.db import Reviews, Tags, Courses, ReviewTagMap, DoesNotExist, db_connection
 
 from detoxify import Detoxify
 from fastapi import APIRouter, Depends, HTTPException
@@ -20,19 +20,26 @@ review_router = APIRouter(tags = ["Review ✨"])
 
 @review_router.post("/", summary = "Create a review ⭐")
 async def create_review(review: ReviewsCreate, current_user: dict = Depends(decode_token)):
+  if review.content is None or len(review.content) == 0:
+    raise HTTPException(status_code = 401, detail = "Missing review content 🌚")
+
   try:
     model = Detoxify("unbiased-small")
     flag = False
 
-    toxicity = model.predict(review.content)
+    toxicity = model.predict(review.content.strip())
     inference = parse_review_inference(toxicity)
     for key in inference:
       if inference[key] >= float(os.getenv("TOXICITY_THRESHOLD")):
         flag = True
+    
+    course = Courses.get_or_none(Courses.id == review.course_id)
+    if course is None:
+      raise HTTPException(status_code = 404, detail = f"No such course with id {review.course_id}")
 
     review_instance = Reviews.create(
       content = review.content,
-      course = review.course_id,
+      course = course,
       ratings = review.ratings,
       user = current_user["id"],
       is_flagged = flag

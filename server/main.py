@@ -40,7 +40,7 @@ def custom_openapi():
     return app.openapi_schema
 
   openapi_schema = get_openapi(
-    title = "SE-Sept-14 Recommender System API 🚀", version = "1.0.1",
+    title = "SE-Sept-14 Recommender System API 🚀", version = "1.2.1",
     description = description, routes = app.routes,
   )
   app.openapi_schema = openapi_schema

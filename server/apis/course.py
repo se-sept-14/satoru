@@ -1,5 +1,4 @@
 from utils.crypto import decode_token
-from utils.parser import parse_course
 from models.api import SearchQuery, CourseEdit, CourseCreate
 from models.db import (
   db_connection, fn,
@@ -18,7 +17,7 @@ course_router = APIRouter(tags = ["Course 📚"])
 @course_router.get("/id/{id}", summary = "Fetch a course by ID 🪪")
 async def get_course(id: int, current_user: dict = Depends(decode_token)):
   course = Courses.get_or_none(Courses.id == id)
-  data = parse_course(course) if course is not None else {}
+  data = model_to_dict(course) if course is not None else {}
 
   if course:
     tags = Tags.select().join(CourseTagMap).where(CourseTagMap.course == course)
@@ -37,7 +36,7 @@ async def get_all_courses(current_user: dict = Depends(decode_token)):
   courses = Courses.select()
 
   for course in courses:
-    course_data = parse_course(course) if course is not None else {}
+    course_data = model_to_dict(course) if course is not None else {}
     tags = Tags.select().join(CourseTagMap).where(CourseTagMap.course == course)
     course_data["tags"] = [
       tag.name for tag in tags
