@@ -1,6 +1,9 @@
-from models.db import db_connection, Users, DoesNotExist
+from models.db import db_connection, Users
 from models.api import UserRegistration, UserResponse, UserLogin
-from utils.crypto import hash_password, verify_password, create_access_token, decode_token, JWTError
+from utils.crypto import (
+  hash_password, verify_password,
+  create_access_token, decode_token, JWTError
+)
 
 from typing_extensions import Annotated
 from fastapi import Form, APIRouter, HTTPException, Depends

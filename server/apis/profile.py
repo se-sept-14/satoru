@@ -67,6 +67,7 @@ async def get_profile_by_id(id: int, current_user: dict = Depends(decode_token))
     }
   }
 
+
 @profile_router.post("/", summary = "Create / Update profile of a user 👥")
 async def create_profile(
   student_update: StudentUpdate,

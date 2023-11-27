@@ -1,13 +1,14 @@
-from models.db import Users
+from models.db import Users, Students
 from utils.crypto import decode_token
-from models.api import StudentData, AllStudentData, AlumniResponse
+from models.api import AlumniResponse
 
+from playhouse.shortcuts import model_to_dict
 from fastapi import APIRouter, HTTPException, Depends
 
 admin_router = APIRouter(tags = ["Admin 🤵"])
 
 
-@admin_router.get("/all-students", summary = "Fetch a list of all students 🧑‍🤝‍🧑", response_model = AllStudentData)
+@admin_router.get("/all-students", summary = "Fetch a list of all students 🧑‍🤝‍🧑")
 async def get_all_students(current_user: dict = Depends(decode_token)):
   is_admin = current_user["is_admin"] # Check if the current user is an admin
   if not is_admin:
@@ -15,19 +16,16 @@ async def get_all_students(current_user: dict = Depends(decode_token)):
 
   try:
     # Fetch all users who are not admin
-    students = Users.select().where(Users.is_admin == 0)
+    users = Users.select().where(Users.is_admin == 0)
 
-    # Construct a list of student data
-    students_data = [
-      {
-        "id": student.id,
-        "email": student.email,
-        "username": student.username,
-        "is_alumni": student.is_alumni,
-        "created_at": str(student.created_at)
-      } for student in students
-    ]
-    return { "data": students_data }
+    students = []
+    for user in users:
+      user_dict = model_to_dict(user)
+      student = Students.get_or_none(Students.user_id == user.id)
+      student_dict = model_to_dict(student, exclude = [Users.password]) if student is not None else {}
+      students.append({ **student_dict })
+
+    return { "data": students }
   except Exception as e:
     raise HTTPException(status_code = 500, detail = f"{e}")
 
