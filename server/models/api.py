@@ -59,9 +59,6 @@ class StudentAboutMeUpdate(BaseModel):
   level: Optional[int] = None
   term: Optional[str] = None
 
-class LevelUpdate(BaseModel):
-  id: Optional[int] = None
-
 # User's profile update request schema
 class StudentProfileUpdate(BaseModel):
   career_goals: Optional[str] = None

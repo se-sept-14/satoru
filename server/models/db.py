@@ -159,7 +159,7 @@ class StudentAboutMe(Model):
   contact_no: TextField = TextField(null = True)
   is_alumni: IntegerField = IntegerField(constraints=[SQL("DEFAULT 0")])
   level: ForeignKeyField = ForeignKeyField(column_name = 'level', field = 'id', model = Levels)
-  student: ForeignKeyField = ForeignKeyField(column_name = 'student_id', field = 'id', model = Students)
+  user: ForeignKeyField = ForeignKeyField(column_name = 'user_id', field = 'id', model = Users)
   term = TextField()
 
   class Meta:
