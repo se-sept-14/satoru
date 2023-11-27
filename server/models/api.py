@@ -69,16 +69,16 @@ class StudentProfileUpdate(BaseModel):
 
 # CREATE Course request schema
 class CourseCreate(BaseModel):
-  name: str
-  code: str
-  price: int
-  credits: int
-  description: str
-  corerequisite: str
-  prerequisites: str
-  hours_per_week: str
-  instructor_name: str
-  instructor_picture: str
+  name: str = Field(..., min_length = 1)
+  code: str = Field(..., min_length = 1)
+  price: int = Field(..., gt = 1000)
+  credits: int = Field(..., ge = 1, le = 4)
+  description: str = Field(..., min_length = 1)
+  corerequisite: str = Field(..., min_length = 1)
+  prerequisites: str = Field(..., min_length = 1)
+  hours_per_week: str = Field(..., min_length = 1)
+  instructor_name: str = Field(..., min_length = 1)
+  instructor_picture: str = Field(..., min_length = 1)
   tags: List[str]
 
 # EDIT Course request schema
