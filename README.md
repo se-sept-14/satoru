@@ -5,8 +5,7 @@
 | 🌱 Environment         | 🔗 URL                                                               |
 |------------------------|----------------------------------------------------------------------|
 | 🏭 Production Base URL |[api.pickmycourse.online](https://api.pickmycourse.online)            |
-| 🖥️ Swagger             |[api.pickmycourse.online/docs](https://api.pickmycourse.online/docs)  |
-| 🤖 Redoc               |[api.pickmycourse.online/redoc](https://api.pickmycourse.online/redoc)|
+| 🖥️ Swagger Doc         |[api.pickmycourse.online/docs](https://api.pickmycourse.online/docs)  |
 
 ## 💻 **Web app details**
 
