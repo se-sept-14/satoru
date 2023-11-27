@@ -22,3 +22,19 @@ async def search_tags(search_query: SearchQuery, current_user: dict = Depends(de
     raise HTTPException(status_code = 500, detail = f"{str(e)}")
   
   return { "data": results }
+
+
+@tags_router.post("/create", summary = "Create a new tag 📑")
+async def create_tag(name: str, current_user: dict = Depends(decode_token)):
+  is_admin = current_user["is_admin"]
+  if not is_admin:
+    raise HTTPException(status_code = 403, detail = "You are not an admin ❌")
+  
+  try:
+    new_tag, created = Tags.get_or_create(name = name.strip())
+    if created:
+      return { "message": f"{new_tag.name} tag created successfully ✅", "data": model_to_dict(new_tag) }
+    else:
+      return { "message": f"{name.strip()} tag already exists 😵‍💫" }
+  except Exception as e:
+    raise HTTPException(status_code = 500, detail = str(e))

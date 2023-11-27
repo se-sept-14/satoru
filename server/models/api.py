@@ -1,6 +1,6 @@
 from datetime import date
 from typing import Optional, List
-from pydantic import BaseModel, EmailStr, constr
+from pydantic import BaseModel, Field, EmailStr, constr
 
 """Pydantic models for admin endpoints"""
 # /all-students Student data object
@@ -11,26 +11,17 @@ class StudentData(BaseModel):
   is_alumni: bool
   created_at: str
 
-# List of Student data object
-class AllStudentData(BaseModel):
-  data: List[StudentData]
-
 # /alumni/{id} User id object
 class UserId(BaseModel):
   id: int
 
-# /alumni/{id} response object
-class AlumniResponse(BaseModel):
-  data: UserId
-  message: str
-
-# Create user request schema
+# Create user registration endpoint request schema
 class UserRegistration(BaseModel):
   email: EmailStr
   username: constr(min_length = 4, max_length = 32)
   password: constr(min_length = 4, max_length = 32)
 
-# Create user response schema
+# Create user registration endpoint response schema
 class UserResponse(BaseModel):
   id: int
   email: str
@@ -69,16 +60,16 @@ class StudentProfileUpdate(BaseModel):
 
 # CREATE Course request schema
 class CourseCreate(BaseModel):
-  name: str
-  code: str
-  price: int
-  credits: int
-  description: str
-  corerequisite: str
-  prerequisites: str
-  hours_per_week: str
-  instructor_name: str
-  instructor_picture: str
+  name: str = Field(..., min_length = 1)
+  code: str = Field(..., min_length = 1)
+  price: int = Field(..., gt = 1000)
+  credits: int = Field(..., ge = 1, le = 4)
+  description: str = Field(..., min_length = 1)
+  corerequisite: str = Field(..., min_length = 1)
+  prerequisites: str = Field(..., min_length = 1)
+  hours_per_week: str = Field(..., min_length = 1)
+  instructor_name: str = Field(..., min_length = 1)
+  instructor_picture: str = Field(..., min_length = 1)
   tags: List[str]
 
 # EDIT Course request schema
@@ -95,13 +86,13 @@ class CourseEdit(BaseModel):
   instructor_picture: Optional[str] = None
 
 class ReviewsCreate(BaseModel):
-  content: Optional[str]
-  course_id: Optional[int]
-  ratings: Optional[int]
+  content: str
+  course_id: int
+  ratings: int = Field(..., gt = 0, le = 10) # Rating should be in the range 1-10
 
 class ReviewTagMapCreate(BaseModel):
   review_id: int
   tag_id: int
 
 class SearchQuery(BaseModel):
-  query: str
+  query: str = Field(..., min_length = 1)

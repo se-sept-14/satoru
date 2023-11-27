@@ -2,8 +2,8 @@ import os
 
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.utils import get_openapi
+from fastapi.middleware.cors import CORSMiddleware
 
 from apis.auth import auth_router
 from apis.tags import tags_router
@@ -24,23 +24,28 @@ async def lifecycle(app: FastAPI):
   finally:
     db_connection.close()
 
-app = FastAPI(lifespan = lifecycle, redoc_url = None)
-app.include_router(auth_router, prefix = "/api/auth")
-app.include_router(tags_router, prefix = "/api/tags")
+app = FastAPI(lifespan = lifecycle, redoc_url = None) # Disabled /redoc
 app.include_router(admin_router, prefix = "/api/admin")
+app.include_router(auth_router, prefix = "/api/auth")
 app.include_router(course_router, prefix = "/api/course")
-app.include_router(review_router, prefix = "/api/review")
 app.include_router(profile_router, prefix = "/api/profile")
+app.include_router(review_router, prefix = "/api/review")
+app.include_router(tags_router, prefix = "/api/tags")
 
-if os.path.exists("dist"):
-  app.mount("/", StaticFiles(directory = "dist", html = True))
+app.add_middleware(
+  CORSMiddleware,
+  allow_origins = ["https://pickmycourse.vercel.app"],
+  allow_credentials = "*",
+  allow_methods = ["*"],
+  allow_headers = ["*"]
+)
 
 def custom_openapi():
   if app.openapi_schema:
     return app.openapi_schema
 
   openapi_schema = get_openapi(
-    title = "SE-Sept-14 Recommender System API 🚀", version = "1.0.1",
+    title = "SE-Sept-14 Recommender System API 🚀", version = "1.2.1",
     description = description, routes = app.routes,
   )
   app.openapi_schema = openapi_schema

@@ -1,9 +1,8 @@
 from utils.crypto import decode_token
-from utils.parser import parse_course
 from models.api import SearchQuery, CourseEdit, CourseCreate
 from models.db import (
-  db_connection, fn,
-  Courses, Tags, CourseTagMap
+  Courses, Tags, CourseTagMap,
+  db_connection, fn, DoesNotExist
 )
 
 from playhouse.shortcuts import model_to_dict
@@ -18,7 +17,10 @@ course_router = APIRouter(tags = ["Course 📚"])
 @course_router.get("/id/{id}", summary = "Fetch a course by ID 🪪")
 async def get_course(id: int, current_user: dict = Depends(decode_token)):
   course = Courses.get_or_none(Courses.id == id)
-  data = parse_course(course) if course is not None else {}
+  if course is None:
+    raise HTTPException(status_code = 404, detail = f"No course with id {id} 🧊")
+
+  data = model_to_dict(course) if course is not None else {}
 
   if course:
     tags = Tags.select().join(CourseTagMap).where(CourseTagMap.course == course)
@@ -37,7 +39,7 @@ async def get_all_courses(current_user: dict = Depends(decode_token)):
   courses = Courses.select()
 
   for course in courses:
-    course_data = parse_course(course) if course is not None else {}
+    course_data = model_to_dict(course) if course is not None else {}
     tags = Tags.select().join(CourseTagMap).where(CourseTagMap.course == course)
     course_data["tags"] = [
       tag.name for tag in tags
@@ -72,16 +74,14 @@ async def create_course(course_data: CourseCreate, current_user: dict = Depends(
       )
 
       for tag_name in course_data.tags:
-        tag, created = Tags.get_or_create(name = tag_name)
+        tag, created = Tags.get_or_create(name = tag_name.strip())
         CourseTagMap.create(course = new_course, tag = tag)
   except Exception as e:
     return HTTPException(status_code = 500, detail = f"{e}")
 
   return {
     "message": "Course added successfully ✔️",
-    "data": {
-      "id": new_course.id,
-    }
+    "data": model_to_dict(new_course)
   }
 
 
@@ -91,20 +91,20 @@ async def delete_course(id: int, current_user: dict = Depends(decode_token)):
   if not is_admin:
     raise HTTPException(status_code = 403, detail = "You are not an admin ⛔")
 
-  try:
-    with db_connection.atomic():
-      course = Courses.get_or_none(Courses.id == id)
+  with db_connection.atomic():
+    try:
+      course = Courses.get(Courses.id == id)
+      course_dict = model_to_dict(course)
+      course.delete_instance()
 
-      if course:
-        course.delete_instance()
-        return {
-          "data": { "id": id },
-          "message": f"Course with ID {id} deleted successfully 🗑️"
-        }
-      else:
-        raise HTTPException(status_code = 404, detail = f"Course with ID {id} not found 🚫")
-  except Exception as e:
-    raise HTTPException(status_code = 500, detail = f"{e}")
+      return {
+        "data": course_dict,
+        "message": f"Course with ID {id} deleted successfully 🗑️"
+      }
+    except DoesNotExist:
+      raise HTTPException(status_code = 404, detail = f"Course with ID {id} not found 🚫")
+    except Exception as e:
+      raise HTTPException(status_code = 500, detail = str(e))
 
 
 @course_router.put("/{id}", summary = "Modify an existing course 📝")
@@ -162,17 +162,13 @@ async def search_course(search_query: SearchQuery, current_user: dict = Depends(
 
 
 @course_router.get("/recommend/{num_courses}", summary = "Get recommended courses ⚙️")
-async def recommend_course(
-  num_courses: int = Path(..., title = "Number of courses", lt = 5),
-  current_user: dict = Depends(decode_token)
-):
-  num_courses = max(1, min(4, num_courses))
+async def recommend_course(num_courses: int = Path(..., gt = 0, le = 4), current_user: dict = Depends(decode_token)):
   try:
     recommended_courses = Courses.select().order_by(fn.Rand()).limit(num_courses)
     data = []
 
     for course in recommended_courses:
-      course_data = parse_course(course)
+      course_data = model_to_dict(course)
       data.append(course_data)
 
     return {
