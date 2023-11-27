@@ -26,11 +26,11 @@ async def lifecycle(app: FastAPI):
 
 app = FastAPI(lifespan = lifecycle, redoc_url = None)
 app.include_router(auth_router, prefix = "/api/auth")
-app.include_router(tags_router, prefix = "/api/tags")
 app.include_router(admin_router, prefix = "/api/admin")
 app.include_router(course_router, prefix = "/api/course")
 app.include_router(review_router, prefix = "/api/review")
 app.include_router(profile_router, prefix = "/api/profile")
+app.include_router(tags_router, prefix = "/api/tags")
 
 if os.path.exists("dist"):
   app.mount("/", StaticFiles(directory = "dist", html = True))
