@@ -1,51 +1,45 @@
 from playhouse.shortcuts import model_to_dict
 from fastapi import APIRouter, Depends, HTTPException
 
-from models.db import Users, StudentProfile, Students, StudentAboutMe, Levels, DoesNotExist
 from utils.crypto import decode_token
-from models.api import StudentProfileUpdate, StudentUpdate, StudentAboutMeUpdate
+from models.api import (
+  StudentUpdate,
+  StudentAboutMeUpdate,
+  StudentProfileUpdate
+)
+from models.db import (
+  DoesNotExist,
+  Users, Students, Levels,
+  StudentProfile, StudentAboutMe
+)
 
 profile_router = APIRouter(tags = ["Profile 👤"])
 
 
-@profile_router.get("/", summary = "Fetch profile of a user 🗣️")
+@profile_router.get("/", summary="Fetch profile of a user 🗣️")
 async def profile(current_user: dict = Depends(decode_token)):
-  try:
-    user_profile = StudentProfile.get(StudentProfile.user == current_user["id"])
-    about_me = StudentAboutMe.get(StudentAboutMe.id == current_user["id"])
-    student_info = Students.get(Students.user == current_user["id"])
+  user_id = current_user['id']
+  if user_id is None:
+    raise HTTPException(status_code = 401, detail = 'Not user found ❌')
 
+  try:
+    user_profile = StudentProfile.get(StudentProfile.user == user_id)       # Fetching user profile details
+    student_about_me = StudentAboutMe.get(StudentAboutMe.user == user_id)   # Fetching student about me details
+    student_info = Students.get(Students.user == user_id)                   # Fetching student information
   except DoesNotExist:
     raise HTTPException(status_code = 404, detail = "User profile not found 🚫")
 
+  student_info_dict = model_to_dict(student_info, exclude = [Users.password])
+  user_profile_dict = model_to_dict(user_profile, exclude = [StudentProfile.user])
+  student_about_me_dict = model_to_dict(student_about_me, exclude = [StudentAboutMe.user])
+
   return {
-    "data": {
-      "id": user_profile.user_id,
-      "career_goals": user_profile.career_goals,
-      "hours_per_week": user_profile.hours_per_week,
-      "completion_deadline": user_profile.completion_deadline,
-      "learning_preferences": user_profile.learning_preferences,
-      "courses_willing_to_take": user_profile.courses_willing_to_take,
-
-      "address": about_me.address,
-      "contact_no": about_me.contact_no,
-      "is_alumni": about_me.is_alumni,
-      "level": about_me.level,
-      "term": about_me.term,
-
-      "category": student_info.category,
-      "dob": student_info.dob,
-      "email": student_info.email,
-      "gender":student_info.gender,
-      "name": student_info.name,
-      "profile_picture_url": student_info.profile_picture_url,
-      "pwd": student_info.pwd,
-      "roll_no": student_info.roll_no,
-      "student_email": student_info.student_email,
-      
+    'data': {
+      **user_profile_dict,
+      **student_info_dict,
+      **student_about_me_dict,
     }
   }
-
 
 
 @profile_router.post("/", summary = "Create / Update profile of a user 👥")
