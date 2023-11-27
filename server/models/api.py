@@ -11,18 +11,9 @@ class StudentData(BaseModel):
   is_alumni: bool
   created_at: str
 
-# List of Student data object
-class AllStudentData(BaseModel):
-  data: List[StudentData]
-
 # /alumni/{id} User id object
 class UserId(BaseModel):
   id: int
-
-# /alumni/{id} response object
-class AlumniResponse(BaseModel):
-  data: UserId
-  message: str
 
 # Create user registration endpoint request schema
 class UserRegistration(BaseModel):

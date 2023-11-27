@@ -1,6 +1,5 @@
-from models.db import Users, Students
 from utils.crypto import decode_token
-from models.api import AlumniResponse
+from models.db import Users, Students, StudentAboutMe
 
 from playhouse.shortcuts import model_to_dict
 from fastapi import APIRouter, HTTPException, Depends
@@ -30,21 +29,22 @@ async def get_all_students(current_user: dict = Depends(decode_token)):
     raise HTTPException(status_code = 500, detail = f"{e}")
 
 
-@admin_router.get("/alumni/{user_id}", summary = "Make a student alumni 🎓", response_model = AlumniResponse)
+@admin_router.get("/alumni/{user_id}", summary = "Make a student alumni 🎓")
 async def make_alumni(user_id: int, current_user: dict = Depends(decode_token)):
   is_admin = current_user["is_admin"]
   if not is_admin:
     raise HTTPException(status_code = 403, detail = "You are not an admin ⛔")
   
   try:
-    student = Users.get_or_none(Users.id == user_id)
-    if not student:
+    user = Users.get_or_none(Users.id == user_id)
+    if not user:
       raise HTTPException(status_code = 404, detail = f"User with ID {user_id} does not exist ❌")
     
-    if student.is_alumni:
-      raise HTTPException(status_code = 419, detail = f"Student is already an alumni 🎓")
+    student = StudentAboutMe.get_or_none(StudentAboutMe.user_id == user.id)
+    if student is None:
+      raise HTTPException(status_code = 404, detail = "Student has not completed the profile 🧑‍🎓")
     
-    query = Users.update(is_alumni = True).where(Users.id == user_id)
+    query = StudentAboutMe.update(is_alumni = True).where(StudentAboutMe.user_id == user.id)
     query.execute()
   except HTTPException as e:
     raise e
