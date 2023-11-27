@@ -24,13 +24,13 @@ class AlumniResponse(BaseModel):
   data: UserId
   message: str
 
-# Create user request schema
+# Create user registration endpoint request schema
 class UserRegistration(BaseModel):
   email: EmailStr
   username: constr(min_length = 4, max_length = 32)
   password: constr(min_length = 4, max_length = 32)
 
-# Create user response schema
+# Create user registration endpoint response schema
 class UserResponse(BaseModel):
   id: int
   email: str

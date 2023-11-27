@@ -16,34 +16,59 @@ from models.db import (
 profile_router = APIRouter(tags = ["Profile 👤"])
 
 
-@profile_router.get("/", summary="Fetch profile of a user 🗣️")
-async def profile(current_user: dict = Depends(decode_token)):
+@profile_router.get("/", summary = "Fetch profile of a user 🗣️")
+async def get_profile(current_user: dict = Depends(decode_token)):
   user_id = current_user['id']
   if user_id is None:
     raise HTTPException(status_code = 401, detail = 'Not user found ❌')
 
   try:
-    user_profile = StudentProfile.get(StudentProfile.user == user_id)       # Fetching user profile details
+    student_profile = StudentProfile.get(StudentProfile.user == user_id)       # Fetching user profile details
     student_about_me = StudentAboutMe.get(StudentAboutMe.user == user_id)   # Fetching student about me details
     student_info = Students.get(Students.user == user_id)                   # Fetching student information
   except DoesNotExist:
     raise HTTPException(status_code = 404, detail = "User profile not found 🚫")
 
   student_info_dict = model_to_dict(student_info, exclude = [Users.password])
-  user_profile_dict = model_to_dict(user_profile, exclude = [StudentProfile.user])
+  student_profile_dict = model_to_dict(student_profile, exclude = [StudentProfile.user])
   student_about_me_dict = model_to_dict(student_about_me, exclude = [StudentAboutMe.user])
 
   return {
     'data': {
-      **user_profile_dict,
+      **student_profile_dict,
       **student_info_dict,
       **student_about_me_dict,
     }
   }
 
 
+@profile_router.get("/{id}", summary = "Fetch profile of a user by id 👤")
+async def get_profile_by_id(id: int, current_user: dict = Depends(decode_token)):
+  is_admin = current_user["is_admin"]
+  if not is_admin:
+    raise HTTPException(status_code = 401, detail = "You are not an admin ⛔")
+
+  try:
+    student_profile = StudentProfile.get(StudentProfile.user == id)    # Fetching user profile details
+    student_about_me = StudentAboutMe.get(StudentAboutMe.user == id)   # Fetching student about me details
+    student_info = Students.get(Students.user == id)                   # Fetching student information
+  except DoesNotExist:
+    raise HTTPException(status_code = 404, detail = f"User profile not found 🚫")
+  
+  student_info_dict = model_to_dict(student_info, exclude = [Users.password])
+  student_profile_dict = model_to_dict(student_profile, exclude = [StudentProfile.user])
+  student_about_me_dict = model_to_dict(student_about_me, exclude = [StudentAboutMe.user])
+
+  return {
+    'data': {
+      **student_profile_dict,
+      **student_info_dict,
+      **student_about_me_dict,
+    }
+  }
+
 @profile_router.post("/", summary = "Create / Update profile of a user 👥")
-async def profile(
+async def create_profile(
   student_update: StudentUpdate,
   student_profile_update: StudentProfileUpdate,
   student_about_me_update: StudentAboutMeUpdate,
