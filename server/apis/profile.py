@@ -1,7 +1,7 @@
-from peewee import IntegrityError, DoesNotExist
+from playhouse.shortcuts import model_to_dict
 from fastapi import APIRouter, Depends, HTTPException
 
-from models.db import StudentProfile,Students,StudentAboutMe,Levels
+from models.db import Users, StudentProfile, Students, StudentAboutMe, Levels, DoesNotExist
 from utils.crypto import decode_token
 from models.api import StudentProfileUpdate,StudentUpdate,StudentAboutMeUpdate,LevelUpdate
 
@@ -48,7 +48,7 @@ async def profile(current_user: dict = Depends(decode_token)):
 
 
 
-@profile_router.post("/", summary = "Create/Update profile of a user 👥")
+@profile_router.post("/", summary = "Create / Update profile of a user 👥")
 async def profile(
   student_profile_update: StudentProfileUpdate,
   # student_about_me_update: StudentAboutMeUpdate,
@@ -56,18 +56,21 @@ async def profile(
   current_user: dict = Depends(decode_token)
 ):
   user_id = current_user['id']
-  student_profile = StudentProfile.get_or_none(StudentProfile.user == user_id)
-  query = StudentProfile.update(
-    career_goals = student_profile_update.career_goals if student_profile_update.career_goals else student_profile.career_goals,
-    completion_deadline = student_profile_update.completion_deadline if student_profile_update.completion_deadline else student_profile.completion_deadline,
-    courses_willing_to_take = student_profile_update.courses_willing_to_take if student_profile_update.courses_willing_to_take else student_profile.courses_willing_to_take,
-    hours_per_week = student_profile_update.hours_per_week if student_profile_update.hours_per_week else student_profile.hours_per_week,
-    learning_preferences = student_profile_update.learning_preferences if student_profile_update.learning_preferences else student_profile.learning_preferences,
-  ).where(StudentProfile.user == user_id)
-  print(query)
-  query.execute()
 
-  return {}
+  # Either get the existing profile, or create a new one if it doesn't exist
+  student_profile, created = StudentProfile.get_or_create(user = user_id)
+
+  # If the profile exists, update the fields with non-None values from the update
+  student_profile.career_goals = student_profile_update.career_goals if student_profile_update.career_goals else student_profile.career_goals
+  student_profile.completion_deadline = student_profile_update.completion_deadline if student_profile_update.completion_deadline else student_profile.completion_deadline
+  student_profile.courses_willing_to_take = student_profile_update.courses_willing_to_take if student_profile_update.courses_willing_to_take else student_profile.courses_willing_to_take
+  student_profile.hours_per_week = student_profile_update.hours_per_week if student_profile_update.hours_per_week else student_profile.hours_per_week
+  student_profile.learning_preferences = student_profile_update.learning_preferences if student_profile_update.learning_preferences else student_profile.learning_preferences
+  student_profile.save()
+
+  return {
+    'data': model_to_dict(student_profile, exclude = [Users.password])
+  }
     # try:
     #     user=current_user["id"]
 
