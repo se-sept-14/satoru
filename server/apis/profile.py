@@ -50,21 +50,33 @@ async def profile(current_user: dict = Depends(decode_token)):
 
 @profile_router.post("/", summary = "Create / Update profile of a user 👥")
 async def profile(
+  student_update: StudentUpdate,
   student_profile_update: StudentProfileUpdate,
-  # student_about_me_update: StudentAboutMeUpdate,
-  # student_profile_update: StudentProfileUpdate,
+  student_about_me_update: StudentAboutMeUpdate,
   current_user: dict = Depends(decode_token)
 ):
   user_id = current_user['id']
 
-  # Either get the existing profile, or create a new one if it doesn't exist
+  # Either get the existing student, or create a new one
+  student, created = Students.get_or_create(user = user_id)
+  student.category = student_update.category if student_update.category else student.category
+  student.dob = student_update.dob if student_update.dob else student.dob
+  student.gender = student_update.gender if student_update.gender else student.gender
+  student.name = student_update.name if student_update.name else student.name
+  student.profile_picture_url = student_update.profile_picture_url if student_update.profile_picture_url else student.profile_picture_url
+  student.pwd = student_update.pwd if student_update.pwd else student.pwd
+  student.roll_no = student_update.roll_no if student_update.roll_no else student.roll_no
+  student.student_email = f'{student_update.roll_no}@student.iitm' if student_update.roll_no else student.student_email
+  student.save()
+
+  # Either get the existing profile, or create a new one
   student_profile, created = StudentProfile.get_or_create(user = user_id)
 
   # If the profile exists, update the fields with non-None values from the update
   student_profile.career_goals = student_profile_update.career_goals if student_profile_update.career_goals else student_profile.career_goals
   student_profile.completion_deadline = student_profile_update.completion_deadline if student_profile_update.completion_deadline else student_profile.completion_deadline
   student_profile.courses_willing_to_take = student_profile_update.courses_willing_to_take if student_profile_update.courses_willing_to_take else student_profile.courses_willing_to_take
-  student_profile.hours_per_week = student_profile_update.hours_per_week if student_profile_update.hours_per_week else student_profile.hours_per_week
+  student_profile.hours_per_week = student_profile_update.hours_per_week if student_profile_update.hours_per_week != 0 else student_profile.hours_per_week
   student_profile.learning_preferences = student_profile_update.learning_preferences if student_profile_update.learning_preferences else student_profile.learning_preferences
   student_profile.save()
 

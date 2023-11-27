@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional, List
 from pydantic import BaseModel, EmailStr, constr
 
@@ -45,21 +46,21 @@ class UserLogin(BaseModel):
 
 class StudentUpdate(BaseModel):
   category: Optional[str] = None
-  dob: Optional[str] = None
+  dob: Optional[date] = None
   gender: Optional[str] = None
   name: Optional[str] = None
   profile_picture_url: Optional[str] = None
   pwd: Optional[int] = None
+  roll_no: Optional[str] = None
 
 class StudentAboutMeUpdate(BaseModel):
   address: Optional[str] = None
   contact_no: Optional[str] = None
-  is_alumni: Optional[int] = None
   level: Optional[int] = None
   term: Optional[str] = None
 
 class LevelUpdate(BaseModel):
-    id: Optional[int] = None
+  id: Optional[int] = None
 
 # User's profile update request schema
 class StudentProfileUpdate(BaseModel):
