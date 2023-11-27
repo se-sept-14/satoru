@@ -2,8 +2,8 @@ import os
 
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from fastapi.staticfiles import StaticFiles
 from fastapi.openapi.utils import get_openapi
+from fastapi.middleware.cors import CORSMiddleware
 
 from apis.auth import auth_router
 from apis.tags import tags_router
@@ -31,6 +31,14 @@ app.include_router(course_router, prefix = "/api/course")
 app.include_router(profile_router, prefix = "/api/profile")
 app.include_router(review_router, prefix = "/api/review")
 app.include_router(tags_router, prefix = "/api/tags")
+
+app.add_middleware(
+  CORSMiddleware,
+  allow_origins = ["https://pickmycourse.vercel.app"],
+  allow_credentials = "*",
+  allow_methods = ["*"],
+  allow_headers = ["*"]
+)
 
 def custom_openapi():
   if app.openapi_schema:
