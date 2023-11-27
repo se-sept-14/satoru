@@ -88,7 +88,7 @@ class CourseEdit(BaseModel):
 class ReviewsCreate(BaseModel):
   content: str
   course_id: int
-  ratings: int = Field(..., gt = 0, le = 1) # Rating should be in the range 1-10
+  ratings: int = Field(..., gt = 0, le = 10) # Rating should be in the range 1-10
 
 class ReviewTagMapCreate(BaseModel):
   review_id: int
