@@ -34,7 +34,7 @@ app.include_router(tags_router, prefix = "/api/tags")
 
 app.add_middleware(
   CORSMiddleware,
-  allow_origins = ["https://pickmycourse.vercel.app"],
+  allow_origins = ["https://pickmycourse.vercel.app", "http://localhost:8000", "http://localhost:5000", "https://api.pickmycourse.online"],
   allow_credentials = "*",
   allow_methods = ["*"],
   allow_headers = ["*"]
