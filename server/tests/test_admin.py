@@ -46,6 +46,17 @@ def test_make_alumni_success():
   assert response.status_code == 200
   assert "data" in response.json() and "id" in response.json()["data"]
 
+# Test: Make a non-existent student alumni (failure)
+def test_make_alumni_nonexistent_student_failure():
+  user_to_make_alumni = 1000000 # User ID 1 million
+  admin_user = { "id": 1, "is_admin": 1 }
+  token = create_access_token(admin_user)
+
+  response = client.get(f"api/admin/alumni/{user_to_make_alumni}", headers = { "Authorization": f"Bearer {token}" })
+
+  assert response.status_code == 404
+  assert f"User with ID {user_to_make_alumni} does not exist" in response.text
+
 # Test: Make a student alumni (failure)
 def test_make_alumni_unauthorized():
   user_to_make_alumni = 2
