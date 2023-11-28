@@ -2,7 +2,7 @@ import os
 from utils.crypto import decode_token
 from utils.parser import parse_review_inference
 from models.api import ReviewsCreate, ReviewTagMapCreate
-from models.db import Reviews, Tags, Courses, ReviewTagMap, DoesNotExist, db_connection
+from models.db import Users, Reviews, Tags, Courses, ReviewTagMap, DoesNotExist, db_connection
 
 from detoxify import Detoxify
 from playhouse.shortcuts import model_to_dict
@@ -76,12 +76,13 @@ async def get_review_by_course_id(id: int, current_user: dict = Depends(decode_t
       raise HTTPException(status_code = 404, detail = f"No such course with id {id} 🙈")
     
     data = []
-    reviews = Reviews.get_or_none(course = course)
+    reviews = Reviews.select().where(Reviews.course_id == course.id)
+    print(reviews)
     if reviews is None:
       return { "data": data }
     else:
       for review in reviews:
-        data.append(model_to_dict(review))
+        data.append(model_to_dict(review, exclude = [Reviews.user]))
     
     return { "data": data }
   except Exception as e:
@@ -107,15 +108,15 @@ async def edit_review(review_id: int, review: ReviewsCreate, current_user: dict 
   try:
     review_instance = Reviews.get_by_id(review_id)
     if review_instance.user_id != current_user['id']:
-      raise HTTPException(status_code=403, detail="Not authorized to edit this review")
+      raise HTTPException(status_code = 403, detail = "Not authorized to edit this review ❌")
     review_instance.content = review.content
     review_instance.ratings = review.ratings
     review_instance.save()
     return {"message": "Review updated successfully"}
   except DoesNotExist:
-    raise HTTPException(status_code=404, detail="Review not found")
+    raise HTTPException(status_code = 404, detail = "Review not found")
   except Exception as e:
-    raise HTTPException(status_code=500, detail=str(e))
+    raise HTTPException(status_code = 500, detail = str(e))
 
 
 @review_router.delete("/{review_id}", summary = "Delete a review 🗑️")
@@ -125,14 +126,14 @@ async def delete_review(review_id: int, current_user: dict = Depends(decode_toke
       review_instance = Reviews.get_by_id(review_id)
 
       if review_instance.user_id != current_user['id']:
-          raise HTTPException(status_code=403, detail="Not authorized to delete this review")
+          raise HTTPException(status_code = 403, detail = "Not authorized to delete this review 👤")
       
       db_connection.execute_sql(f"DELETE FROM reviews WHERE id={review_id}")
     return {"message": "Review deleted successfully"}
   except DoesNotExist:
-    raise HTTPException(status_code=404, detail="Review not found")
+    raise HTTPException(status_code = 404, detail = "Review not found ❌")
   except Exception as e:
-    raise HTTPException(status_code=500, detail=str(e))
+    raise HTTPException(status_code = 500, detail = str(e))
 
 
 @review_router.delete("/flagged/{review_id}", summary = "Delete a flagged review 🚮")
@@ -144,14 +145,14 @@ async def delete_flagged_review(review_id: int, current_user: dict = Depends(dec
     with db_connection.atomic():
       review_instance = Reviews.get_by_id(review_id)
       if review_instance.is_flagged != 1:
-        raise HTTPException(status_code=404, detail="Review not found or not flagged")
+        raise HTTPException(status_code = 404, detail = "Review not found or not flagged ❌")
       db_connection.execute_sql(f"DELETE FROM reviews WHERE id={review_id}")
 
     return {"message": "Flagged review deleted successfully"}
   except DoesNotExist:
-    raise HTTPException(status_code=404, detail="Review not found")
+    raise HTTPException(status_code = 404, detail = "Review not found ❌")
   except Exception as e:
-    raise HTTPException(status_code=500, detail=str(e))
+    raise HTTPException(status_code = 500, detail = str(e))
 
 
 @review_router.post("/tag", summary = "Add tag to a review 🏷️")
