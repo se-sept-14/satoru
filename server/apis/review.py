@@ -70,23 +70,20 @@ async def get_all_reviews(current_user: dict = Depends(decode_token)):
 
 @review_router.get("/course-id/{id}", summary = "Fetch the reviews for a particular course 🧾")
 async def get_review_by_course_id(id: int, current_user: dict = Depends(decode_token)):
-  try:
-    course = Courses.get_or_none(Courses.id == id)
-    if course is None:
-      raise HTTPException(status_code = 404, detail = f"No such course with id {id} 🙈")
-    
-    data = []
-    reviews = Reviews.select().where(Reviews.course_id == course.id)
-    print(reviews)
-    if reviews is None:
-      return { "data": data }
-    else:
-      for review in reviews:
-        data.append(model_to_dict(review, exclude = [Reviews.user]))
-    
+  course = Courses.get_or_none(Courses.id == id)
+  if course is None:
+    raise HTTPException(status_code = 404, detail = f"No such course with id {id} 🙈")
+  
+  data = []
+  reviews = Reviews.select().where(Reviews.course_id == course.id)
+
+  if reviews is None:
     return { "data": data }
-  except Exception as e:
-    raise HTTPException(status_code = 500, detail = str(e))
+  else:
+    for review in reviews:
+      data.append(model_to_dict(review, exclude = [Reviews.user]))
+  
+  return { "data": data }
 
 
 @review_router.post("/flag/{review_id}", summary = "Flag a review 🏳️")
