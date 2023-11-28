@@ -13,7 +13,7 @@ def parse_course(course: Courses) -> Dict[str, Any]:
   data['price'] = course.price
   data['credits'] = course.credits
   data['description'] = course.description
-  data['corerequisite'] = course.corerequisite
+  data['corequisite'] = course.corequisite
   data['prerequisites'] = course.prerequisites
   data['hours_per_week'] = course.hours_per_week
   data['instructor_name'] = course.instructor_name

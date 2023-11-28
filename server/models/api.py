@@ -65,7 +65,7 @@ class CourseCreate(BaseModel):
   price: int = Field(..., gt = 1000)
   credits: int = Field(..., ge = 1, le = 4)
   description: str = Field(..., min_length = 1)
-  corerequisite: str = Field(..., min_length = 1)
+  corequisite: str = Field(..., min_length = 1)
   prerequisites: str = Field(..., min_length = 1)
   hours_per_week: str = Field(..., min_length = 1)
   instructor_name: str = Field(..., min_length = 1)
@@ -79,7 +79,7 @@ class CourseEdit(BaseModel):
   price: Optional[int] = None
   credits: Optional[int] = None
   description: Optional[str] = None
-  corerequisite: Optional[str] = None
+  corequisite: Optional[str] = None
   prerequisites: Optional[str] = None
   hours_per_week: Optional[str] = None
   instructor_name: Optional[str] = None

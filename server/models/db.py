@@ -41,7 +41,7 @@ class Courses(Model):
   price: IntegerField = IntegerField()
   credits: IntegerField = IntegerField()
   description: TextField = TextField()
-  corerequisite: TextField = TextField()
+  corequisite: TextField = TextField()
   prerequisites: TextField = TextField()
   hours_per_week: TextField = TextField()
   instructor_name: TextField = TextField()
