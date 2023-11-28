@@ -1,6 +1,7 @@
 from datetime import date
 from typing import Optional, List
-from pydantic import BaseModel, Field, EmailStr, constr
+from pydantic import StringConstraints, BaseModel, Field, EmailStr
+from typing_extensions import Annotated
 
 """Pydantic models for admin endpoints"""
 # /all-students Student data object
@@ -18,8 +19,8 @@ class UserId(BaseModel):
 # Create user registration endpoint request schema
 class UserRegistration(BaseModel):
   email: EmailStr
-  username: constr(min_length = 4, max_length = 32)
-  password: constr(min_length = 4, max_length = 32)
+  username: Annotated[str, StringConstraints(min_length = 4, max_length = 32)]
+  password: Annotated[str, StringConstraints(min_length = 4, max_length = 32)]
 
 # Create user registration endpoint response schema
 class UserResponse(BaseModel):
