@@ -5,6 +5,7 @@ from models.api import ReviewsCreate, ReviewTagMapCreate
 from models.db import Reviews, Tags, Courses, ReviewTagMap, DoesNotExist, db_connection
 
 from detoxify import Detoxify
+from playhouse.shortcuts import model_to_dict
 from fastapi import APIRouter, Depends, HTTPException
 
 from dotenv import load_dotenv
@@ -63,6 +64,26 @@ async def get_all_reviews(current_user: dict = Depends(decode_token)):
     return {
       "reviews": list(reviews)
     }
+  except Exception as e:
+    raise HTTPException(status_code = 500, detail = str(e))
+
+
+@review_router.get("/course-id/{id}", summary = "Fetch the reviews for a particular course 🧾")
+async def get_review_by_course_id(id: int, current_user: dict = Depends(decode_token)):
+  try:
+    course = Courses.get_or_none(Courses.id == id)
+    if course is None:
+      raise HTTPException(status_code = 404, detail = f"No such course with id {id} 🙈")
+    
+    data = []
+    reviews = Reviews.get_or_none(course = course)
+    if reviews is None:
+      return { "data": data }
+    else:
+      for review in reviews:
+        data.append(model_to_dict(review))
+    
+    return { "data": data }
   except Exception as e:
     raise HTTPException(status_code = 500, detail = str(e))
 
