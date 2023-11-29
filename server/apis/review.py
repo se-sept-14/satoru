@@ -35,8 +35,10 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
         flag = True
     
     course = Courses.get_or_none(Courses.id == review.course_id)
+    print(course)
     if course is None:
-      raise HTTPException(status_code = 404, detail = f"No such course with id {review.course_id}")
+      print(f"No such course ${review.course_id}")
+      raise HTTPException(status_code=404, detail = f"No such course with id {review.course_id}")
 
     review_instance = Reviews.create(
       content = review.content,
@@ -53,8 +55,13 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
         "profanity_check": inference
       }
     }
+  except HTTPException as http_exc:
+    print(f"HTTPException caught: {http_exc}")
+    raise  # Reraise the exception for FastAPI to handle
+
   except Exception as e:
-    raise HTTPException(status_code = 500, detail = str(e))
+      print(f"Unexpected exception: {e}")
+      raise HTTPException(status_code=500, detail=str(e))
 
 
 @review_router.get("/all", summary = "Fetch a list of all review 🚀")
@@ -108,6 +115,7 @@ async def edit_review(review_id: int, review: ReviewsCreate, current_user: dict 
       raise HTTPException(status_code = 403, detail = "Not authorized to edit this review ❌")
     review_instance.content = review.content
     review_instance.ratings = review.ratings
+    review_instance.course_id = review.course_id
     review_instance.save()
     return {"message": "Review updated successfully"}
   except DoesNotExist:
