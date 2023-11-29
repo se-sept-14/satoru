@@ -94,7 +94,18 @@ def test_create_course_nonadmin_user_failure():
 #   response = client.delete(f"api/course/{course_to_delete}", headers = { "Authorization": f"Bearer {token}" })
 #
 #   assert response.status_code == 200
-#   assert "message" in response.json() and "data" in response.json() and f"Course with ID {course_to_delete} deleted successfully" in response.json()["message"]
+#   assert "message" in response.json() and "data" in response.json() and f"Course with ID {course_to_delete} deleted successfully" in response.json()["message"]def test_delete_course_success():
+
+# Test: Delete a non-existent course (failure)
+def test_delete_nonexistent_course_failure():
+  admin_user = { "id": 1, "is_admin": 1 }
+  token = create_access_token(admin_user)
+  course_to_delete = 1000000
+
+  response = client.delete(f"api/course/{course_to_delete}", headers = { "Authorization": f"Bearer {token}" })
+
+  assert response.status_code == 404
+  assert f"Course with ID {course_to_delete} not found" in response.text
 
 # Test: Delete a course (failure)
 def test_delete_course_nonadmin_user_failure():
@@ -109,12 +120,13 @@ def test_delete_course_nonadmin_user_failure():
 
 # Test: Add a new course [non-admin user] (failure)
 # def test_create_course_nonadmin_user_failure():
-#   nonadmin_user = { "id": 2, "is_admin": 0 }
+#   nonadmin_user = { "id": 1, "is_admin": 1 }
 #   token = create_access_token(nonadmin_user)
+#   course_to_edit = 6
 #
 #   # Test valid data
 #   valid_data = {
-#     "name": "Test Course",
+#     "name": "Test Course - Edit",
 #     "code": "TC101",
 #     "price": 4000,
 #     "credits": 3,
@@ -127,7 +139,7 @@ def test_delete_course_nonadmin_user_failure():
 #     "tags": ["tag1", "tag2"]
 #   }
 #
-#   response = client.post("api/course/", json = valid_data, headers = { "Authorization": f"Bearer {token}" })
+#   response = client.put(f"api/course/{course_to_edit}", json = valid_data, headers = { "Authorization": f"Bearer {token}" })
 #
 #   assert response.status_code == 403
 #   assert "You are not an admin" in response.text
