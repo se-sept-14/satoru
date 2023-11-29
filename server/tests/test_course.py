@@ -25,3 +25,12 @@ def test_fetch_course_by_id_failure():
 
   assert response.status_code == 404
   assert f"No course with id {course_id}" in response.text
+
+# Test: Fetch all courses (success)
+def test_fetch_course_by_id():
+  user = { "id": 2, "is_admin": 0 }
+  token = create_access_token(user)
+  response = client.get(f"api/course/all", headers = { "Authorization": f"Bearer {token}" })
+
+  assert response.status_code == 200
+  assert "data" in response.json() and len(response.json()["data"]) >= 0
