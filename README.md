@@ -49,8 +49,8 @@ You'll also need to make a copy of `.env` file with proper details (`.env.exampl
   - `cd server`
 - Create & activate python virtual environment
   - `python -m venv .venv`
-  - `source .venv/bin/activate` [Linux]()
-  - `source .venv/Scripts/activate` [Windows]()
+  - [Linux]() `source .venv/bin/activate`
+  - [Windows]() `source .venv/Scripts/activate`
 - Install the requirements
   - `pip install -r requirements.txt`
 - Run it using the shell script
