@@ -38,3 +38,4 @@ async def create_tag(name: str, current_user: dict = Depends(decode_token)):
       return { "message": f"{name.strip()} tag already exists 😵‍💫" }
   except Exception as e:
     raise HTTPException(status_code = 500, detail = str(e))
+
