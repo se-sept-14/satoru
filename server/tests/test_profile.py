@@ -25,3 +25,14 @@ def test_fetch_profile_success():
 
   assert response.status_code == 200
   assert "data" in response.json()
+
+# Test: Fetch the profile of a student by ID (success)
+def test_fetch_profile_by_id_success():
+  admin_user = { "id": 1, "is_admin": 1 }
+  token = create_access_token(admin_user)
+  student_id = 2
+
+  response = client.get(f"api/profile/{student_id}", headers = { "Authorization": f"Bearer {token}" })
+
+  assert response.status_code == 200
+  assert "data" in response.json()
