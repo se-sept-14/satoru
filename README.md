@@ -60,6 +60,8 @@ You'll also need to make a copy of `.env` file with proper details (`.env.exampl
 - Create and activate the environment as described above, install requirements
 - Run the `pytest.sh` script
   - `sh pytest.sh`
+
+## 💉 **For writing tests**
 - The directory name has to be `tests`
 - The filename must start with `test_`
   - Example: Use name like `test_auth.py` to make tests for `auth.py` endpoints
