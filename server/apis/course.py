@@ -113,23 +113,20 @@ async def update_course(id: int, course_data: CourseEdit, current_user: dict = D
   if not is_admin:
     raise HTTPException(status_code = 403, detail = "You are not an admin ⛔")
 
-  try:
-    with db_connection.atomic():
-      course = Courses.get_or_none(Courses.id == id)
+  with db_connection.atomic():
+    course = Courses.get_or_none(Courses.id == id)
 
-      if course:
-        for field, value in course_data.dict(exclude_unset = True).items():
-          setattr(course, field, value)
+    if course:
+      for field, value in course_data.dict(exclude_unset = True).items():
+        setattr(course, field, value)
 
-        course.save()
-        return {
-          "data": { "id": id },
-          "message": f"Course with ID {id} updated successfully ✔️"
-        }
-      else:
-        raise HTTPException(status_code = 404, detail = f"Course with ID {id} not found 🚫")
-  except Exception as e:
-    raise HTTPException(status_code = 500, detail = f"{e}")
+      course.save()
+      return {
+        "data": { "id": id },
+        "message": f"Course with ID {id} updated successfully ✔️"
+      }
+    else:
+      raise HTTPException(status_code = 404, detail = f"Course with ID {id} not found 🚫")
 
 
 @course_router.post("/search", summary = "Search for a course 🔍")
