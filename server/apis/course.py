@@ -153,9 +153,7 @@ async def search_course(search_query: SearchQuery, current_user: dict = Depends(
         unique_course_ids.add(ctm.course.id)
         results.append(model_to_dict(ctm.course))
 
-  return {
-    "data": results
-  }
+  return { "data": results }
 
 
 @course_router.get("/recommend/{num_courses}", summary = "Get recommended courses ⚙️")

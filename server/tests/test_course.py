@@ -206,3 +206,16 @@ def test_search_courses():
 
   assert response.status_code == 200
   assert "data" in response.json() and len(response.json()["data"]) >= 0
+
+# Test: Get recommended courses
+def test_get_recommended_courses():
+  user = { "id": 2, "is_admin": 0 }
+  token = create_access_token(user)
+
+  # Test valid request
+  response = client.get("api/course/recommend/3", headers = { "Authorization": f"Bearer {token}" })
+  assert response.status_code == 200
+  assert "data" in response.json()
+
+  recommended_courses = response.json()["data"]
+  assert len(recommended_courses) == 3
