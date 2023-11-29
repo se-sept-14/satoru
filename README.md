@@ -24,7 +24,7 @@
 - `sh deploy.sh`
 
 ## 🏃‍♀️ **To run this locally on your machine**
-- Use Git Bash on Windows (not PowerShell) [Better if you use WSL]()
+- Use Git Bash on Windows (not PowerShell) [Better if you use WSL](https://learn.microsoft.com/en-us/windows/wsl/)
   - `cd server`
 - Create & activate python virtual environment
   - `python -m venv .venv`
