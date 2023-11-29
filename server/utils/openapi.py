@@ -1,3 +1,6 @@
+title = "SE-Sept-14 Recommender System API 🚀"
+summary = "API endpoints for Software Engineering Group 14 project (Recommender System)"
+version = "1.1.0"
 description = """
 ## **Components of this app** 🌠
 

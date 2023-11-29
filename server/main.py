@@ -13,9 +13,10 @@ from apis.course import course_router
 from apis.review import review_router
 from apis.profile import profile_router
 
-from utils.openapi import description
+from utils.openapi import description, version, summary, title
+from utils.cors import allowed_origins, allowed_credentials, allowed_methods, allowed_headers
 
-# Lifecycle context
+# Lifecycle context (keep the DB connection alive till the FastAPI server is running)
 @asynccontextmanager
 async def lifecycle(app: FastAPI):
   try:
@@ -24,30 +25,29 @@ async def lifecycle(app: FastAPI):
   finally:
     db_connection.close()
 
-app = FastAPI(lifespan = lifecycle, redoc_url = None) # Disabled /redoc
-app.include_router(auth_router, prefix = "/api/auth")
-app.include_router(admin_router, prefix = "/api/admin")
-app.include_router(course_router, prefix = "/api/course")
-app.include_router(profile_router, prefix = "/api/profile")
-app.include_router(review_router, prefix = "/api/review")
-app.include_router(tags_router, prefix = "/api/tags")
+app = FastAPI(lifespan = lifecycle, redoc_url = None, summary = summary, version = version)
+app.include_router(auth_router, prefix = "/api/auth")         # Auth endpoints
+app.include_router(admin_router, prefix = "/api/admin")       # Admin endpoints
+app.include_router(course_router, prefix = "/api/course")     # Course management endpoints
+app.include_router(profile_router, prefix = "/api/profile")   # Profile management endpoints
+app.include_router(review_router, prefix = "/api/review")     # Review management endpoints
+app.include_router(tags_router, prefix = "/api/tags")         # Tag management endpoints
 
+# Add a middleware to allow certain origins only (and credentials, methods and headers)
 app.add_middleware(
   CORSMiddleware,
-  allow_origins = ["https://pickmycourse.vercel.app", "http://localhost:8000", "http://localhost:5000", "https://api.pickmycourse.online"],
-  allow_credentials = "*",
-  allow_methods = ["*"],
-  allow_headers = ["*"]
+  allow_origins = allowed_origins,
+  allow_credentials = allowed_credentials,
+  allow_methods = allowed_methods,
+  allow_headers = allowed_headers
 )
 
+# Define a custom OpenAPI document
 def custom_openapi():
   if app.openapi_schema:
     return app.openapi_schema
 
-  openapi_schema = get_openapi(
-    title = "SE-Sept-14 Recommender System API 🚀", version = "1.2.1",
-    description = description, routes = app.routes,
-  )
+  openapi_schema = get_openapi(title = title, version = version, description = description, routes = app.routes)
   app.openapi_schema = openapi_schema
   return app.openapi_schema
 
