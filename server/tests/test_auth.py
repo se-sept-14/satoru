@@ -44,3 +44,25 @@ def test_login_user_success():
 
   assert response.status_code == 200
   assert "access_token" in response.json() and "token_type" in response.json()
+
+# Test: Logging in a user (failure)
+def test_login_user_failure():
+  user_data = {
+    "username": "testuser",
+    "password": "wrong-password"
+  }
+  response = client.post("api/auth/login", data = user_data)
+
+  assert response.status_code == 401
+  assert "Incorrect username and password" in response.text
+
+# Test: Logging in a non-existent user (failure)
+def test_login_nonexistent_user_failure():
+  user_data = {
+    "username": "thisuserdoesnotexist",
+    "password": "thispasswordisalsowrong"
+  }
+  response = client.post("api/auth/login", data = user_data)
+
+  assert response.status_code == 404
+  assert "User not found" in response.text
