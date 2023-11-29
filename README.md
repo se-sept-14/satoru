@@ -13,7 +13,7 @@
 |-----------------|-----------------------------------------------------------|
 | 📱 Vue frontend |[pickmycourse.vercel.app](https://pickmycourse.vercel.app) |
 
-### **[⛏️ Check Projects](https://github.com/orgs/se-sept-14-draft-work/projects/1)**
+### **[⛏️ Check Projects board](https://github.com/orgs/se-sept-14-draft-work/projects/1)**
 
 ## 💫 **To deploy the API using Docker**
 > Well it goes without saying, make sure you have [Docker installed on your system](https://docs.docker.com/engine/install)
@@ -45,12 +45,13 @@ Follow the steps mentioned above to quickly spin up a MariaDB instance using doc
 You'll also need to make a copy of `.env` file with proper details (`.env.example` is given). Follow the below steps next:
 </blockquote>
 
-- Use Git Bash on Windows (not PowerShell) [Better if you use WSL](https://learn.microsoft.com/en-us/windows/wsl/)
+- Use Git Bash on Windows (avoid using `cmd` or `powershell`) [Better if you use WSL](https://learn.microsoft.com/en-us/windows/wsl/)
   - `cd server`
 - Create & activate python virtual environment
-  - `python -m venv .venv`
-  - [Linux]() `source .venv/bin/activate`
-  - [Windows]() `source .venv/Scripts/activate`
+  - [Linux]() 👉️ `python3 -m venv .venv`
+  - [Windows or `conda`]() 👉️ `python -m venv .venv`
+  - [Linux]() 👉️ `source .venv/bin/activate`
+  - [Windows]() 👉️ `source .venv/Scripts/activate`
 - Install the requirements
   - `pip install -r requirements.txt`
 - Run it using the shell script
