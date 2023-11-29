@@ -130,6 +130,4 @@ async def create_profile(
     'about_me': model_to_dict(student_about_me, exclude = [StudentAboutMe.user])
   }
 
-  return {
-    'data': data
-  }
+  return { 'data': data }

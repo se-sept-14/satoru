@@ -56,7 +56,7 @@ async def get_all_courses(current_user: dict = Depends(decode_token)):
 async def create_course(course_data: CourseCreate, current_user: dict = Depends(decode_token)):
   is_admin = current_user["is_admin"]
   if not is_admin:
-    return HTTPException(status_code = 403, detail = f"You are not an admin ⛔")
+    raise HTTPException(status_code = 403, detail = f"You are not an admin ⛔")
 
   try:
     with db_connection.atomic():
@@ -77,7 +77,7 @@ async def create_course(course_data: CourseCreate, current_user: dict = Depends(
         tag, created = Tags.get_or_create(name = tag_name.strip())
         CourseTagMap.create(course = new_course, tag = tag)
   except Exception as e:
-    return HTTPException(status_code = 500, detail = f"{e}")
+    raise HTTPException(status_code = 500, detail = f"{e}")
 
   return {
     "message": "Course added successfully ✔️",
@@ -113,23 +113,20 @@ async def update_course(id: int, course_data: CourseEdit, current_user: dict = D
   if not is_admin:
     raise HTTPException(status_code = 403, detail = "You are not an admin ⛔")
 
-  try:
-    with db_connection.atomic():
-      course = Courses.get_or_none(Courses.id == id)
+  with db_connection.atomic():
+    course = Courses.get_or_none(Courses.id == id)
 
-      if course:
-        for field, value in course_data.dict(exclude_unset = True).items():
-          setattr(course, field, value)
+    if course:
+      for field, value in course_data.dict(exclude_unset = True).items():
+        setattr(course, field, value)
 
-        course.save()
-        return {
-          "data": { "id": id },
-          "message": f"Course with ID {id} updated successfully ✔️"
-        }
-      else:
-        raise HTTPException(status_code = 404, detail = f"Course with ID {id} not found 🚫")
-  except Exception as e:
-    raise HTTPException(status_code = 500, detail = f"{e}")
+      course.save()
+      return {
+        "data": { "id": id },
+        "message": f"Course with ID {id} updated successfully ✔️"
+      }
+    else:
+      raise HTTPException(status_code = 404, detail = f"Course with ID {id} not found 🚫")
 
 
 @course_router.post("/search", summary = "Search for a course 🔍")
@@ -156,9 +153,7 @@ async def search_course(search_query: SearchQuery, current_user: dict = Depends(
         unique_course_ids.add(ctm.course.id)
         results.append(model_to_dict(ctm.course))
 
-  return {
-    "data": results
-  }
+  return { "data": results }
 
 
 @course_router.get("/recommend/{num_courses}", summary = "Get recommended courses ⚙️")

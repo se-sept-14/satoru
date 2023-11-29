@@ -60,7 +60,7 @@ async def login_user(username: Annotated[str, Form()], password: Annotated[str, 
     raise HTTPException(status_code = 404, detail = "User not found 👀")
   
   if not verify_password(password, user.password):
-    raise HTTPException(status_code = 401, detail = "Incorrect email and password 🚫")
+    raise HTTPException(status_code = 401, detail = "Incorrect username and password 🚫")
 
   access_token = create_access_token(data = {
     "id": user.id,
