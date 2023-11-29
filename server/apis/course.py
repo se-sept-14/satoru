@@ -56,7 +56,7 @@ async def get_all_courses(current_user: dict = Depends(decode_token)):
 async def create_course(course_data: CourseCreate, current_user: dict = Depends(decode_token)):
   is_admin = current_user["is_admin"]
   if not is_admin:
-    return HTTPException(status_code = 403, detail = f"You are not an admin ⛔")
+    raise HTTPException(status_code = 403, detail = f"You are not an admin ⛔")
 
   try:
     with db_connection.atomic():
@@ -77,7 +77,7 @@ async def create_course(course_data: CourseCreate, current_user: dict = Depends(
         tag, created = Tags.get_or_create(name = tag_name.strip())
         CourseTagMap.create(course = new_course, tag = tag)
   except Exception as e:
-    return HTTPException(status_code = 500, detail = f"{e}")
+    raise HTTPException(status_code = 500, detail = f"{e}")
 
   return {
     "message": "Course added successfully ✔️",
