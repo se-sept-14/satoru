@@ -38,3 +38,116 @@ async def create_tag(name: str, current_user: dict = Depends(decode_token)):
       return { "message": f"{name.strip()} tag already exists 😵‍💫" }
   except Exception as e:
     raise HTTPException(status_code = 500, detail = str(e))
+
+
+# ----------------------------------------------------------------------------------------------------------------------------
+
+
+# Test: Create a new tag (success) as admin
+def test_create_tag_success_admin():
+    new_tag_name = "new_tag"
+    admin_user = {"id": 1, "is_admin": 1}
+    token = create_access_token(admin_user)
+
+    response = client.post("/api/tags/create", json={"name": new_tag_name}, headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 200
+    assert "message" in response.json()
+    assert "data" in response.json()
+    assert response.json()["message"] == f"{new_tag_name} tag created successfully ✅"
+
+
+# Test: Create a new tag that already exists as admin
+def test_create_tag_already_exists_admin():
+    existing_tag_name = "existing_tag"
+    admin_user = {"id": 1, "is_admin": 1}
+    token = create_access_token(admin_user)
+
+    # Create the tag before attempting to create it again
+    client.post("/api/tags/create", json={"name": existing_tag_name}, headers={"Authorization": f"Bearer {token}"})
+
+    # Attempt to create the tag again
+    response = client.post("/api/tags/create", json={"name": existing_tag_name}, headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 200
+    assert "message" in response.json()
+    assert response.json()["message"] == f"{existing_tag_name} tag already exists 😵‍💫"
+
+
+# Test: Create a new tag (unauthorized) as non-admin
+def test_create_tag_unauthorized_non_admin():
+    new_tag_name = "new_tag"
+    non_admin_user = {"id": 2, "is_admin": 0}
+    token = create_access_token(non_admin_user)
+
+    response = client.post("/api/tags/create", json={"name": new_tag_name}, headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 403
+    assert "You are not an admin" in response.text
+
+
+# Test: Create a new tag (server error)
+def test_create_tag_server_error():
+    # Simulate a server error by providing an invalid parameter type
+    invalid_tag_name = 123
+    admin_user = {"id": 1, "is_admin": 1}
+    token = create_access_token(admin_user)
+
+    response = client.post("/api/tags/create", json={"name": invalid_tag_name}, headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 500
+    assert "valueError" in response.text  # Adjust this check based on the actual error message
+
+# Test: Create a new tag (success) as admin with leading/trailing spaces
+def test_create_tag_with_spaces_success_admin():
+    new_tag_name_with_spaces = "   tag_with_spaces   "
+    admin_user = {"id": 1, "is_admin": 1}
+    token = create_access_token(admin_user)
+
+    response = client.post("/api/tags/create", json={"name": new_tag_name_with_spaces}, headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 200
+    assert "message" in response.json()
+    assert "data" in response.json()
+    assert response.json()["message"] == f"{new_tag_name_with_spaces.strip()} tag created successfully ✅"
+
+
+# Test: Create a new tag (success) as admin with empty name
+def test_create_tag_with_empty_name_success_admin():
+    admin_user = {"id": 1, "is_admin": 1}
+    token = create_access_token(admin_user)
+
+    response = client.post("/api/tags/create", json={"name": ""}, headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 200
+    assert "message" in response.json()
+    assert "data" in response.json()
+    assert response.json()["message"] == " tag created successfully ✅"
+
+
+# Test: Create a new tag (success) as admin with very long name
+def test_create_tag_with_long_name_success_admin():
+    long_tag_name = "a" * 1000  # Replace with a very long tag name
+    admin_user = {"id": 1, "is_admin": 1}
+    token = create_access_token(admin_user)
+
+    response = client.post("/api/tags/create", json={"name": long_tag_name}, headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 200
+    assert "message" in response.json()
+    assert "data" in response.json()
+    assert response.json()["message"] == f"{long_tag_name} tag created successfully ✅"
+
+
+# Test: Create a new tag (success) as admin with special characters
+def test_create_tag_with_special_characters_success_admin():
+    special_characters_tag_name = "!@#$%^&*()_-+=[]{}|;:'\",.<>/?"
+    admin_user = {"id": 1, "is_admin": 1}
+    token = create_access_token(admin_user)
+
+    response = client.post("/api/tags/create", json={"name": special_characters_tag_name}, headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 200
+    assert "message" in response.json()
+    assert "data" in response.json()
+    assert response.json()["message"] == f"{special_characters_tag_name} tag created successfully ✅"
