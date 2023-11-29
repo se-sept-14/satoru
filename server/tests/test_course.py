@@ -195,3 +195,14 @@ def test_edit_course_nonadmin_user_failure():
 
   assert response.status_code == 403
   assert "You are not an admin" in response.text
+
+# Test: Search for courses
+def test_search_courses():
+  nonadmin_user = { "id": 2, "is_admin": 0 }
+  token = create_access_token(nonadmin_user)
+  search_term = { "query": "deep learning" }
+
+  response = client.post(f"api/course/search", json = search_term, headers = { "Authorization": f"Bearer {token}" })
+
+  assert response.status_code == 200
+  assert "data" in response.json() and len(response.json()["data"]) >= 0
