@@ -16,14 +16,35 @@
 ### **[⛏️ Check Projects](https://github.com/orgs/se-sept-14-draft-work/projects/1)**
 
 ## 💫 **To deploy the API using Docker**
-- Well it goes without saying, make sure you have [Docker installed on your system](https://docs.docker.com/engine/install)
+> Well it goes without saying, make sure you have [Docker installed on your system](https://docs.docker.com/engine/install)
+
+### 🛢️ **Run a MariaDB instance**
+> To quickly get a MariaDB instance running, run the following 👇️
+```sh
+docker run --name mariadb-dev \
+  -v /path/on/your/system:/var/lib/mysql:Z \
+  -e MARIADB_DATABASE=some-db-name \
+  -e MARIADB_ROOT_PASSWORD=strong-root-password \
+  -p 3306:3306 \
+  -d mariadb:latest
+```
+Also need to migrate the peewee DB models to MariaDB, look into the [`peewee-migrate` tool](https://github.com/klen/peewee_migrate)
+
+👉️ **Then, follow the steps to deploy the ⚡️ FastAPI server**
 - `cd server`
 - `cp .env.example .env`
 - Make sure to edit the `.env` file with proper details
-- To quickly get a MariaDB instance running, run `docker run --name mariadb-dev -v /path/on/your/system:/var/lib/mysql:Z -e MARIADB_DATABASE=some-db-name -e MARIADB_ROOT_PASSWORD=strong-root-password -p 3306:3306 -d mariadb:latest`
 - `sh deploy.sh`
 
 ## 🏃‍♀️ **To run this locally on your machine**
+<blockquote>
+You'll need MariaDB for this API to work.
+
+Follow the steps mentioned above to quickly spin up a MariaDB instance using docker, either on your local machine or some remote machine.
+
+You'll also need to make a copy of `.env` file with proper details (`.env.example` is given). Follow the below steps next:
+</blockquote>
+
 - Use Git Bash on Windows (not PowerShell) [Better if you use WSL](https://learn.microsoft.com/en-us/windows/wsl/)
   - `cd server`
 - Create & activate python virtual environment
