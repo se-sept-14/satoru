@@ -1,7 +1,11 @@
 import os
 
-from fastapi import FastAPI
+from pathlib import Path
+from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.exceptions import HTTPException
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -37,10 +41,18 @@ app.include_router(tags_router, prefix = "/api/tags")         # Tag management e
 app.add_middleware(
   CORSMiddleware,
   allow_origins = allowed_origins,
-  allow_credentials = allowed_credentials,
   allow_methods = allowed_methods,
-  allow_headers = allowed_headers
+  allow_headers = allowed_headers,
+  allow_credentials = allowed_credentials,
 )
+
+# Serve the vite dist folder (this handles the vue router too)
+'''Essentially, redirect every 404 for vue router to handle'''
+@app.exception_handler(404)
+async def redirect_to_vue_router(request: Request, exc: HTTPException):
+  return HTMLResponse(open(Path(__file__).parent / 'dist/index.html').read())
+
+app.mount('/', StaticFiles(directory = Path(__file__).parent / 'dist'), name = 'dist')
 
 # Define a custom OpenAPI document
 def custom_openapi():

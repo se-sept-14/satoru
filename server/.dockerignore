@@ -2,7 +2,6 @@ __pycache__/
 .git/
 .pytest_cache/
 .venv/
-dist/
 models/__pycache__/
 utils/__pycache__/
 .gitignore
