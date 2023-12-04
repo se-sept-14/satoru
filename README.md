@@ -2,16 +2,16 @@
 
 ## 🖧 **API details**
 
-| 🌱 Environment         | 🔗 URL                                                               |
-|------------------------|----------------------------------------------------------------------|
-| 🏭 Production Base URL |[api.pickmycourse.online](https://api.pickmycourse.online)            |
-| 🖥️ Swagger Doc         |[api.pickmycourse.online/docs](https://api.pickmycourse.online/docs)  |
+| 🌱 Environment         | 🔗 URL                                                       |
+|------------------------|---------------------------------------------------------------|
+| 🏭 Production Base URL |[pickmycourse.online](https://pickmycourse.online)            |
+| 🖥️ Swagger Doc         |[pickmycourse.online/docs](https://pickmycourse.online/docs)  |
 
 ## 💻 **Web app details**
 
-| 🌱 Environment  | 🔗 URL                                                    |
-|-----------------|-----------------------------------------------------------|
-| 📱 Vue frontend |[pickmycourse.vercel.app](https://pickmycourse.vercel.app) |
+| 🌱 Environment  | 🔗 URL                                           |
+|-----------------|---------------------------------------------------|
+| 📱 Vue frontend |[pickmycourse.online](https://pickmycourse.online) |
 
 ### **[⛏️ Check Projects board](https://github.com/orgs/se-sept-14-draft-work/projects/1)**
 
