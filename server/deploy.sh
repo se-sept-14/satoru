@@ -24,7 +24,7 @@ git pull
 cd ../client        # Move to vite directory
 npm install         # Install the dependencies
 npm run build       # Build the vue app
-mv dist ../server   # Move it to fastapi server
+mv -f dist ../server   # Move it to fastapi server
 cd -                # Go back to /server directory
 
 # Deploy the current version
