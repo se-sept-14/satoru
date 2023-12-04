@@ -4,7 +4,11 @@ import { defineStore } from "pinia";
 export const useAuthStore = defineStore("authStore", {
   state: () => ({
     api: {
-      server: "http://localhost:8000",
+      server:
+        window.location.hostname == "localhost" ||
+        window.location.hostname == "127.0.0.1"
+          ? "http://localhost:8000"
+          : "https://pickmycourse.online",
       endpoints: {
         auth: {
           login: "/api/auth/login",
@@ -21,17 +25,19 @@ export const useAuthStore = defineStore("authStore", {
   },
   actions: {
     async login(userData) {
-      const { email, password } = await userData;
-      const payload = {
-        email: email,
-        password: password,
+      const apiUrl = `${this.api.server}${this.api.endpoints.auth.login}`;
+      const headers = {
+        accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       };
+      const { username, password } = await userData;
+      const formData = new URLSearchParams();
+      formData.append('username', username);
+      formData.append('password', password);
 
       try {
-        const { data } = await axios.post(
-          `${this.api.server}${this.api.endpoints.auth.login}`,
-          payload
-        );
+        const { data } = await axios.post(apiUrl, formData, { headers });
+        console.log(data);
 
         if (data) {
           const { access_token, token_type } = data;
@@ -40,7 +46,7 @@ export const useAuthStore = defineStore("authStore", {
           localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
         }
       } catch (err) {
-        if(err.response.status == 401) {
+        if (err.response.status == 401) {
           return null;
         }
       }
