@@ -1,5 +1,5 @@
 # Use a base python 3.10.13 image which uses alpine 3.18
-FROM pytorch/pytorch:2.1.1-cuda12.1-cudnn8-runtime
+FROM python:3.10.13-alpine3.18
 
 # Set the working directory to /server inside the docker container
 WORKDIR /server

@@ -1,10 +1,8 @@
 import os
 from utils.crypto import decode_token
-from utils.parser import parse_review_inference
 from models.api import ReviewsCreate, ReviewTagMapCreate
 from models.db import Users, Reviews, Tags, Courses, ReviewTagMap, DoesNotExist, db_connection
 
-from detoxify import Detoxify
 from playhouse.shortcuts import model_to_dict
 from fastapi import APIRouter, Depends, HTTPException
 
@@ -25,14 +23,7 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
     raise HTTPException(status_code = 401, detail = "Missing review content 🌚")
 
   try:
-    model = Detoxify("unbiased-small")
     flag = False
-
-    toxicity = model.predict(review.content.strip())
-    inference = parse_review_inference(toxicity)
-    for key in inference:
-      if inference[key] >= float(os.getenv("TOXICITY_THRESHOLD")):
-        flag = True
     
     course = Courses.get_or_none(Courses.id == review.course_id)
     print(course)
@@ -51,8 +42,7 @@ async def create_review(review: ReviewsCreate, current_user: dict = Depends(deco
     return {
       "message": "Review created successfully ✔️",
       "data": {
-        "id": review_instance.id,
-        "profanity_check": inference
+        "id": review_instance.id
       }
     }
   except HTTPException as http_exc:

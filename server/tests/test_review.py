@@ -57,7 +57,6 @@ def test_create_review_success():
     assert "id" in response.json()["data"]
     created_review_id = response.json()["data"]["id"]
 
-    assert "profanity_check" in response.json()["data"]
     assert "Review created successfully ✔️" in response.json()["message"]
 
 def test_get_all_reviews_success():
