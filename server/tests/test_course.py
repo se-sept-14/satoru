@@ -85,16 +85,16 @@ def test_create_course_nonadmin_user_failure():
   assert response.status_code == 403
   assert "You are not an admin" in response.text
 
-# # Test: Delete a course (success)
-# def test_delete_course_success():
-#   admin_user = { "id": 1, "is_admin": 1 }
-#   token = create_access_token(admin_user)
-#   course_to_delete = 6
-#
-#   response = client.delete(f"api/course/{course_to_delete}", headers = { "Authorization": f"Bearer {token}" })
-#
-#   assert response.status_code == 200
-#   assert "message" in response.json() and "data" in response.json() and f"Course with ID {course_to_delete} deleted successfully" in response.json()["message"]def test_delete_course_success():
+# Test: Delete a course (success)
+def test_delete_course_success():
+  admin_user = { "id": 1, "is_admin": 1 }
+  token = create_access_token(admin_user)
+  course_to_delete = 6
+
+  response = client.delete(f"api/course/{course_to_delete}", headers = { "Authorization": f"Bearer {token}" })
+
+  assert response.status_code == 200
+  assert "message" in response.json() and "data" in response.json() and f"Course with ID {course_to_delete} deleted successfully" in response.json()["message"]def test_delete_course_success():
 
 # Test: Delete a non-existent course (failure)
 def test_delete_nonexistent_course_failure():
