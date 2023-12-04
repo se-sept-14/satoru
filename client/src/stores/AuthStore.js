@@ -4,11 +4,7 @@ import { defineStore } from "pinia";
 export const useAuthStore = defineStore("authStore", {
   state: () => ({
     api: {
-      server:
-        window.location.hostname == "localhost" ||
-        window.location.hostname == "127.0.0.1"
-          ? "http://localhost:8000"
-          : "https://pickmycourse.online",
+      server: "https://pickmycourse.online",
       endpoints: {
         auth: {
           login: "/api/auth/login",
@@ -32,8 +28,8 @@ export const useAuthStore = defineStore("authStore", {
       };
       const { username, password } = await userData;
       const formData = new URLSearchParams();
-      formData.append('username', username);
-      formData.append('password', password);
+      formData.append("username", username);
+      formData.append("password", password);
 
       try {
         const { data } = await axios.post(apiUrl, formData, { headers });
