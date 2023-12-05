@@ -14,18 +14,13 @@ docker compose down
 echo "Delete old docker image ..."
 docker image rm server-api:latest
 
-# Checkout the `main` branch
-git checkout main
-
-# Pull the changes from main
-git pull
-
 # Build vite app
-cd ../client        # Move to vite directory
-npm install         # Install the dependencies
-npm run build       # Build the vue app
-mv -f dist ../server   # Move it to fastapi server
-cd -                # Go back to /server directory
+rm -rf dist
+cd ../client
+npm install
+npm run build
+mv dist ../server
+cd - 
 
 # Deploy the current version
 echo "Building and deploying containers ..."
