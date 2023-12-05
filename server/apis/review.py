@@ -6,14 +6,6 @@ from models.db import Users, Reviews, Tags, Courses, ReviewTagMap, DoesNotExist,
 from playhouse.shortcuts import model_to_dict
 from fastapi import APIRouter, Depends, HTTPException
 
-from dotenv import load_dotenv
-dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
-load_dotenv(dotenv_path)
-required_env_vars = ["TOXICITY_THRESHOLD"]
-for var in required_env_vars:
-  if not os.getenv(var):
-    raise EnvironmentError(f"Missing required environment variable: {var}")
-
 review_router = APIRouter(tags = ["Review ✨"])
 
 

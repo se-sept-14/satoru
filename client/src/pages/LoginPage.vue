@@ -134,7 +134,6 @@ export default {
 
       if (!this.userDataError.username && !this.userDataError.password) {
         const user = await this.authStore.login(this.userData);
-        console.log(user);
 
         if (user && user.access_token.length != 0) {
           this.$router.push("/dashboard");
