@@ -24,4 +24,4 @@ cd -
 
 # Deploy the current version
 echo "Building and deploying containers ..."
-docker compose up -d
+docker compose up --build -d
