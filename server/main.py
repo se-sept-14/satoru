@@ -1,5 +1,3 @@
-import ssl
-
 from pathlib import Path
 from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
@@ -36,10 +34,6 @@ app.include_router(course_router, prefix = "/api/course")     # Course managemen
 app.include_router(profile_router, prefix = "/api/profile")   # Profile management endpoints
 app.include_router(review_router, prefix = "/api/review")     # Review management endpoints
 app.include_router(tags_router, prefix = "/api/tags")         # Tag management endpoints
-
-# Add SSL certificate
-ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-ssl_context.load_cert_chain('certs/certificate.pem', keyfile = 'certs/key.pem')
 
 # Add a middleware to allow certain origins only (and credentials, methods and headers)
 app.add_middleware(
