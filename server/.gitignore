@@ -3,6 +3,7 @@
 env/
 venv/
 dist/
+certs/
 __pycache__/
 .pytest_cache/
 routes/__pycache__/

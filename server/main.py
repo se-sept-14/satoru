@@ -1,4 +1,4 @@
-import os
+import ssl
 
 from pathlib import Path
 from fastapi import FastAPI, Request
@@ -37,6 +37,10 @@ app.include_router(profile_router, prefix = "/api/profile")   # Profile manageme
 app.include_router(review_router, prefix = "/api/review")     # Review management endpoints
 app.include_router(tags_router, prefix = "/api/tags")         # Tag management endpoints
 
+# Add SSL certificate
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+ssl_context.load_cert_chain('certs/certificate.pem', keyfile = 'certs/key.pem')
+
 # Add a middleware to allow certain origins only (and credentials, methods and headers)
 app.add_middleware(
   CORSMiddleware,
@@ -45,14 +49,6 @@ app.add_middleware(
   allow_headers = allowed_headers,
   allow_credentials = allowed_credentials,
 )
-
-# Serve the vite dist folder (this handles the vue router too)
-'''Essentially, redirect every 404 for vue router to handle'''
-@app.exception_handler(404)
-async def redirect_to_vue_router(request: Request, exc: HTTPException):
-  return HTMLResponse(open(Path(__file__).parent / 'dist/index.html').read())
-
-app.mount('/', StaticFiles(directory = Path(__file__).parent / 'dist'), name = 'dist')
 
 # Define a custom OpenAPI document
 def custom_openapi():
