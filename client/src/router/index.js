@@ -25,5 +25,20 @@ export default createRouter({
       name: "DashboardPage",
       component: () => import("@/pages/DashboardPage.vue"),
     },
+    {
+      path: "/managecourse",
+      name: "ManageCoursePage",
+      component: () => import("@/pages/ManageCoursePage.vue"),
+    },
+    {
+      path: "/addcourse",
+      name: "AddCoursePage",
+      component: () => import("@/pages/AddCoursePage.vue"),
+    },
+    {
+      path: "/admincourseview",
+      name: "AdminCourseView",
+      component: () => import("@/pages/AdminCourseView.vue"),
+    },
   ],
 });
