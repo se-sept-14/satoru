@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 export const useAuthStore = defineStore("authStore", {
   state: () => ({
     api: {
-      server: 'https://api.pickmycourse.online',
+      server: "https://api.pickmycourse.online",
       endpoints: {
         auth: {
           login: "/api/auth/login",
@@ -14,11 +14,7 @@ export const useAuthStore = defineStore("authStore", {
     },
     currentUser: {},
   }),
-  getters: {
-    getCurrentUser() {
-      return this.currentUser;
-    },
-  },
+  getters: {},
   actions: {
     async login(userData) {
       const apiUrl = `${this.api.server}${this.api.endpoints.auth.login}`;
@@ -47,6 +43,22 @@ export const useAuthStore = defineStore("authStore", {
       }
 
       return this.currentUser;
+    },
+    async register(userData) {
+      const apiUrl = `${this.api.server}${this.api.endpoints.auth.register}`;
+      const headers = {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      };
+      const { username, email, password } = await userData;
+      const payload = { email, username, password };
+
+      try {} catch(err) {
+        if(err.response.status == 400) {
+          // User already exists condition
+          return null;
+        }
+      }
     },
   },
 });

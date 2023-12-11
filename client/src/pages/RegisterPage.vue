@@ -28,13 +28,13 @@
               type="email"
               autocomplete="email"
               placeholder="Create a username ..."
-              v-model="username"
+              v-model="userData.username"
               required
               class="block w-full rounded-md border-0 py-1.5 px-1.5 bg-transparent text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 focus:rounded-none sm:text-sm sm:leading-6"
             />
           </div>
         </div>
-        
+
         <div>
           <label
             for="email"
@@ -48,9 +48,9 @@
               type="email"
               autocomplete="email"
               placeholder="Enter your email ..."
-              v-model="email"
+              v-model="userData.email"
               required
-              class="block w-full rounded-md border-0 py-1.5 px-1.5 bg-transparent text-gray-200shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 focus:rounded-none sm:text-sm sm:leading-6"
+              class="block w-full rounded-md border-0 py-1.5 px-1.5 bg-transparent text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 focus:rounded-none sm:text-sm sm:leading-6"
             />
           </div>
         </div>
@@ -70,13 +70,13 @@
               type="password"
               autocomplete="current-password"
               placeholder="Enter your password ..."
-              v-model="password"
+              v-model="userData.password"
               required
               class="block w-full rounded-md border-0 py-1.5 px-1.5 bg-transparent text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 focus:rounded-none sm:text-sm sm:leading-6"
             />
           </div>
         </div>
-        
+
         <div>
           <div class="flex items-center justify-between">
             <label
@@ -92,7 +92,7 @@
               type="password"
               autocomplete="current-password"
               placeholder="Enter your password ..."
-              v-model="passwordAgain"
+              v-model="userData.passwordAgain"
               required
               class="block w-full rounded-md border-0 py-1.5 px-1.5 bg-transparent text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 focus:rounded-none sm:text-sm sm:leading-6"
             />
@@ -123,23 +123,34 @@
 </template>
 
 <script>
+import { useAuthStore } from "@/stores/AuthStore";
+
 export default {
+  setup() {
+    const authStore = useAuthStore();
+    return { authStore };
+  },
   name: "RegisterPage",
   data() {
     return {
-      email: "",
-      username: "",
-      password: "",
-      passwordAgain: ""
+      userData: {
+        email: "",
+        username: "",
+        password: "",
+        passwordAgain: "",
+      },
     };
   },
   methods: {
-    register(e) {
+    async register(e) {
       e.preventDefault(); // Prevents the default behaviour of submit button (to refresh the page)
 
-      console.log(this.email, this.username, this.password, this.passwordAgain);
-    }
-  }
+      // Check if the passwords match
+      if(this.userData.password != this.userData.passwordAgain) { return; }
+
+      await this.authStore.register(this.userData);
+    },
+  },
 };
 </script>
 
