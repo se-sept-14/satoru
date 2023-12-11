@@ -2,10 +2,10 @@
 
 ## 🖧 **API details**
 
-| 🌱 Environment         | 🔗 URL                                                       |
-|------------------------|---------------------------------------------------------------|
-| 🏭 Production Base URL |[pickmycourse.online](https://pickmycourse.online)            |
-| 🖥️ Swagger Doc         |[pickmycourse.online/docs](https://pickmycourse.online/docs)  |
+| 🌱 Prod Environment | 🔗 URL                                                              |
+|---------------------|---------------------------------------------------------------------|
+| 🏭 Base URL         |[api.pickmycourse.online](https://api.pickmycourse.online)           |
+| 🖥️ Swagger Doc      |[api.pickmycourse.online/docs](https://api.pickmycourse.online/docs) |
 
 ## 💻 **Web app details**
 
