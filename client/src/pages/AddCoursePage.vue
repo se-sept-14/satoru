@@ -1,53 +1,77 @@
 <template>
-<div class="w-[1400px] h-[1331px] relative bg-black">
-  <div class="left-[601px] top-[135px] absolute text-center text-white text-[40px] font-bold font-['Roboto Slab']">Add a new course</div>
-  <div class="h-[113px] left-[350px] top-[265px] absolute">
-    <div class="left-0 top-0 absolute text-center text-white text-[32px] font-normal font-['Roboto Slab']">Course Name:</div>
-    <div class="w-[900px] h-[60px] left-0 top-[53px] absolute">
-      <div class="w-[900px] h-[60px] left-0 top-0 absolute bg-white rounded-xl"></div>
-      <div class="left-[14px] top-[14px] absolute text-center text-zinc-800 text-opacity-60 text-2xl font-normal font-['Roboto Slab']">Course Name</div>
+<br><br><br><br><br>
+    <div class="text-4xl font-bold mb-8 bg-black from-black to-black p-4 w-full fixed top-0">
+    
     </div>
-  </div>
-  <div class="h-[213px] left-[350px] top-[403px] absolute">
-    <div class="left-0 top-0 absolute text-center text-white text-[32px] font-normal font-['Roboto Slab']">Description:</div>
-    <div class="w-[900px] h-40 left-0 top-[53px] absolute">
-      <div class="w-[900px] h-40 left-0 top-0 absolute bg-white rounded-xl"></div>
-      <div class="left-[20px] top-[13px] absolute text-center text-zinc-800 text-opacity-60 text-2xl font-normal font-['Roboto Slab']">Course description goes here ...</div>
-    </div>
-  </div>
-  <div class="h-[113px] left-[350px] top-[641px] absolute">
-    <div class="left-0 top-0 absolute text-center text-white text-[32px] font-normal font-['Roboto Slab']">Prerequisite:</div>
-    <div class="w-[900px] h-[60px] left-0 top-[53px] absolute">
-      <div class="w-[900px] h-[60px] left-0 top-0 absolute bg-white rounded-xl"></div>
-      <div class="left-[19px] top-[14px] absolute text-center text-zinc-800 text-opacity-60 text-2xl font-normal font-['Roboto Slab']">BSCCS2001, BSCCS2003, ...</div>
-    </div>
-  </div>
-  <div class="w-[900px] h-[114px] left-[350px] top-[778px] absolute">
-    <div class="left-0 top-0 absolute text-center text-white text-[32px] font-normal font-['Roboto Slab']">Taught by:</div>
-    <div class="w-[741px] h-[60px] left-0 top-[54px] absolute">
-      <div class="w-[741px] h-[60px] left-0 top-0 absolute bg-white rounded-xl"></div>
-      <div class="w-[280.99px] left-[15.19px] top-[14px] absolute text-center text-zinc-800 text-opacity-60 text-2xl font-normal font-['Roboto Slab']">Professor name here ...</div>
-    </div>
-    <img class="w-[100px] h-[100px] left-[800px] top-[14px] absolute rounded-full" src="https://via.placeholder.com/100x100" />
-  </div>
-  <div class="w-[900px] h-28 left-[350px] top-[917px] absolute">
-    <div class="left-0 top-0 absolute text-center text-white text-[32px] font-normal font-['Roboto Slab']">Category:</div>
-    <div class="w-[900px] h-[60px] left-0 top-[52px] absolute">
-      <div class="w-[900px] h-[60px] left-0 top-0 absolute bg-white rounded-xl"></div>
-      <div class="left-[35px] top-[14px] absolute text-center text-zinc-800 text-2xl font-normal font-['Roboto Slab']">Programming</div>
-    </div>
-  </div>
-  <div class="h-[114px] left-[350px] top-[1052px] absolute">
-    <div class="left-0 top-0 absolute text-center text-white text-[32px] font-normal font-['Roboto Slab']">Credits:</div>
-    <div class="w-[900px] h-[60px] left-0 top-[54px] absolute">
-      <div class="w-[900px] h-[60px] left-0 top-0 absolute bg-white rounded-xl"></div>
-      <div class="left-[30px] top-[14px] absolute text-center text-zinc-800 text-2xl font-normal font-['Roboto Slab']">4</div>
-    </div>
-  </div>
-  <div class="w-[150px] h-[60px] left-[685px] top-[1217px] absolute">
-    <div class="w-[150px] h-[60px] left-0 top-0 absolute bg-green-600 rounded-xl"></div>
-    <div class="w-[150px] h-[60px] left-0 top-0 absolute text-center text-black text-2xl font-normal font-['Roboto Slab']">Add</div>
-  </div>
+  <form class="flex flex-col items-center justify-center h-screen bg-black text-black">
+    <div class="container bg-gradient-to-b from-gray-900 to-gray-600 p-8 rounded-lg shadow-md">
+      <center><div class="text-4xl font-bold mb-8 text-white">Add a new course</div></center>
 
-</div>
+      <div class="flex flex-col mb-4">
+        <label for="courseName" class="text-xl text-white">Course Name:</label>
+        <input id="courseName" type="text" class="input-field" placeholder="Course Name">
+      </div>
+
+      <div class="flex flex-col mb-6"> <!-- Increase the height of the description input -->
+        <label for="description" class="text-xl text-white ">Description:</label>
+        <textarea id="description" class="textarea-field" placeholder="Course description goes here ..."></textarea>
+      </div>
+
+      <div class="flex flex-col mb-4">
+        <label for="prerequisite" class="text-xl text-white">Prerequisite:</label>
+        <input id="prerequisite" type="text" class="input-field" placeholder="BSCCS2001, BSCCS2003, ...">
+      </div>
+
+      <div class="flex flex-col mb-4">
+        <label for="taughtBy" class="text-xl text-white">Taught by:</label>
+        <input id="taughtBy" type="text" class="input-field" placeholder="Professor name here ...">
+      </div>
+
+      <div class="flex flex-col mb-4">
+        <label for="category" class="text-xl text-white">Category:</label>
+        <input id="category" type="text" class="input-field" placeholder="Programming">
+      </div>
+
+      <div class="flex flex-col mb-4">
+        <label for="credits" class="text-xl text-white">Credits:</label>
+        <input id="credits" type="text" class="input-field" placeholder="4">
+      </div>
+
+      <center><button class="w-32 h-12 bg-green-600 rounded-xl text-xl font-normal text-white">Add</button></center>
+    </div>
+  </form><br><br><br><br><br>
 </template>
+
+<style scoped>
+ .textarea-field {
+    width: 100%;
+    padding: 1rem; /* Adjusted padding for increased height */
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 0.375rem;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    resize: vertical; /* Allows vertical resizing of the textarea */
+  }
+  .input-field {
+    width: 100%;
+    padding: 0.75rem; /* Adjust padding for height */
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 0.375rem;
+    text:black;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Green glow effect, adjust color as needed */
+  }
+
+  .container {
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
