@@ -18,7 +18,7 @@
         <div>
           <label
             for="username"
-            class="block text-sm font-medium leading-6 text-white"
+            class="block text-md font-medium leading-6 text-white"
             >Username</label
           >
           <div class="mt-2">
@@ -36,7 +36,7 @@
             <small
               class="text-sm font-light italic text-yellow-600"
               v-if="userDataError.username"
-              >Invalid email</small
+              >Invalid username</small
             >
           </div>
         </div>
@@ -45,16 +45,9 @@
           <div class="flex items-center justify-between">
             <label
               for="password"
-              class="block text-sm font-medium leading-6 text-white"
+              class="block text-md font-medium leading-6 text-white"
               >Password</label
             >
-            <div class="text-sm">
-              <a
-                href="#"
-                class="font-semibold text-yellow-300 hover:text-yellow-600"
-                >Forgot password?</a
-              >
-            </div>
           </div>
           <div class="mt-2">
             <input
@@ -80,7 +73,7 @@
           <button
             type="submit"
             @click="login($event)"
-            class="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:shadow-lg hover:shadow-yellow-200/90 hover:rounded-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-md font-semibold leading-6 text-black shadow-sm hover:shadow-md hover:shadow-yellow-400/90 hover:rounded-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Login
           </button>
@@ -124,19 +117,32 @@ export default {
     async login(e) {
       e.preventDefault(); // Prevents the default behaviour of submit button (to refresh the page)
 
-      if (this.userData.username.length == 0) {
+      if (this.userData.username.length == 0)
         this.userDataError.username = true;
-      }
-
-      if (this.userData.password.length == 0) {
+      if (this.userData.password.length == 0)
         this.userDataError.password = true;
-      }
 
       if (!this.userDataError.username && !this.userDataError.password) {
         const user = await this.authStore.login(this.userData);
 
-        if (user && user.access_token.length != 0) {
-          this.$router.push("/dashboard");
+        if (user) {
+          if (typeof user == "string") {
+            console.log(user);
+          } else if (typeof user == "number") {
+            if (parseInt(user) == 401) {
+              this.userDataError.password = true;
+            }
+
+            if (parseInt(user) == 404) {
+              this.userDataError.username = true;
+              this.userDataError.password = true;
+            }
+          } else {
+            localStorage.setItem("access_token", user.access_token);
+            localStorage.setItem("token_type", user.token_type);
+
+            this.$router.push("/dashboard");
+          }
         } else {
           this.userDataError.username = true;
           this.userDataError.password = true;

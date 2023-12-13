@@ -17,16 +17,16 @@
       <form class="space-y-6" action="#" method="POST">
         <div>
           <label
-            for="email"
+            for="username"
             class="block text-sm font-medium leading-6 text-white"
             >Username</label
           >
           <div class="mt-2">
             <input
-              id="email"
-              name="email"
-              type="email"
-              autocomplete="email"
+              id="username"
+              name="username"
+              type="username"
+              autocomplete="username"
               placeholder="Create a username ..."
               v-model="userData.username"
               required
@@ -80,16 +80,16 @@
         <div>
           <div class="flex items-center justify-between">
             <label
-              for="password"
+              for="passwordAgain"
               class="block text-sm font-medium leading-6 text-white"
               >Enter Password Again</label
             >
           </div>
           <div class="mt-2">
             <input
-              id="password"
-              name="password"
-              type="password"
+              id="passwordAgain"
+              name="passwordAgain"
+              type="passwordAgain"
               autocomplete="current-password"
               placeholder="Enter your password ..."
               v-model="userData.passwordAgain"
@@ -103,7 +103,7 @@
           <button
             type="submit"
             @click="register($event)"
-            class="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:shadow-lg hover:shadow-yellow-200/90 hover:rounded-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-md font-semibold leading-6 text-black shadow-sm hover:shadow-md hover:shadow-yellow-400/90 hover:rounded-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Register
           </button>
@@ -145,10 +145,22 @@ export default {
     async register(e) {
       e.preventDefault(); // Prevents the default behaviour of submit button (to refresh the page)
 
-      // Check if the passwords match
-      if(this.userData.password != this.userData.passwordAgain) { return; }
+      if (this.userData.password != this.userData.passwordAgain) return;
 
-      await this.authStore.register(this.userData);
+      const user = await this.authStore.register(this.userData);
+
+      if (user) {
+        if (typeof user == "string") {
+          console.error(user);
+        } else {
+          localStorage.setItem("access_token", user.access_token);
+          localStorage.setItem("token_type", user.token_type);
+
+          this.$router.push("/profile");
+        }
+      } else {
+        console.log(user);
+      }
     },
   },
 };

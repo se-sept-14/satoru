@@ -1,27 +1,22 @@
 <template>
   <nav
-    class="lg:sticky top-4 z-10 text-white p-3 lg:mx-80 lg:mt-4 lg:rounded-xl lg:shadow-lg lg:shadow-slate-500/30 flex flex-row justify-center items-center"
-    style="background-color: #00050d"
+    class="navbar-black sticky top-0 z-5 text-white p-4 lg:mx-40 lg:my-4 flex flex-row justify-center items-center"
   >
     <router-link
-      class="basis-1/2 lg:basis-1/4 font-sans text-lg cursor-pointer font-medium hover:font-bold mx-2"
+      class="basis-1/4 font-serif font-bold text-xl cursor-pointer hover:font-bold"
       to="/"
-      >recommender system</router-link
     >
-    <div class="collapse lg:visible basis-1/2 flex flex-row">
-      <router-link to="/" class="collapse lg:visible mx-3 hover:underline"
-        >Discover Courses</router-link
-      >
-      <router-link to="/" class="mx-3 hover:underline">My Courses</router-link>
-      <router-link to="/" class="mx-3 hover:underline"
-        >Recommendations</router-link
-      >
+      <span>{{ title }}</span>
+      <span class="font-redacted ml-2">{{ title }}</span>
+    </router-link>
+
+    <div class="collapse md:visible md:basis-1/2 flex flex-row">
     </div>
     <button
       @click="goToRegisterPage"
-      class="basis-1/6 bg-white text-black p-2 rounded-lg shadow-md hover:shadow-lg hover:shadow-yellow-200/90 hover:text-md"
+      class="collapse md:visible basis-1/4 lg:basis-1/6 bg-white text-black p-2 rounded-lg shadow-md hover:shadow-lg hover:shadow-yellow-200/90 hover:text-md"
     >
-      Register
+      Get Started
     </button>
   </nav>
 </template>
@@ -29,6 +24,11 @@
 <script>
 export default {
   name: "NavbarComponent",
+  data() {
+    return {
+      title: "pickmycourse",
+    };
+  },
   methods: {
     goToRegisterPage() {
       this.$router.push("/register");
@@ -36,3 +36,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Redacted+Script&display=swap");
+
+.font-redacted {
+  font-family: "Redacted Script", cursive;
+}
+</style>
