@@ -25,15 +25,92 @@
           </svg>
         </div>
       </div>
-    </div>'
-    
+    </div>
+
+    <div class="h-screen flex mx-auto px-36">
+      <div class="w-3/4 p-4 h-full flex flex-col">
+        <h1 class="text-3xl font-bold text-white my-2">
+          Welcome, {{ userName }}
+        </h1>
+        <h2 class="text-2xl text-white my-4">Your courses</h2>
+        <div class="grid auto-rows-[192px] grid-cols-3 gap-7">
+          <div
+            v-for="(course, i) in courses"
+            :key="i"
+            class="row-span-1 rounded-xl border-2 border-slate-100/10 bg-[#000101] p-5 dark:bg-[#000101] text-white"
+            :class="{ 'col-span-2': i === 3 || i === 6 }"
+          >
+            <h2 class="text-xl font-bold">{{ course.name }}</h2>
+            <p class="text-sm">{{ course.code }}</p>
+            <p class="text-sm">Credits: {{ course.credits }}</p>
+            <p class="text-sm">{{ course.description }}</p>
+            <p class="text-sm">Corequisite: {{ course.corequisite }}</p>
+            <p class="text-sm">Prerequisite: {{ course.prerequisite }}</p>
+            <p class="text-sm">Instructor: {{ course.instructor }}</p>
+          </div>
+        </div>
+        <!-- <div class="grid auto-rows-[192px] grid-cols-3 gap-7">
+          <div
+            v-for="(course, i) in courses"
+            :key="i"
+            :class="`row-span-1 rounded-xl border-2 border-slate-100/10 bg-[#000101] p-5 dark:bg-[#000101] ${
+              i === 3 || i === 6 ? 'col-span-2' : ''
+            }`"
+          >
+            <div class="text-white">
+              {{ course.name }}
+            </div>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="w-1/4 p-4 h-full">
+        2nd
+        <!-- Content for the second column -->
+      </div>
+    </div>
   </div>
 </template>
+
+<!-- ... rest of your component ... -->
 
 <script>
 export default {
   name: "DashboardPage",
+  data() {
+    return {
+      userName: "username",
+      courses: [
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
+        { id: 2, name: "Course 2", image: "url-to-course-2-image" },
+        // add more courses as needed
+      ],
+    };
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.course-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.course-image {
+  width: 100%;
+  height: auto;
+}
+</style>
