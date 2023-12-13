@@ -26,22 +26,22 @@ export default createRouter({
       component: () => import("@/pages/DashboardPage.vue"),
     },
     {
-      path: "/managecourse",
+      path: "/manage-course",
       name: "ManageCoursePage",
       component: () => import("@/pages/ManageCoursePage.vue"),
     },
     {
-      path: "/addcourse",
+      path: "/add-course",
       name: "AddCoursePage",
       component: () => import("@/pages/AddCoursePage.vue"),
     },
     {
-      path: "/admincourseview",
+      path: "/admin-course-view",
       name: "AdminCourseView",
       component: () => import("@/pages/AdminCourseView.vue"),
     },
     {
-      path: "/reccomendationpage",
+      path: "/recommend",
       name: "ReccomendationPage",
       component: () => import("@/pages/ReccomendationPage.vue"),
     },

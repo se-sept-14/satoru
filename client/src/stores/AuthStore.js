@@ -17,12 +17,13 @@ export const useAuthStore = defineStore("authStore", {
   getters: {},
   actions: {
     async login(userData) {
+      const { username, password } = await userData;
       const apiUrl = `${this.api.server}${this.api.endpoints.auth.login}`;
       const headers = {
         accept: "application/json",
         "Content-Type": "application/x-www-form-urlencoded",
       };
-      const { username, password } = await userData;
+
       const formData = new URLSearchParams();
       formData.append("username", username);
       formData.append("password", password);
@@ -32,13 +33,15 @@ export const useAuthStore = defineStore("authStore", {
 
         if (data) {
           const { access_token, token_type } = data;
-          this.currentUser["access_token"] = access_token;
+
           this.currentUser["token_type"] = token_type;
-          localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+          this.currentUser["access_token"] = access_token;
         }
       } catch (err) {
-        if (err.response.status == 401) {
-          return null;
+        switch(err.response.status) {
+          case 401: return 401;
+          case 404: return 404;
+          default: return err.message;
         }
       }
 
@@ -53,8 +56,9 @@ export const useAuthStore = defineStore("authStore", {
       const { username, email, password } = await userData;
       const payload = { email, username, password };
 
-      try {} catch(err) {
-        if(err.response.status == 400) {
+      try {
+      } catch (err) {
+        if (err.response.status == 400) {
           // User already exists condition
           return null;
         }
