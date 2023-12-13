@@ -128,6 +128,7 @@ export default {
 
         if (user) {
           if (typeof user == "string") {
+            console.log(user);
           } else if (typeof user  == "number") {
             if(parseInt(user) == 401) {
               this.userDataError.password = true;
