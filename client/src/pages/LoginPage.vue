@@ -73,8 +73,7 @@
           <button
             type="submit"
             @click="login($event)"
-            class="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-md font-semibold leading-6 text-black shadow-sm hover:shadow-md
-             hover:shadow-yellow-400/90 hover:rounded-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-md font-semibold leading-6 text-black shadow-sm hover:shadow-md hover:shadow-yellow-400/90 hover:rounded-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Login
           </button>
@@ -129,12 +128,12 @@ export default {
         if (user) {
           if (typeof user == "string") {
             console.log(user);
-          } else if (typeof user  == "number") {
-            if(parseInt(user) == 401) {
+          } else if (typeof user == "number") {
+            if (parseInt(user) == 401) {
               this.userDataError.password = true;
             }
 
-            if(parseInt(user) == 404) {
+            if (parseInt(user) == 404) {
               this.userDataError.username = true;
               this.userDataError.password = true;
             }
