@@ -20,6 +20,13 @@ services:
       - ./server/.env
     ports:
       - "80:80"
+  
+  satoru-client:
+    build: ./client
+    container_name: satoru-client
+    command: sh -c "serve --single /dist"
+    ports:
+      - "3000:3000"
 
 volumes:
   mariadb-dev:
