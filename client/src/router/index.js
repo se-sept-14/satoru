@@ -21,6 +21,11 @@ export default createRouter({
       component: () => import("@/pages/RegisterPage.vue"),
     },
     {
+      path: "/profile",
+      name: "StudentProfile",
+      component: () => import("@/pages/StudentProfilePage.vue"),
+    },
+    {
       path: "/dashboard",
       name: "DashboardPage",
       component: () => import("@/pages/DashboardPage.vue"),

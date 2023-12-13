@@ -38,10 +38,13 @@ export const useAuthStore = defineStore("authStore", {
           this.currentUser["access_token"] = access_token;
         }
       } catch (err) {
-        switch(err.response.status) {
-          case 401: return 401;
-          case 404: return 404;
-          default: return err.message;
+        switch (err.response.status) {
+          case 401:
+            return 401;
+          case 404:
+            return 404;
+          default:
+            return err.message;
         }
       }
 
@@ -57,11 +60,31 @@ export const useAuthStore = defineStore("authStore", {
       const payload = { email, username, password };
 
       try {
-      } catch (err) {
-        if (err.response.status == 400) {
-          // User already exists condition
-          return null;
+        const { data } = await axios.post(apiUrl, payload, { headers });
+
+        if (data) {
+          const { access_token, token_type } = data;
+
+          this.currentUser["token_type"] = token_type;
+          this.currentUser["access_token"] = access_token;
+
+          return this.currentUser;
         }
+      } catch (err) {
+        if (err.response) {
+          const { status, data } = err.response;
+
+          switch (status) {
+            case 400:
+              if (
+                data.detail.includes("Email") ||
+                data.detail.includes("Username")
+              )
+                return "Email or Username already in use";
+            default:
+              return status;
+          }
+        } else throw err;
       }
     },
   },
