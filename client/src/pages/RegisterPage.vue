@@ -89,7 +89,7 @@
             <input
               id="passwordAgain"
               name="passwordAgain"
-              type="passwordAgain"
+              type="password"
               autocomplete="current-password"
               placeholder="Enter your password ..."
               v-model="userData.passwordAgain"
