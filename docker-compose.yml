@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  mariadb-dev:
+    image: mariadb:latest
+    container_name: mariadb-dev
+    environment:
+      - MARIADB_DATABASE=db_name
+      - MARIADB_ROOT_PASSWORD=very-weak-password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb-dev:/var/lib/mysql:Z
+  
+  satoru-api:
+    build: ./server
+    container_name: satoru-api
+    command: sh -c "uvicorn main:app --host 0.0.0.0 --port 80"
+    env_file:
+      - ./server/.env
+    ports:
+      - "80:80"
+
+volumes:
+  mariadb-dev:

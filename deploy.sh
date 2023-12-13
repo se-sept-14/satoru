@@ -1,11 +1,7 @@
 #!/bin/bash
 
-# Checkout the `main` branch
-git checkout main
-
-# Pull the changes from main
-git pull
-
-# Run the deploy.sh script inside `server` directory
-cd server/
-sh deploy.sh
+# Check if .env file exists
+if [ ! -f ./server/.env ]; then
+  echo "Error: .env file not found. Please create the .env file inside `server` directory before running this script."
+  exit 1
+fi
