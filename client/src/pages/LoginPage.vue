@@ -133,15 +133,31 @@ export default {
       }
 
       if (!this.userDataError.username && !this.userDataError.password) {
-        const user = await this.authStore.login(this.userData);
+        try {
+          const user = await this.authStore.login(this.userData);
 
-        if (user && user.access_token.length != 0) {
-          this.$router.push("/dashboard");
-        } else {
-          this.userDataError.username = true;
-          this.userDataError.password = true;
+          if (user && user.access_token.length != 0) {
+            this.$router.push("/dashboard");
+          } else {
+            this.userDataError.username = true;
+            this.userDataError.password = true;
+          }
+        } catch (err) {
+          if (err.response && err.response.status === 401) {
+            // Token is expired or invalid, redirect to login page
+            this.$router.push("/login");
+          } else {
+            // Some other error occurred
+            console.error(err);
+          }
         }
       }
+    },
+    clearUsernameError() {
+      this.userDataError.username = false;
+    },
+    clearPasswordError() {
+      this.userDataError.password = false;
     },
     clearUsernameError() {
       this.userDataError.username = false;
