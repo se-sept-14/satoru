@@ -16,6 +16,22 @@ export const useAuthStore = defineStore("authStore", {
   }),
   getters: {},
   actions: {
+    logout() {
+      try {
+        localStorage.setItem("access_token", "");
+        localStorage.setItem("token_type", "");
+
+        return {
+          success: true,
+        };
+      } catch (err) {
+        console.error("Logout failed:", err);
+        return {
+          success: false,
+          error: err.message,
+        };
+      }
+    },
     async login(userData) {
       const { username, password } = await userData;
       const apiUrl = `${this.api.server}${this.api.endpoints.auth.login}`;
