@@ -1,4 +1,4 @@
-from models.db import db_connection, Users
+from models.db import db_connection, Users, DoesNotExist
 from models.api import UserRegistration, UserResponse, UserLogin
 from utils.crypto import (
   hash_password, verify_password,
@@ -58,9 +58,10 @@ async def login_user(username: Annotated[str, Form()], password: Annotated[str, 
     raise HTTPException(status_code = 400, detail = "Username and Password are required ⚠️")
 
   # Check if the user exist or not
-  user = Users.get_or_none(Users.username == username)
-  if user is None:
-    raise HTTPException(status_code = 404, detail = "User not found 👀")
+  try:
+    user = Users.get(Users.username == username)
+  except DoesNotExist:
+    raise HTTPException(status_code = 404, detail = "User does not exist")
   
   # Check if their password is correct or not
   if not verify_password(password, user.password):
