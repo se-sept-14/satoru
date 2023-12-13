@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
+import { useAuthStore } from "@/stores/AuthStore"; // adjust the path as needed
 
 // Vue router docs: https://router.vuejs.org/guide/
 export default createRouter({
@@ -10,11 +11,11 @@ export default createRouter({
       name: "HomePage",
       component: HomePage,
     },
-    {
-      path: "/login",
-      name: "LoginPage",
-      component: () => import("@/pages/LoginPage.vue"),
-    },
+    // {
+    //   path: "/login",
+    //   name: "LoginPage",
+    //   component: () => import("@/pages/LoginPage.vue"),
+    // },
     // {
     //   path: "/login",
     //   name: "LoginPage",
@@ -30,6 +31,22 @@ export default createRouter({
     //     }
     //   },
     // },
+    {
+      path: "/login",
+      name: "LoginPage",
+      component: () => import("@/pages/LoginPage.vue"),
+      beforeEnter: (to, from, next) => {
+        const authStore = useAuthStore();
+        // Check if the user is already logged in
+        if (authStore.currentUser && authStore.currentUser.access_token) {
+          // If they are, redirect to the dashboard
+          next("/dashboard");
+        } else {
+          // If not, continue to the login page
+          next();
+        }
+      },
+    },
     {
       path: "/register",
       name: "RegisterPage",
