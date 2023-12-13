@@ -166,6 +166,11 @@ export default {
       this.userDataError.password = false;
     },
   },
+  mounted() {
+    if (localStorage.currentUser) {
+      this.$router.push("dashboard");
+    }
+  },
 };
 </script>
 
