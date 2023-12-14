@@ -117,33 +117,25 @@ export default {
     async login(e) {
       e.preventDefault(); // Prevents the default behaviour of submit button (to refresh the page)
 
-      if (this.userData.username.length == 0)
-        this.userDataError.username = true;
-      if (this.userData.password.length == 0)
-        this.userDataError.password = true;
+      if (this.userData.username.length == 0) this.userDataError.username = true;
+      if (this.userData.password.length == 0) this.userDataError.password = true;
 
       if (!this.userDataError.username && !this.userDataError.password) {
-        try {
-          const user = await this.authStore.login(this.userData);
-        } catch (err) {
-          console.error(err);
-        }
+        const user = await this.authStore.login(this.userData);
 
         if (user) {
           if (typeof user == "string") {
             console.log(user);
           } else if (typeof user == "number") {
-            if (parseInt(user) == 401) {
-              this.userDataError.password = true;
-            }
+            if (parseInt(user) == 401) this.userDataError.password = true;
 
             if (parseInt(user) == 404) {
               this.userDataError.username = true;
               this.userDataError.password = true;
             }
           } else {
-            localStorage.setItem("access_token", user.access_token);
             localStorage.setItem("token_type", user.token_type);
+            localStorage.setItem("access_token", user.access_token);
 
             this.$router.push("/dashboard");
           }
@@ -152,12 +144,6 @@ export default {
           this.userDataError.password = true;
         }
       }
-    },
-    clearUsernameError() {
-      this.userDataError.username = false;
-    },
-    clearPasswordError() {
-      this.userDataError.password = false;
     },
     clearUsernameError() {
       this.userDataError.username = false;
