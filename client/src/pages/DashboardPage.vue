@@ -90,17 +90,16 @@ export default {
       userName: "username",
       courses: [
         { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
         { id: 2, name: "Course 2", image: "url-to-course-2-image" },
-        // add more courses as needed
+        { id: 3, name: "Course 3", image: "url-to-course-3-image" },
+        { id: 4, name: "Course 4", image: "url-to-course-4-image" },
+        { id: 5, name: "Course 5", image: "url-to-course-5-image" },
+        { id: 6, name: "Course 6", image: "url-to-course-6-image" },
+        { id: 7, name: "Course 7", image: "url-to-course-7-image" },
+        { id: 8, name: "Course 8", image: "url-to-course-8-image" },
+        { id: 9, name: "Course 9", image: "url-to-course-9-image" },
+        { id: 10, name: "Course 10", image: "url-to-course-10-image" },
+        { id: 11, name: "Course 11", image: "url-to-course-11-image" },
       ],
     };
   },
@@ -122,13 +121,3 @@ export default {
   height: auto;
 }
 </style>
-
-<!-- <script>
-export default {
-  name: "StudentProfile",
-  data() {
-    return {}
-  },
-  methods: {}
-}
-</script> -->
