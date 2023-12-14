@@ -9,26 +9,26 @@
             class="rounded-full w-32 h-32"
           />
           <h1 class="text-2xl font-bold text-white my-2">User Name</h1>
-          <h2 class="text-xl text-white my-2">User Type</h2>
+          <h2 class="text-xl text-white my-2">enderboi</h2>
         </div>
         <div class="flex flex-col items-center justify-center mt-10">
-          <h1 class="text-2xl font-bold text-white my-2">User Name</h1>
-          <h2 class="text-xl text-white my-2">User Type</h2>
+          <h1 class="text-2xl font-bold text-white my-2">Total courses:</h1>
+          <h2 class="text-xl text-white my-2">26</h2>
         </div>
         <div class="flex flex-col items-center justify-center mt-10">
-          <h1 class="text-2xl font-bold text-white my-2">User Name</h1>
-          <h2 class="text-xl text-white my-2">User Type</h2>
+          <h1 class="text-2xl font-bold text-white my-2">Total credits:</h1>
+          <h2 class="text-xl text-white my-2">84</h2>
         </div>
       </div>
       <div class="w-3/4 p-4 h-full flex flex-col">
-        <div class="flex">
-          <div id="welcome-message" class="flex auto">
+        <div class="flex justify-between">
+          <div id="welcome-message" class="flex pt-6">
             <h1 class="text-3xl font-bold text-white my-2">
               Welcome, {{ userName }}
             </h1>
           </div>
 
-          <div id="search-box" class="flex auto">
+          <div id="search-box" class="flex">
             <div class="flex items-center justify-center my-8">
               <div class="relative">
                 <input
