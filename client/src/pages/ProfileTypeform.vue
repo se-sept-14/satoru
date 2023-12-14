@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="h-screen w-screen flex">
-      <div class="h-full flex w-6/12 text-white">
-        <div class="flex justify-center items-center font-light text-9xl">
-          Welcome to Pick My Course
+      <div class="h-full flex w-5/12 text-white">
+        <div class="flex flex-col justify-center text-center bg-slate-400">
+          <p class="font-light text-4xl custom-font bg-yellow-300">
+            Welcome to Pick My Course
+          </p>
         </div>
       </div>
-      <div class="h-full flex w-8/12 bg-white rounded-l-2xl">
+      <div class="h-full flex w-7/12 bg-white rounded-l-2xl">
         <div class="flex justify-center items-center min-h-screen">
           <div class="max-w-4xl mx-auto mt-8 p-4">
             <transition name="slide" mode="out-in">
@@ -360,5 +362,16 @@ export default {
 .slide-enter,
 .slide-leave-to {
   transform: translateX(100%);
+}
+/* your-component.css */
+@font-face {
+  font-family: "ApercuProRegular"; /* Provide a name for your font */
+  src: url("@/assets/fonts/ApercuProRegular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.custom-font {
+  font-family: "ApercuProRegular", sans-serif; /* Use the font-family name you specified in @font-face */
 }
 </style>

@@ -232,6 +232,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Add your Tailwind CSS styles here */
-</style>
+<style scoped></style>
