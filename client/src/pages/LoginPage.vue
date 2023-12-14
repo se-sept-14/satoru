@@ -123,7 +123,8 @@ export default {
         this.userDataError.password = true;
 
       if (!this.userDataError.username && !this.userDataError.password) {
-        const user = await this.authStore.login(this.userData);
+        try {
+          const user = await this.authStore.login(this.userData);
 
         if (user) {
           if (typeof user == "string") {
@@ -155,6 +156,17 @@ export default {
     clearPasswordError() {
       this.userDataError.password = false;
     },
+    clearUsernameError() {
+      this.userDataError.username = false;
+    },
+    clearPasswordError() {
+      this.userDataError.password = false;
+    },
+  },
+  mounted() {
+    if (localStorage.currentUser) {
+      this.$router.push("dashboard");
+    }
   },
 };
 </script>
