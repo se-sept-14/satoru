@@ -31,6 +31,11 @@ export default createRouter({
       component: () => import("@/pages/DashboardPage.vue"),
     },
     {
+      path: "/admin-dashboard",
+      name: "AdminDashboard",
+      component: () => import("@/pages/AdminDashboard.vue"),
+    },
+    {
       path: "/manage-course",
       name: "ManageCoursePage",
       component: () => import("@/pages/ManageCoursePage.vue"),
