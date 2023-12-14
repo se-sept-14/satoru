@@ -11,7 +11,7 @@
         </h2>
         <button
           @click="nextStep"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-black hover:bg-teal-800 text-white font-bold py-2 px-4 rounded"
         >
           Let's Get Started
         </button>
@@ -56,7 +56,7 @@
         />
         <button
           @click="nextStep"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-black hover:bg-teal-800 text-white font-bold py-2 px-4 rounded"
         >
           Next
         </button>
@@ -87,7 +87,7 @@
         />
         <button
           @click="nextStep"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-black hover:bg-teal-800 text-white font-bold py-2 px-4 rounded"
         >
           Next
         </button>
@@ -106,7 +106,7 @@
         />
         <button
           @click="nextStep"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-black hover:bg-teal-800 text-white font-bold py-2 px-4 rounded"
         >
           Next
         </button>
@@ -125,7 +125,7 @@
         />
         <button
           @click="nextStep"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-black hover:bg-teal-800 text-white font-bold py-2 px-4 rounded"
         >
           Next
         </button>
@@ -143,7 +143,7 @@
         ></textarea>
         <button
           @click="nextStep"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-black hover:bg-teal-800 text-white font-bold py-2 px-4 rounded"
         >
           Next
         </button>
@@ -161,7 +161,7 @@
         />
         <button
           @click="nextStep"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-black hover:bg-teal-800 text-white font-bold py-2 px-4 rounded"
         >
           Next
         </button>
