@@ -13,7 +13,7 @@
         />
       </div>
 
-      <div class="h-full w-7/12 bg-white rounded-l-2xl">
+      <div class="h-full w-7/12 bg-stone-50 rounded-l-2xl">
         <div class="flex justify-center items-center min-h-screen">
           <div class="w-[640px] mx-auto mt-8 p-4">
             <transition name="slide" mode="out-in">
