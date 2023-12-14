@@ -4,16 +4,18 @@
       <div
         class="h-full w-5/12 flex flex-col justify-center text-center text-white"
       >
-        <p class="font-light text-4xl custom-font">Welcome to Pick My Course</p>
+        <p class="font-light text-4xl custom-font w-64 mt-30 self-center">
+          Welcome to Pick My Course
+        </p>
         <img
-          class="w-[640px] self-center my-12 rounded-lg"
-          src="https://images.unsplash.com/photo-1523289333742-be1143f6b766?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          class="w-[400px] self-center mx-4 mt-12 rounded-lg"
+          src="@/assets/newtang.png"
         />
       </div>
 
       <div class="h-full w-7/12 bg-white rounded-l-2xl">
         <div class="flex justify-center items-center min-h-screen">
-          <div class="max-w-4xl mx-auto mt-8 p-4">
+          <div class="w-[640px] mx-auto mt-8 p-4">
             <transition name="slide" mode="out-in">
               <div v-if="step === 1" key="1">
                 <h2 class="text-2xl font-bold mb-4">
@@ -22,7 +24,7 @@
                 </h2>
                 <button
                   @click="nextStep"
-                  class="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
                   Let's Get Started
                 </button>
@@ -103,7 +105,7 @@
                 />
                 <button
                   @click="nextStep"
-                  class="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
                   Next
                 </button>
@@ -148,7 +150,7 @@
                 />
                 <button
                   @click="nextStep"
-                  class="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
                   Next
                 </button>
@@ -181,7 +183,7 @@
                 />
                 <button
                   @click="nextStep"
-                  class="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
                   Next
                 </button>
@@ -214,7 +216,7 @@
                 />
                 <button
                   @click="nextStep"
-                  class="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
                   Next
                 </button>
@@ -246,7 +248,7 @@
                 ></textarea>
                 <button
                   @click="nextStep"
-                  class="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
                   Next
                 </button>
@@ -278,7 +280,7 @@
                 />
                 <button
                   @click="nextStep"
-                  class="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
                   Next
                 </button>
