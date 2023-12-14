@@ -1,13 +1,16 @@
 <template>
   <div>
     <div class="h-screen w-screen flex">
-      <div class="h-full w-5/12 flex flex-col justify-center text-center text-white">
-          <p class="font-light text-4xl custom-font">
-            Welcome to Pick My Course
-          </p>
-          <img class="w-[640px] self-center my-12 rounded-lg" src="https://images.unsplash.com/photo-1523289333742-be1143f6b766?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+      <div
+        class="h-full w-5/12 flex flex-col justify-center text-center text-white"
+      >
+        <p class="font-light text-4xl custom-font">Welcome to Pick My Course</p>
+        <img
+          class="w-[640px] self-center my-12 rounded-lg"
+          src="https://images.unsplash.com/photo-1523289333742-be1143f6b766?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        />
       </div>
-      
+
       <div class="h-full w-7/12 bg-white rounded-l-2xl">
         <div class="flex justify-center items-center min-h-screen">
           <div class="max-w-4xl mx-auto mt-8 p-4">
