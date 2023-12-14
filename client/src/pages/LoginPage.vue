@@ -125,6 +125,9 @@ export default {
       if (!this.userDataError.username && !this.userDataError.password) {
         try {
           const user = await this.authStore.login(this.userData);
+        } catch (err) {
+          console.error(err);
+        }
 
         if (user) {
           if (typeof user == "string") {
