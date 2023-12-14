@@ -13,20 +13,21 @@
         />
       </div>
 
-      <div class="h-full w-7/12 bg-white rounded-l-2xl">
+      <div class="h-full w-7/12 bg-stone-50 rounded-l-2xl">
         <div class="flex justify-center items-center min-h-screen">
           <div class="w-[640px] mx-auto mt-8 p-4">
             <transition name="slide" mode="out-in">
               <div v-if="step === 1" key="1">
-                <h2 class="text-2xl font-bold mb-4">
-                  Hi! 👋 Please answer as detailed as possible to get the best
-                  experience tailored for you! 💪
-                </h2>
+                <h2 class="text-3xl font-bold mb-2">Let's get you set up!</h2>
+                <p class="text-2xl mb-6">
+                  It only takes a moment. And it'll make your time with us even
+                  better.💪
+                </p>
                 <button
                   @click="nextStep"
                   class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
-                  Let's Get Started
+                  Get Started
                 </button>
               </div>
 
