@@ -82,7 +82,6 @@ export default {
       courses: [],
     };
   },
-
   async beforeMount() {
     const isAdmin = await useCourseStore().isAdmin();
 
@@ -129,6 +128,5 @@ export default {
       }
     },
   },
-  // ...other methods and functions
 };
 </script>

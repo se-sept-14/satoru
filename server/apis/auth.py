@@ -80,6 +80,17 @@ async def login_user(username: Annotated[str, Form()], password: Annotated[str, 
   }
 
 
+@auth_router.get("/is-admin", summary = "Returns whether the current user is an admin or not 🎓")
+async def is_admin(current_user: dict = Depends(decode_token)):
+  if current_user is None:
+    raise HTTPException(status_code = 403, detail = "Unauthorized ☠")
+  
+  return {
+    "id": current_user["id"],
+    "is_admin": current_user["is_admin"]
+  }
+
+
 @auth_router.post("/change-password", summary = "Change password of current user 🔓")
 async def change_password(
   current_password: str = Form(..., description = "Current Password"),
