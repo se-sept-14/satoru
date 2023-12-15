@@ -36,13 +36,9 @@ export const useUserProfileStore = defineStore("userProfileStore", {
           }
         } catch(err) {
           if (err.response && err.response.status === 404) {
-            // Handle 404 error here
             console.error("Profile not found");
-            // You can choose to return a specific value or throw an error
-            // depending on how you want to handle it in the calling code.
             return null;
           } else {
-            // Handle other errors
             console.error("Error fetching profile:", err.message);
             return false;
           }
