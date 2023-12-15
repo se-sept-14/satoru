@@ -59,10 +59,11 @@ export default {
     };
   },
   async mounted() {
+    const accessToken = localStorage.getItem("access_token");
+    console.log(accessToken)
     const response = await axios.get("https://api.pickmycourse.online/api/course/all", {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJlbmRlcmJvaUBwaWNrbXljb3Vyc2Uub25saW5lIiwiaXNfYWRtaW4iOjAsImV4cCI6MTcwMjM5MTU5OH0.dXgUS4Lz2slUwRwOWbMCzKjp9dKIHlrrUFFl3HasfJ0`,
-      },
+        Authorization: `Bearer ${accessToken}`,      },
     });
     this.courses = response.data;
     console.log(response.data);
