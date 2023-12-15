@@ -82,7 +82,7 @@ export const useUserProfileStore = defineStore("userProfileStore", {
       }
     },
     async fetchProfilePicture(username) {
-      const apiUrl = `${this.profilePicture.api}${username.toString().trim()}`;
+      const apiUrl = `${this.profilePicture.api}${username.toString().trim().split("").reverse().join("")}`;
       const { data } = await axios.get(apiUrl);
       return data;
     },

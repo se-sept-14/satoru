@@ -1,39 +1,58 @@
 <template>
   <div>
     <div class="h-screen flex mx-auto px-10">
-      <div class="w-1/4">
-        <div class="flex flex-col items-center justify-center">
-          <div
-            id="profilePic"
-            class="rounded-full w-32 h-32 my-6"
-            v-html="profilePicture"
-          ></div>
-          <h1 class="text-2xl font-bold text-white my-2">Username</h1>
-          <h2 class="text-xl text-white my-2">{{ username }}</h2>
+      <!-- Left sidebar -->
+      <div class="w-1/4 flex flex-col" v-if="username">
+        <!-- Student's randomly generated profile picture -->
+        <div
+          id="profilePic"
+          class="rounded-full w-32 h-32 my-12 self-center"
+          v-html="profilePicture"
+        ></div>
+
+        <div class="flex justify-between">
+          <div class="flex flex-col">
+            <!-- Student's name and username -->
+            <h1 class="text-2xl font-bold text-white">{{ name }}</h1>
+            <h2 class="text-lg text-gray-400">{{ username }}</h2>
+          </div>
+
+          <!-- Logout button -->
+          <button
+            class="bg-transparent text-gray-200 rounded px-6 py-2 hover:bg-slate-900"
+            @click="logout"
+          >
+            Logout
+          </button>
         </div>
-        <div class="flex flex-col items-center justify-center mt-10">
-          <h1 class="text-2xl font-bold text-white my-2">Total courses:</h1>
-          <h2 class="text-xl text-white my-2">{{ courses.length }}</h2>
+
+        <div class="flex mt-6">
+          <div class="flex items-end">
+            <h2 class="text-2xl font-semibold text-white">
+              {{ courses.length }}
+            </h2>
+            <h1 class="text-lg text-gray-400 ml-1">courses taken</h1>
+          </div>
+
+          <div class="flex items-end ml-6">
+            <h2 class="text-2xl font-semibold text-white">84</h2>
+            <h1 class="text-lg text-gray-400 ml-1">credits</h1>
+          </div>
         </div>
-        <div class="flex flex-col items-center justify-center mt-10">
-          <h1 class="text-2xl font-bold text-white my-2">Total credits:</h1>
-          <h2 class="text-xl text-white my-2">84</h2>
-        </div>
-        <button
-          class="self-center mt-10 bg-slate-100 text-black rounded px-6 py-2 hover:bg-slate-200"
-          @click="logout"
-        >
-          Logout
-        </button>
       </div>
+
+      <!-- Right, main section -->
       <div class="w-3/4 p-4 h-full flex flex-col">
         <div class="flex justify-between">
+          <!-- Welcome message -->
           <div id="welcome-message" class="flex pt-6">
-            <h1 class="text-3xl font-bold text-white my-2">
-              Welcome {{ username }} 👋
+            <h1 v-if="username" class="text-3xl font-bold text-white my-2">
+              Welcome
+              <span class="font-semibold italic">{{ username }}</span> 👋
             </h1>
           </div>
 
+          <!-- Search box -->
           <div id="search-box" class="flex">
             <div class="flex items-center justify-center my-8">
               <div class="relative">
@@ -66,7 +85,13 @@
           </div>
         </div>
 
-        <h2 class="text-2xl text-white my-4">Your courses</h2>
+        <!-- Courses section -->
+        <h2
+          v-if="courses.length > 0"
+          class="text-2xl text-white my-4 font-semibold"
+        >
+          Your courses 🔻
+        </h2>
         <div class="grid auto-rows-[192px] grid-cols-3 gap-7">
           <div
             v-for="(course, i) in courses"
@@ -74,13 +99,35 @@
             class="row-span-1 rounded-xl border-2 border-slate-100/10 bg-[#000101] p-5 dark:bg-[#000101] text-white"
             :class="{ 'col-span-2': i === 3 || i === 6 }"
           >
-            <h2 class="text-xl font-bold">{{ course.name }}</h2>
-            <p class="text-sm">{{ course.code }}</p>
-            <p class="text-sm">Credits: {{ course.credits }}</p>
-            <!-- <p class="text-sm">{{ course.description }}</p> -->
-            <p class="text-sm">Corequisite: {{ course.corequisite }}</p>
-            <p class="text-sm">Prerequisite: {{ course.prerequisites }}</p>
-            <p class="text-sm">Instructor: {{ course.instructor_name }}</p>
+            <div class="flex items-end mb-4">
+              <h2 class="text-xl font-bold">{{ course.name }}</h2>
+              <p class="text-xs ml-2 font-extralight italic">
+                {{ course.code }}
+              </p>
+            </div>
+
+            <div class="flex mb-1">
+              <p class="text-xs">
+                Corequisite:
+                <span class="text-md italic font-bold">{{
+                  course.corequisite
+                }}</span>
+              </p>
+              <p class="text-xs ml-2">
+                Prerequisite:
+                <span class="text-md italic font-bold">{{
+                  course.prerequisites
+                }}</span>
+              </p>
+            </div>
+
+            <div class="flex justify-between items-end mt-8">
+              <p class="text-md font-extralight italic">{{ course.instructor_name }}</p>
+              <div class="flex flex-col">
+                <p class="text-2xl font-bold self-center">{{ course.credits }}</p>
+                <p class="text-xs font-extralight text-gray-300">Credits</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -102,23 +149,12 @@ export default {
   name: "DashboardPage",
   data() {
     return {
+      name: "",
+      username: "",
       searchQuery: "",
-      username: "@username",
       profilePicture: null,
+      courses: [],
       userData: {},
-      courses: [
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 2, name: "Course 2", image: "url-to-course-2-image" },
-        { id: 3, name: "Course 3", image: "url-to-course-3-image" },
-        { id: 4, name: "Course 4", image: "url-to-course-4-image" },
-        { id: 5, name: "Course 5", image: "url-to-course-5-image" },
-        { id: 6, name: "Course 6", image: "url-to-course-6-image" },
-        { id: 7, name: "Course 7", image: "url-to-course-7-image" },
-        { id: 8, name: "Course 8", image: "url-to-course-8-image" },
-        { id: 9, name: "Course 9", image: "url-to-course-9-image" },
-        { id: 10, name: "Course 10", image: "url-to-course-10-image" },
-        { id: 11, name: "Course 11", image: "url-to-course-11-image" },
-      ],
     };
   },
   methods: {
@@ -150,6 +186,7 @@ export default {
       return;
     }
 
+    // If they are an admin, redirect them to their dashboard
     if (await this.authStore.isAdmin()) {
       this.$router.push("/manage-course");
       return;
@@ -157,11 +194,11 @@ export default {
       const studentProfile = await this.userProfileStore.fetchProfile();
 
       if (studentProfile) {
-        const { user } = studentProfile;
+        const { user, name } = studentProfile;
         this.username = `@${user["username"]}`;
+        this.name = name;
 
         this.courses = await this.userProfileStore.fetchStudentCourses();
-        // console.log(studentCourses);
 
         const pfpSvg = await this.userProfileStore.fetchProfilePicture(
           this.username
