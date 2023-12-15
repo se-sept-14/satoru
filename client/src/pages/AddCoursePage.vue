@@ -3,7 +3,10 @@
     <div class="header"></div>
     <div class="form-wrapper">
       <form @submit.prevent="addCourse" class="form">
-        <div v-show="currentStep === 1" class="container bg-black mt-10 mb-10 p-10">
+        <div
+          v-show="currentStep === 1"
+          class="container bg-black mt-10 mb-10 p-10"
+        >
           <div class="title mt-4 text-white">Step 1: Basic Information</div>
 
           <div class="flex flex-col mb-4">
@@ -16,7 +19,8 @@
               type="text"
               class="input-field"
               placeholder="Course Name"
-              required/>
+              required
+            />
           </div>
 
           <div class="flex flex-col mb-6">
@@ -33,7 +37,8 @@
           </div>
           <div class="flex flex-col mb-4">
             <label for="prerequisite" class="text-xl text-white"
-              >Course price in Rs:</label>
+              >Course price in Rs:</label
+            >
             <input
               v-model="courseData.price"
               id="courseprice"
@@ -41,12 +46,18 @@
               class="input-field"
               inputmode="numeric"
               placeholder="10000"
-              required/>
+              required
+            />
           </div>
-          <button @click="nextStep1" type="button" class="navigation-button">Next</button>
+          <button @click="nextStep1" type="button" class="navigation-button">
+            Next
+          </button>
         </div>
 
-        <div v-show="currentStep === 2" class="container bg-black mt-10 mb-10 p-10">
+        <div
+          v-show="currentStep === 2"
+          class="container bg-black mt-10 mb-10 p-10"
+        >
           <div class="title mt-4 text-white">Step 2: Course Details</div>
           <div class="flex flex-col mb-4">
             <label for="prerequisite" class="text-xl text-white"
@@ -88,11 +99,18 @@
               required
             />
           </div>
-          <button @click="prevStep" type="button" class="navigation-button">Previous</button>
-          <button @click="nextStep2" type="button" class="navigation-button">Next</button>
+          <button @click="prevStep" type="button" class="navigation-button">
+            Previous
+          </button>
+          <button @click="nextStep2" type="button" class="navigation-button">
+            Next
+          </button>
         </div>
 
-        <div v-show="currentStep === 3" class="container bg-black mt-10 mb-10 p-10">
+        <div
+          v-show="currentStep === 3"
+          class="container bg-black mt-10 mb-10 p-10"
+        >
           <div class="title mt-4 text-white">
             Step 3: Instructor Information
           </div>
@@ -108,7 +126,9 @@
             />
           </div>
           <div class="flex flex-col mb-4 text-white">
-            <label class="text-xl text-white" for="imageInput">Select an Image:</label>
+            <label class="text-xl text-white" for="imageInput"
+              >Select an Image:</label
+            >
             <input
               type="file"
               id="imageInput"
@@ -123,15 +143,20 @@
                 style="max-width: 100%"
               />
             </div>
-
-            
           </div>
 
-          <button type="button" @click="prevStep" class="navigation-button">Previous</button>
-          <button type="button" @click="nextStep3" class="navigation-button">Next</button>
+          <button type="button" @click="prevStep" class="navigation-button">
+            Previous
+          </button>
+          <button type="button" @click="nextStep3" class="navigation-button">
+            Next
+          </button>
         </div>
 
-        <div v-show="currentStep === 4" class="container bg-black mt-5 mb-10 p-10">
+        <div
+          v-show="currentStep === 4"
+          class="container bg-black mt-5 mb-10 p-10"
+        >
           <div class="title mt-4 text-white">Step 4: Other Details</div>
 
           <div class="flex flex-col mb-4">
@@ -158,9 +183,13 @@
               id="tags"
               @keydown.enter.prevent="addTag"
             />
-            <br>
+            <br />
             <ul>
-              <li class="text-white text-xl mr-3" v-for="(tag, index) in courseData.tags" :key="index">
+              <li
+                class="text-white text-xl mr-3"
+                v-for="(tag, index) in courseData.tags"
+                :key="index"
+              >
                 {{ tag }}
                 <button
                   type="button"
@@ -181,10 +210,13 @@
               type="text"
               class="input-field"
               placeholder="4"
-              required/>
+              required
+            />
           </div>
 
-          <button type="button" @click="prevStep" class="navigation-button">Previous</button>
+          <button type="button" @click="prevStep" class="navigation-button">
+            Previous
+          </button>
           <button type="submit" class="submit-button">Add</button>
         </div>
       </form>
@@ -194,7 +226,7 @@
 
 
 <script>
-import axios from "axios";
+import { useCourseStore } from "@/stores/courseStore";
 
 export default {
   data() {
@@ -209,7 +241,8 @@ export default {
         prerequisites: "",
         hours_per_week: "",
         instructor_name: "",
-        instructor_picture:"https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg",
+        instructor_picture:
+          "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg",
         tags: [],
       },
       newTag: "",
@@ -217,46 +250,39 @@ export default {
       currentStep: 1,
     };
   },
-  beforeMount() {
-    // Check for the existence of the access token in local storage
+  async beforeMount() {
+    const isAdmin = await useCourseStore().isAdmin();
+
+    if (!isAdmin) {
+      this.$router.push("/dashboard");
+    }
+
     const accessToken = localStorage.getItem("access_token");
 
-    // If access token is not present, redirect to the login component
     if (!accessToken) {
-      this.$router.push("/login"); // Adjust the route based on your setup
+      this.$router.push("/login");
     }
   },
 
   // Other component options and methods can be added here
   methods: {
-async addCourse() {
-  
+    async addCourse() {
+      this.courseData.credits = parseInt(this.courseData.credits);
+      this.courseData.price = parseInt(this.courseData.price);
 
-  this.courseData.credits = parseInt(this.courseData.credits);
-  this.courseData.price = parseInt(this.courseData.price);
+      try {
+        // Call the addCourse action from the store
+        const newCourse = await useCourseStore().addCourse(this.courseData);
 
-  const accessToken = localStorage.getItem("access_token");
-  const headers = {
-    accept: "application/json",
-    Authorization: `Bearer ${accessToken}`,
-    "Content-Type": "application/json",
-  };
+        console.log(newCourse);
 
-  try {
-    const response = await axios.post(
-      "https://api.pickmycourse.online/api/course/",
-      this.courseData,
-      {
-        headers,
+        this.$router.push('/manage-course');
+
+      } catch (error) {
+        alert("Please check if you have entered all the data correctly");
+        console.error(error);
       }
-    );
-
-    console.log(response.data);
-  } catch (error) {
-    alert("Please check if you have entered all the data correctly");
-    console.error(error);
-  }
-},
+    },
     addTag() {
       if (this.newTag.trim() !== "") {
         this.courseData.tags.push(this.newTag.trim());
@@ -284,50 +310,45 @@ async addCourse() {
       console.log("Image saved:", this.courseData.instructor_picture);
     },
     nextStep1() {
-      if(this.courseData.name=="" || this.courseData.description=="" || this.courseData.price==0){
+      if (
+        this.courseData.name == "" ||
+        this.courseData.description == "" ||
+        this.courseData.price == 0
+      ) {
         console.log("hii");
-
-      }
-      else{
+      } else {
         console.log("byee");
         this.currentStep++;
-
       }
-      
-      
     },
     nextStep2() {
-      if(this.courseData.code=="" || this.courseData.prerequisites=="" || this.courseData.corequisite==""){
+      if (
+        this.courseData.code == "" ||
+        this.courseData.prerequisites == "" ||
+        this.courseData.corequisite == ""
+      ) {
         console.log("hii");
-
-      }
-      else{
+      } else {
         console.log("byee");
         this.currentStep++;
-
       }
-      
-      
     },
     nextStep3() {
-      if(this.courseData.instructor_name=="" || this.courseData.instructor_picture==""){
+      if (
+        this.courseData.instructor_name == "" ||
+        this.courseData.instructor_picture == ""
+      ) {
         console.log("hii");
-
-      }
-      else{
+      } else {
         console.log("byee");
         this.currentStep++;
-
       }
-      
-      
     },
     prevStep() {
-  if (this.currentStep > 1) {
-    this.currentStep--;
-  }
-}
-
+      if (this.currentStep > 1) {
+        this.currentStep--;
+      }
+    },
   },
 };
 </script>
@@ -357,7 +378,7 @@ async addCourse() {
   width: 100%;
   background-color: rgb(26, 25, 25);
   box-shadow: 0 0 10px rgba(192, 165, 165, 0.6);
-  border:rgb(248, 241, 241);
+  border: rgb(248, 241, 241);
 }
 
 .form-container {

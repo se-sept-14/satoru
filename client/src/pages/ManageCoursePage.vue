@@ -30,12 +30,14 @@
         </div>
 
         <div class="flex justify-between p-4">
-          <button @click="redirectToAdminCourseView"
+          <button
+            @click="redirectToAdminCourseView"
             class="w-32 h-12 bg-green-500 rounded-xl hover:bg-green-600 mx-auto text-white text-lg font-normal"
           >
             Manage
           </button>
-          <button @click="confirmDeleteCourse(course.id)"
+          <button
+            @click="confirmDeleteCourse(course.id)"
             class="w-32 h-12 bg-red-500 rounded-xl hover:bg-red-600 mx-auto text-white text-lg font-normal"
           >
             Delete
@@ -72,7 +74,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { useCourseStore } from "@/stores/courseStore";
 
 export default {
   data() {
@@ -81,60 +83,51 @@ export default {
     };
   },
 
-  beforeMount() {
-    // Check for the existence of the access token in local storage
+  async beforeMount() {
+    const isAdmin = await useCourseStore().isAdmin();
+
+    if (!isAdmin) {
+      this.$router.push("/dashboard");
+    }
+
     const accessToken = localStorage.getItem("access_token");
 
-    // If access token is not present, redirect to the login component
     if (!accessToken) {
-      this.$router.push("/login"); // Adjust the route based on your setup
+      this.$router.push("/login");
     }
   },
   async mounted() {
-  await this.fetchCourses();
+    await this.fetchCourses();
+  },
+  computed: {
+    courses() {
+      return useCourseStore().courses;
+    },
   },
 
   methods: {
-    
     async fetchCourses() {
-      const accessToken = localStorage.getItem("access_token");
-      const response = await axios.get(
-        "https://api.pickmycourse.online/api/course/all",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      this.courses = response.data;
+      await useCourseStore().fetchCourses();
     },
     redirectToAdminCourseView() {
       this.$router.push("/admin-course-view");
     },
-confirmDeleteCourse(courseId) {
-      const confirmDelete = window.confirm("Are you sure you want to delete this course?");
+    confirmDeleteCourse(courseId) {
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this course?"
+      );
       if (confirmDelete) {
         this.deleteCourse(courseId);
       }
     },
     async deleteCourse(courseId) {
-      const accessToken = localStorage.getItem("access_token");
-      try {
-        await axios.delete(`https://api.pickmycourse.online/api/course/${courseId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        // Refresh the course list after deletion
-        await this.fetchCourses();
-      } catch (error) {
-        console.error("Error deleting course:", error);
-        // Handle error as needed
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this course?"
+      );
+      if (confirmDelete) {
+        await useCourseStore().deleteCourse(courseId);
       }
-    
-  },
-
-
+    },
   },
   // ...other methods and functions
 };
