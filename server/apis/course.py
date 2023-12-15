@@ -1,7 +1,7 @@
 from utils.crypto import decode_token
 from models.api import SearchQuery, CourseEdit, CourseCreate
 from models.db import (
-  Courses, Tags, CourseTagMap, StudentCourseMap,
+  Courses, Tags, CourseTagMap, StudentCourseMap, Users,
   db_connection, fn, DoesNotExist
 )
 
@@ -216,22 +216,18 @@ async def cousese_by_student(student_id, current_user: dict = Depends(decode_tok
   try:
     if current_user['is_admin'] == 0:
       raise HTTPException(status_code=403, detail="Not an admin")
-    
+  
+    try:
+      user = Users.get_by_id(student_id)
+    except Users.DoesNotExist:
+      raise HTTPException(status_code=404, detail="User not found")
+
     course_ids = StudentCourseMap.select(StudentCourseMap.course_id).where(StudentCourseMap.user_id == student_id)
     courses = Courses.select().where(Courses.id.in_(course_ids))
-    data = []
-
-    for course in courses:
-            course_data = model_to_dict(course) if course is not None else {}
-            tags = Tags.select().join(CourseTagMap).where(CourseTagMap.course == course)
-            course_data["tags"] = [
-              tag.name for tag in tags
-            ] if tags else []
-            data.append(course_data)
-
-    return {
-        "data": data
-      }
+    return courses
   
+  except HTTPException as e:
+        raise e  
+
   except Exception as e:
-      raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
