@@ -64,6 +64,11 @@ export default createRouter({
       component: () => import("@/pages/DashboardPage.vue"),
     },
     {
+      path: "/search",
+      name: "SearchPage",
+      component: () => import("@/pages/SearchPage.vue"),
+    },
+    {
       path: "/manage-course",
       name: "ManageCoursePage",
       component: () => import("@/pages/ManageCoursePage.vue"),
