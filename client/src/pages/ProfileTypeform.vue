@@ -37,9 +37,19 @@
                   <i class="fa-solid fa-arrow-left mr-1"></i>
                   Go back
                 </button>
+
+                <h2 class="text-2xl font-bold mb-4">What is your name?</h2>
+                <input
+                  v-model="name"
+                  type="text"
+                  class="w-full p-2 mb-4 border-b border-black border-t-0 border-r-0 border-l-0 rounded-none"
+                  placeholder="Enter your name"
+                />
+
                 <h2 class="text-2xl font-bold mb-4">
                   What is your learning preference?
                 </h2>
+
                 <label class="block mb-2">
                   <input
                     type="radio"
@@ -89,6 +99,23 @@
                   type="text"
                   class="w-full p-2 mb-4 rounded"
                   placeholder="Enter your CGPA"
+                />
+
+                <h2 class="text-2xl font-bold mb-4">In Which level are you?</h2>
+                <p>(0:foundational, 1:diploma, 2:degree, 3:bs)</p>
+                <input
+                  v-model="term"
+                  type="number"
+                  class="w-full p-2 mb-4 rounded"
+                  placeholder="Enter your current level"
+                />
+
+                <h2 class="text-2xl font-bold mb-4">In Which term are you?</h2>
+                <input
+                  v-model="term"
+                  type="text"
+                  class="w-full p-2 mb-4 rounded"
+                  placeholder="Enter your current term"
                 />
                 <button
                   @click="nextStep"
@@ -273,7 +300,69 @@
                 </button>
               </div>
 
-              <div v-else key="9">
+              <div v-else-if="step === 9" key="9">
+                <button @click="prevStep" class="my-2">
+                  <svg
+                    class="w-6 h-6 inline-block mr-1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"
+                    ></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                  </svg>
+                  Previous
+                </button>
+                <h2 class="text-2xl font-bold mb-4">
+                  Step 9: Tell us a more about yourself
+                </h2>
+                <!-- Add input for completion date -->
+                <input
+                  v-model="dob"
+                  type="date"
+                  class="w-full p-2 mb-4 rounded"
+                />
+                <input
+                  v-model="address"
+                  type="text"
+                  class="w-full p-2 mb-4 rounded"
+                  placeholder="Enter your address"
+                />
+                <input
+                  v-model="category"
+                  type="text"
+                  class="w-full p-2 mb-4 rounded"
+                  placeholder="Enter your address"
+                />
+                <input
+                  v-model="gender"
+                  type="text"
+                  class="w-full p-2 mb-4 rounded"
+                  placeholder="Enter your address"
+                />
+                <input
+                  v-model="contact_no"
+                  type="number"
+                  class="w-full p-2 mb-4 rounded"
+                  placeholder="Enter your phone number"
+                />
+                <!-- <input
+                  v-model="pwd"
+                  type="checkbok"
+                  class="w-full p-2 mb-4 rounded"
+                  placeholder="Choose true if pwd"
+                /> -->
+                <button
+                  @click="nextStep"
+                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                >
+                  Next
+                </button>
+              </div>
+
+              <div v-else key="10">
                 <h2 class="text-2xl font-bold mb-4">Summary</h2>
                 <p>Learning Preferences: {{ preferences }}</p>
                 <p>CGPA: {{ cgpa }}</p>
@@ -301,19 +390,42 @@
 </template>
 
 <script>
+import { useProfileStore } from "@/stores/ProfileStore";
+import { useAuthStore } from "@/stores/AuthStore";
+
 export default {
+  setup() {
+    const authStore = useAuthStore();
+    const profileStore = useProfileStore();
+
+    return { authStore, profileStore };
+  },
   data() {
     return {
       step: 1,
+      category: "",
+      dob: "",
+      gender: "",
+      name: "",
+      profile_picture_url: "",
+      pwd: false,
+      roll_no: "",
+
+      careerGoals: "",
+      completionDate: "",
+      numCourses: "",
+      hoursPerWeek: "",
       preferences: "",
-      cgpa: "",
+
       subject1: "",
       subject2: "",
       subject3: "",
-      hoursPerWeek: "",
-      numCourses: "",
-      careerGoals: "",
-      completionDate: "",
+
+      address: "",
+      contact_no: "",
+      level: 1,
+      term: "",
+      cgpa: "",
     };
   },
   methods: {
@@ -323,18 +435,50 @@ export default {
     prevStep() {
       this.step--;
     },
-    submitForm() {
-      console.log("Form Data:", {
-        preferences: this.preferences,
-        cgpa: this.cgpa,
-        subject1: this.subject1,
-        subject2: this.subject2,
-        subject3: this.subject3,
-        hoursPerWeek: this.hoursPerWeek,
-        numCourses: this.numCourses,
-        careerGoals: this.careerGoals,
-        completionDate: this.completionDate,
-      });
+    // submitForm() {
+    //   console.log("Form Data:", {
+    //     preferences: this.preferences,
+    //     cgpa: this.cgpa,
+    //     subject1: this.subject1,
+    //     subject2: this.subject2,
+    //     subject3: this.subject3,
+    //     hoursPerWeek: this.hoursPerWeek,
+    //     numCourses: this.numCourses,
+    //     careerGoals: this.careerGoals,
+    //     completionDate: this.completionDate,
+    //   });
+    // },
+
+    submitForm() {},
+    async submitForm() {
+      const profileData = {
+        category: this.category,
+        dob: this.dob,
+        gender: this.gender,
+        name: this.name,
+        profile_picture_url: this.profile_picture_url,
+        pwd: this.pwd,
+        roll_no: this.roll_no,
+        career_goals: this.career_goals,
+        completion_deadline: this.completion_deadline,
+        courses_willing_to_take: this.courses_willing_to_take,
+        hours_per_week: this.hours_per_week,
+        learning_preferences: this.learning_preferences,
+        address: this.address,
+        contact_no: this.contact_no,
+        level: this.level,
+        term: this.term,
+      };
+
+      const response = await this.profileStore.createProfile(profileData);
+
+      if (response) {
+        // Handle successful profile creation
+        console.log("created profile");
+      } else {
+        // Handle failed profile creation
+        log("failed to create profile");
+      }
     },
   },
 };
