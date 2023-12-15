@@ -34,7 +34,9 @@
                 <input
                   type="text"
                   class="bg-black text-white border border-gray-700 rounded-full py-3 px-6 pl-14 placeholder-#000101 focus:outline-none focus:shadow-outline w-96"
-                  placeholder="Search..."
+                  placeholder="Search ..."
+                  v-model="searchQuery"
+                  v-on:keyup.enter="callSearch"
                 />
                 <div class="absolute inset-y-0 left-0 flex items-center pl-5">
                   <svg
@@ -94,6 +96,7 @@ export default {
   name: "DashboardPage",
   data() {
     return {
+      searchQuery: "",
       username: "@username",
       profilePicture: null,
       courses: [
@@ -110,6 +113,20 @@ export default {
         { id: 11, name: "Course 11", image: "url-to-course-11-image" },
       ],
     };
+  },
+  methods: {
+    callSearch() {
+      if(this.searchQuery.length != 0) {
+        this.$router.push({
+          name: "SearchPage",
+          params: {
+            query: this.searchQuery
+          }
+        });
+      } else {
+        console.log("empty search query");
+      }
+    }
   },
   async mounted() {
     // Check if the user is logged in or not

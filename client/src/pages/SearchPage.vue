@@ -15,24 +15,22 @@
           <div class="flex flex-col">
             <div class="mb-4">
               <p class="font-semibold text-2xl mb-1">
-                Programming Concepts using Java
+                {{ course.name }}
               </p>
-              <p class="font-light text-lg text-gray-400">by Madhavan Mukund</p>
+              <p class="font-light text-lg text-gray-400">by {{ course.instructor_name }}</p>
             </div>
             <p class="text-gray-400 mb-6">
-              This course covers the basics of programming in Java. Topics
-              include variables, arrays, loops, functions, and object-oriented
-              programming.
+              {{ course.description }}
             </p>
           </div>
           <img
             class="w-20 h-20 object-cover rounded-full ml-6"
-            src="https://study.iitm.ac.in/ds/assets/img/academics/instructors/9003_1x.jpg"
+            :src="course.instructor_picture"
           />
         </div>
         <div class="flex justify-between items-center w-full mt-6">
-          <div class="text-xl font-light">3 credits</div>
-          <div class="text-xl font-light">199 students</div>
+          <div class="text-xl font-light">{{ course.credits }} credits</div>
+          <div class="text-xl font-light">75 students</div>
           <div class="flex items-center">
             <div class="w-4 h-4 bg-yellow-400 clip-star"></div>
             <div class="text-xl font-light ml-2">4.5</div>
@@ -40,7 +38,8 @@
           <button
             class="bg-slate-100 text-black rounded px-6 py-2 transition-colors duration-200 hover:bg-slate-200 hover:text-white"
           >
-            add to cart
+            <i class="fa-solid fa-cart-plus"></i>
+            Add to cart!
           </button>
         </div>
       </div>
@@ -49,7 +48,16 @@
 </template>
 
 <script>
+import { useAuthStore } from "@/stores/AuthStore";
+import { useSearchStore } from "@/stores/SearchStore";
+
 export default {
+  setup() {
+    const authStore = useAuthStore();
+    const searchStore = useSearchStore();
+
+    return { authStore, searchStore };
+  },
   name: "SearchPage",
   data() {
     return {
@@ -64,6 +72,22 @@ export default {
         { id: 3, name: "Course 3", image: "url-to-course-3-image" },
       ],
     };
+  },
+  async created() {
+    if (this.$route.params.query.toString().length == 0) {
+      console.log("Empty query");
+      return;
+    }
+
+    if (!this.authStore.isLoggedIn()) {
+      this.$router.push("/login");
+      return;
+    }
+
+    this.courses = await this.searchStore.searchCourse(
+      this.$route.params.query
+    );
+    console.log(this.courses);
   },
 };
 </script>
