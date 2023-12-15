@@ -113,29 +113,30 @@ export default {
   },
   async mounted() {
     // Check if the user is logged in or not
-    console.log(this.authStore.isLoggedIn());
-    if(!this.authStore.isLoggedIn()) {
+    if (!this.authStore.isLoggedIn()) {
       this.$router.push("/login");
       return;
     }
 
-    const data = await this.userProfileStore.fetchProfile();
+    if (this.authStore.isAdmin()) {
+      this.$router.push("/manage-course");
+      return;
+    } else {
+      const data = await this.userProfileStore.fetchProfile();
+      if (Object.keys(data).length != 0) {
+        const { user } = data;
+        this.username = `@${user["username"]}`;
 
-    if (Object.keys(data).length != 0) {
-      const { user } = data;
-      this.username = `@${user["username"]}`;
+        const pfpSvg = await this.userProfileStore.fetchProfilePicture(
+          this.username
+        );
 
-      const pfpSvg = await this.userProfileStore.fetchProfilePicture(
-        this.username
-      );
-
-      console.log("pfp", pfpSvg);
-
-      if (pfpSvg != {} || pfpSvg != 404) {
-        this.profilePicture = pfpSvg;
-      } else {
-        if (pfpSvg == {}) {
-          this.$router.push("/profile");
+        if (pfpSvg != {} || pfpSvg != 404) {
+          this.profilePicture = pfpSvg;
+        } else {
+          if (pfpSvg == {}) {
+            this.$router.push("/profile");
+          }
         }
       }
     }
