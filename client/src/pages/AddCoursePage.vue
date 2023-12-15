@@ -352,6 +352,7 @@ export default {
   width: 100%;
   background-color: rgb(26, 25, 25);
   box-shadow: 0 0 10px rgba(192, 165, 165, 0.6);
+  border:rgb(248, 241, 241);
 }
 
 .form-container {
