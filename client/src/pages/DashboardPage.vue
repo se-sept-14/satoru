@@ -118,7 +118,16 @@ export default {
       const pfpSvg = await this.userProfileStore.fetchProfilePicture(
         this.username
       );
-      this.profilePicture = pfpSvg;
+
+      console.log('pfp', pfpSvg);
+
+      if(pfpSvg != {} || pfpSvg != 404) {
+        this.profilePicture = pfpSvg;
+      } else {
+        if(pfpSvg == {}) {
+          this.$router.push("/profile");
+        }
+      }
     }
   },
 };

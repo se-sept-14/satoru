@@ -28,8 +28,25 @@ export const useUserProfileStore = defineStore("userProfileStore", {
           Authorization: authToken
         }
 
-        const { data } = await axios.get(apiUrl, { headers });
-        return data['data'];
+        try {
+          const response = await axios.get(apiUrl, { headers });
+
+          if(response.status == 200) {
+            return response.data['data'];
+          }
+        } catch(err) {
+          if (err.response && err.response.status === 404) {
+            // Handle 404 error here
+            console.error("Profile not found");
+            // You can choose to return a specific value or throw an error
+            // depending on how you want to handle it in the calling code.
+            return null;
+          } else {
+            // Handle other errors
+            console.error("Error fetching profile:", err.message);
+            return false;
+          }
+        }
       } else {
         return {}
       }
