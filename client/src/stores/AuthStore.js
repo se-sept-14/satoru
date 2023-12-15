@@ -110,7 +110,7 @@ export const useAuthStore = defineStore("authStore", {
 
       if (tokenType && accessToken) {
         const authToken = `${tokenType} ${accessToken}`;
-        const apiUrl = `${this.api.server}${this.api.endpoints.isAdmin}`;
+        const apiUrl = `${this.api.server}${this.api.endpoints.auth.isAdmin}`;
         const headers = {
           accept: "application/json",
           Authorization: authToken,

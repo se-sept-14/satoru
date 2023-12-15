@@ -118,7 +118,7 @@ export default {
       return;
     }
 
-    if (this.authStore.isAdmin()) {
+    if (await this.authStore.isAdmin()) {
       this.$router.push("/manage-course");
       return;
     } else {
