@@ -1,6 +1,9 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 
+/**
+ * Using Dicebear to generate random profile pictures, check docs: https://www.dicebear.com/how-to-use/http-api/
+ */
 export const useUserProfileStore = defineStore("userProfileStore", {
   state: () => ({
     api: {
@@ -8,7 +11,7 @@ export const useUserProfileStore = defineStore("userProfileStore", {
       endpoints: { profile: "/api/profile/" },
     },
     profilePicture: {
-      api: "https://api.dicebear.com/7.x/notionists/png?seed="
+      api: "https://api.dicebear.com/7.x/pixel-art/svg?seed="
     }
   }),
   getters: {},

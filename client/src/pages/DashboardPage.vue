@@ -3,11 +3,11 @@
     <div class="h-screen flex mx-auto px-10">
       <div class="w-1/4">
         <div class="flex flex-col items-center justify-center">
-          <img
-            :src="profilePicture"
-            alt="avatar"
-            class="rounded-full w-32 h-32"
-          />
+          <div
+            id="profilePic"
+            class="rounded-full w-32 h-32 my-6"
+            v-html="profilePicture"
+          ></div>
           <h1 class="text-2xl font-bold text-white my-2">Username</h1>
           <h2 class="text-xl text-white my-2">{{ username }}</h2>
         </div>
@@ -115,14 +115,10 @@ export default {
       const { user } = data;
       this.username = `@${user["username"]}`;
 
-      const pfp = await this.userProfileStore.fetchProfilePicture(
+      const pfpSvg = await this.userProfileStore.fetchProfilePicture(
         this.username
       );
-      this.profilePicture = URL.createObjectURL(
-        new Blob([pfp], {
-          type: "image/png",
-        })
-      );
+      this.profilePicture = pfpSvg;
     }
   },
 };
