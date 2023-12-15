@@ -229,29 +229,34 @@ export default {
 
   // Other component options and methods can be added here
   methods: {
-    async addCourse() {
-      console.log("hiiiiiiiiii")
-      this.courseData.credits=parseInt(this.courseData.credits);
-      this.courseData.price=parseInt(this.courseData.price);
-      const accessToken = localStorage.getItem("access_token");
-      const headers = {
-        accept: "application/json",
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      };
+async addCourse() {
+  
 
-      axios
-        .post("https://api.pickmycourse.online/api/course/", this.courseData, {
-          headers,
-        })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          alert("Please check if you have entered all the data correctly")
-          console.error(error);
-        });
-    },
+  this.courseData.credits = parseInt(this.courseData.credits);
+  this.courseData.price = parseInt(this.courseData.price);
+
+  const accessToken = localStorage.getItem("access_token");
+  const headers = {
+    accept: "application/json",
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  };
+
+  try {
+    const response = await axios.post(
+      "https://api.pickmycourse.online/api/course/",
+      this.courseData,
+      {
+        headers,
+      }
+    );
+
+    console.log(response.data);
+  } catch (error) {
+    alert("Please check if you have entered all the data correctly");
+    console.error(error);
+  }
+},
     addTag() {
       if (this.newTag.trim() !== "") {
         this.courseData.tags.push(this.newTag.trim());
