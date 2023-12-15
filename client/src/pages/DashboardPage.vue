@@ -20,7 +20,7 @@
           <h2 class="text-xl text-white my-2">84</h2>
         </div>
         <button
-          class="flex-col items-center justify-center mt-10 bg-slate-100 text-black rounded px-6 py-2 hover:bg-slate-200"
+          class="self-center mt-10 bg-slate-100 text-black rounded px-6 py-2 hover:bg-slate-200"
           @click="logout"
         >
           Logout
@@ -79,8 +79,8 @@
             <p class="text-sm">Credits: {{ course.credits }}</p>
             <!-- <p class="text-sm">{{ course.description }}</p> -->
             <p class="text-sm">Corequisite: {{ course.corequisite }}</p>
-            <p class="text-sm">Prerequisite: {{ course.prerequisite }}</p>
-            <p class="text-sm">Instructor: {{ course.instructor }}</p>
+            <p class="text-sm">Prerequisite: {{ course.prerequisites }}</p>
+            <p class="text-sm">Instructor: {{ course.instructor_name }}</p>
           </div>
         </div>
       </div>
