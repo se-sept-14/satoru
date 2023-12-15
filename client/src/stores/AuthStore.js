@@ -9,7 +9,7 @@ export const useAuthStore = defineStore("authStore", {
         auth: {
           login: "/api/auth/login",
           register: "/api/auth/register",
-          isAdmin: "/api/auth/is-admin"
+          isAdmin: "/api/auth/is-admin",
         },
       },
     },
@@ -108,21 +108,21 @@ export const useAuthStore = defineStore("authStore", {
       const tokenType = localStorage.getItem("token_type");
       const accessToken = localStorage.getItem("access_token");
 
-      if(tokenType && accessToken) {
+      if (tokenType && accessToken) {
         const authToken = `${tokenType} ${accessToken}`;
-        const apiUrl = `${this.api.server}${this.api.endpoints.isAdmin}`
+        const apiUrl = `${this.api.server}${this.api.endpoints.isAdmin}`;
         const headers = {
           accept: "application/json",
-          Authorization: authToken
-        }
+          Authorization: authToken,
+        };
 
         try {
           const response = await axios.get(apiUrl, { headers });
 
-          if(response.status == 200) {
+          if (response.status == 200) {
             return response.data["is_admin"] == 1 ? true : false;
           }
-        } catch(err) {
+        } catch (err) {
           if (err.response && err.response.status === 404) {
             console.error("Profile not found");
             return null;
@@ -134,6 +134,12 @@ export const useAuthStore = defineStore("authStore", {
       } else {
         return false;
       }
-    }
+    },
+    isLoggedIn() {
+      const tokenType = localStorage.getItem("token_type");
+      const accessToken = localStorage.getItem("access_token");
+
+      return tokenType && accessToken;
+    },
   },
 });

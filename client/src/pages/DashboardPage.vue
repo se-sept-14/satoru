@@ -82,11 +82,14 @@
 
 <script>
 import { useUserProfileStore } from "@/stores/UserProfileStore";
+import { useAuthStore } from "@/stores/AuthStore";
 
 export default {
   setup() {
+    const authStore = useAuthStore();
     const userProfileStore = useUserProfileStore();
-    return { userProfileStore };
+
+    return { authStore, userProfileStore };
   },
   name: "DashboardPage",
   data() {
@@ -109,6 +112,13 @@ export default {
     };
   },
   async mounted() {
+    // Check if the user is logged in or not
+    console.log(this.authStore.isLoggedIn());
+    if(!this.authStore.isLoggedIn()) {
+      this.$router.push("/login");
+      return;
+    }
+
     const data = await this.userProfileStore.fetchProfile();
 
     if (Object.keys(data).length != 0) {
@@ -119,12 +129,12 @@ export default {
         this.username
       );
 
-      console.log('pfp', pfpSvg);
+      console.log("pfp", pfpSvg);
 
-      if(pfpSvg != {} || pfpSvg != 404) {
+      if (pfpSvg != {} || pfpSvg != 404) {
         this.profilePicture = pfpSvg;
       } else {
-        if(pfpSvg == {}) {
+        if (pfpSvg == {}) {
           this.$router.push("/profile");
         }
       }
