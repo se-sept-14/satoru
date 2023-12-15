@@ -58,11 +58,6 @@ export default createRouter({
       component: () => import("@/pages/ProfileTypeform.vue"),
     },
     {
-      path: "/profile-center",
-      name: "StudentProfile",
-      component: () => import("@/pages/StudentProfilePage.vue"),
-    },
-    {
       path: "/dashboard",
       name: "DashboardPage",
       component: () => import("@/pages/DashboardPage.vue"),
