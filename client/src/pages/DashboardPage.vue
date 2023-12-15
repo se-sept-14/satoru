@@ -95,11 +95,13 @@
           Your courses 🔻
         </h2>
         <div class="grid auto-rows-[192px] grid-cols-3 gap-7">
+          <!-- Each course box -->
           <div
             v-for="(course, i) in courses"
             :key="i"
-            class="row-span-1 rounded-xl border-2 border-slate-100/10 bg-[#000101] p-5 dark:bg-[#000101] text-white"
+            class="row-span-1 rounded-xl border-2 border-slate-100/10 bg-[#000101] p-5 dark:bg-[#000101] text-white cursor-pointer hover:scale-105 transform transition duration-300"
             :class="{ 'col-span-2': i === 3 || i === 6 }"
+            @click="viewCourse(course.id)"
           >
             <div class="flex items-end mb-4">
               <h2 class="text-xl font-bold">{{ course.name }}</h2>
@@ -176,14 +178,18 @@ export default {
         console.log("empty search query");
       }
     },
-
-    // callProfile() {
-
-    // },
     logout() {
       this.authStore.logout();
       this.$router.push("/login");
     },
+    viewCourse(id) {
+      this.$router.push({
+        name: "ViewCourse",
+        params: {
+          id: id
+        }
+      });
+    }
   },
   async mounted() {
     // Check if the user is logged in or not

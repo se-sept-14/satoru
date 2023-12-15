@@ -56,5 +56,10 @@ export default createRouter({
       name: "ReccomendationPage",
       component: () => import("@/pages/ReccomendationPage.vue"),
     },
+    {
+      path: "/course/:id",
+      name: "ViewCourse",
+      component: () => import("@/pages/Courses/View.vue")
+    }
   ],
 });
