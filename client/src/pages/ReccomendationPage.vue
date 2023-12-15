@@ -1,38 +1,31 @@
 <template>
-<div class="w-[1920px] h-[1900px] relative bg-black">
-  <div class="left-[258px] top-[125px] absolute">
-    <div class="left-0 top-[13px] absolute text-center text-white text-[40px] font-bold font-['Roboto Slab']">Based on your profile, we recommend the following courses</div>
-    <div class="w-[158px] h-20 left-[1246px] top-0 absolute">
-      <div class="w-[158px] h-20 left-0 top-0 absolute bg-blue-500 rounded-xl"></div>
-      <button src="#" class="w-[105px] h-[42px] left-[26px] top-[19px] absolute">
-        <div class="left-[41px] top-0 absolute text-center text-white text-[32px] font-normal font-['Roboto Slab']">Cart</div>
-        <div class="w-[33.75px] h-[30px] left-0 top-[6px] absolute flex-col justify-start items-start inline-flex"></div>
+  <div class="w-[800px] h-[800px] relative bg-black mx-auto p-8">
+    <div class="w-[100%] mx-auto mt-8">
+      <div class="flex items-center">
+        <div class="text-center text-white text-3xl font-bold mb-4">Based on your profile, we recommend the following courses</div>
+        <button src="#" class="w-[50%] h-10 relative bg-gradient-to-b from-gray-900 to-gray-600 text-center rounded-xl flex items-center hover:bg-green-600 justify-center text-white text-xl font-normal mt-2">
+          Cart
+        </button>
+      </div>
+    </div>
+    <div class="mx-auto relative bg-gradient-to-b from-gray-900 to-gray-600 rounded-xl lg:shadow-lg lg:shadow-slate-500/30 text-white">
+      <div class="p-4">
+          <div class="text-center text-xl font-semibold mb-2">Programming Concepts using Java <a href="#">(click to view)</a></div>
+          <div class="text-center text-lg font-light">by Madhavan Mukund</div>
+      </div>
+      <div class="flex justify-between p-4 text-center">
+          <div class="text-xl font-normal">3 credits</div>
+          <div class="text-xl font-normal">199 students</div>
+          <div class="flex">
+              <div class="w-5 h-5 bg-yellow-400 clip-star"></div>
+              <div class="text-xl font-normal ml-2">4.5</div>
+          </div>
+          <div class="text-xl font-normal">Register by:<br>18 December 2023</div>
+      </div>
+      </div>
+      <br>
+      <button src="#" class="w-[100%] h-10 relative bg-gradient-to-b from-gray-900 to-gray-600 text-center rounded-xl flex items-center hover:bg-white-600 justify-center text-white text-xl font-normal mt-2">
+          Add To Cart
       </button>
-    </div>
   </div>
-  <div class="w-[1000px] h-[300px] left-[460px] top-[273px] absolute">
-    <div class="w-[1000px] h-[300px] left-0 top-0 absolute bg-zinc-900 rounded-xl border-2 border-zinc-600"></div>
-    <div class="w-[801px] h-[85px] left-[30px] top-[28px] absolute">
-      <div class="left-0 top-0 absolute text-center text-white text-[40px] font-normal font-['Roboto Slab']">Programming Concepts using Java</div>
-      <a href="#" class="left-[671px] top-[21px] absolute text-center text-white text-xl font-thin font-['Roboto Slab']">(click to view)</a>
-      <div class="left-[3px] top-[53px] absolute text-center text-white text-2xl font-thin font-['Roboto Slab']">by Madhavan Mukund</div>
-    </div>
-    <div class="left-[33px] top-[125px] absolute text-center text-white text-2xl font-normal font-['Roboto Slab']">4 credits</div>
-    <div class="w-[198px] h-8 left-[30px] top-[234px] absolute">
-      <div class="left-[57px] top-0 absolute text-center text-white text-2xl font-normal font-['Roboto Slab']">199 students</div>
-    </div>
-    <div class="w-20 h-8 left-[262px] top-[234px] absolute">
-      <div class="left-[47px] top-0 absolute text-center text-white text-2xl font-normal font-['Roboto Slab']">4.5</div>
-      <div class="w-9 h-8 left-0 top-0 absolute flex-col justify-start items-start inline-flex"></div>
-    </div>
-    <div class="left-[409px] top-[234px] absolute text-center text-white text-2xl font-normal font-['Roboto Slab']">Register by: 18 December 2023</div>
-    <button src="#" class="w-40 h-[50px] left-[806px] top-[216px] absolute">
-      <div class="w-40 h-[50px] left-0 top-0 absolute bg-teal-500 rounded-xl"></div>
-      <div class="w-40 h-[50px] left-0 top-0 absolute text-center text-black text-xl font-normal font-['Roboto Slab']">Add to cart</div>
-    </button>
-  
-
-   
-  </div>
-</div>
-</template>
+  </template>
