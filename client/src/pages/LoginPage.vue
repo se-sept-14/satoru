@@ -153,8 +153,9 @@ export default {
     },
   },
   mounted() {
-    if (localStorage.currentUser) {
-      this.$router.push("dashboard");
+    if(this.authStore.isLoggedIn()) {
+      this.$router.push("/dashboard");
+      return;
     }
   },
 };

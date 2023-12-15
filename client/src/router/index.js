@@ -32,7 +32,7 @@ export default createRouter({
       component: () => import("@/pages/DashboardPage.vue"),
     },
     {
-      path: "/search",
+      path: "/search/:query",
       name: "SearchPage",
       component: () => import("@/pages/SearchPage.vue"),
     },
