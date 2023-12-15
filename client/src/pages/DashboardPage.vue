@@ -35,7 +35,9 @@
           </div>
 
           <div class="flex items-end ml-6">
-            <h2 class="text-2xl font-semibold text-white">84</h2>
+            <h2 class="text-2xl font-semibold text-white">
+              {{ courses.reduce((sum, course) => sum + course.credits, 0) }}
+            </h2>
             <h1 class="text-lg text-gray-400 ml-1">credits</h1>
           </div>
         </div>
@@ -122,9 +124,13 @@
             </div>
 
             <div class="flex justify-between items-end mt-8">
-              <p class="text-md font-extralight italic">{{ course.instructor_name }}</p>
+              <p class="text-md font-extralight italic">
+                {{ course.instructor_name }}
+              </p>
               <div class="flex flex-col">
-                <p class="text-2xl font-bold self-center">{{ course.credits }}</p>
+                <p class="text-2xl font-bold self-center">
+                  {{ course.credits }}
+                </p>
                 <p class="text-xs font-extralight text-gray-300">Credits</p>
               </div>
             </div>
