@@ -3,13 +3,13 @@
     <div class="h-screen flex mx-auto px-10">
       <div class="w-1/4">
         <div class="flex flex-col items-center justify-center">
-          <img
-            src="https://avatars.githubusercontent.com/u/73879363?v=4"
-            alt="avatar"
-            class="rounded-full w-32 h-32"
-          />
-          <h1 class="text-2xl font-bold text-white my-2">User Name</h1>
-          <h2 class="text-xl text-white my-2">enderboi</h2>
+          <div
+            id="profilePic"
+            class="rounded-full w-32 h-32 my-6"
+            v-html="profilePicture"
+          ></div>
+          <h1 class="text-2xl font-bold text-white my-2">Username</h1>
+          <h2 class="text-xl text-white my-2">{{ username }}</h2>
         </div>
         <div class="flex flex-col items-center justify-center mt-10">
           <h1 class="text-2xl font-bold text-white my-2">Total courses:</h1>
@@ -24,7 +24,7 @@
         <div class="flex justify-between">
           <div id="welcome-message" class="flex pt-6">
             <h1 class="text-3xl font-bold text-white my-2">
-              Welcome, {{ userName }}
+              Welcome {{ username }} 👋
             </h1>
           </div>
 
@@ -80,14 +80,19 @@
   </div>
 </template>
 
-<!-- ... rest of your component ... -->
-
 <script>
+import { useUserProfileStore } from "@/stores/UserProfileStore";
+
 export default {
+  setup() {
+    const userProfileStore = useUserProfileStore();
+    return { userProfileStore };
+  },
   name: "DashboardPage",
   data() {
     return {
-      userName: "username",
+      username: "@username",
+      profilePicture: null,
       courses: [
         { id: 1, name: "Course 1", image: "url-to-course-1-image" },
         { id: 2, name: "Course 2", image: "url-to-course-2-image" },
@@ -102,6 +107,28 @@ export default {
         { id: 11, name: "Course 11", image: "url-to-course-11-image" },
       ],
     };
+  },
+  async mounted() {
+    const data = await this.userProfileStore.fetchProfile();
+
+    if (Object.keys(data).length != 0) {
+      const { user } = data;
+      this.username = `@${user["username"]}`;
+
+      const pfpSvg = await this.userProfileStore.fetchProfilePicture(
+        this.username
+      );
+
+      console.log('pfp', pfpSvg);
+
+      if(pfpSvg != {} || pfpSvg != 404) {
+        this.profilePicture = pfpSvg;
+      } else {
+        if(pfpSvg == {}) {
+          this.$router.push("/profile");
+        }
+      }
+    }
   },
 };
 </script>
