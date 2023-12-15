@@ -13,12 +13,18 @@
         </div>
         <div class="flex flex-col items-center justify-center mt-10">
           <h1 class="text-2xl font-bold text-white my-2">Total courses:</h1>
-          <h2 class="text-xl text-white my-2">26</h2>
+          <h2 class="text-xl text-white my-2">{{ courses.length }}</h2>
         </div>
         <div class="flex flex-col items-center justify-center mt-10">
           <h1 class="text-2xl font-bold text-white my-2">Total credits:</h1>
           <h2 class="text-xl text-white my-2">84</h2>
         </div>
+        <button
+          class="flex-col items-center justify-center mt-10 bg-slate-100 text-black rounded px-6 py-2 hover:bg-slate-200"
+          @click="logout"
+        >
+          Logout
+        </button>
       </div>
       <div class="w-3/4 p-4 h-full flex flex-col">
         <div class="flex justify-between">
@@ -71,7 +77,7 @@
             <h2 class="text-xl font-bold">{{ course.name }}</h2>
             <p class="text-sm">{{ course.code }}</p>
             <p class="text-sm">Credits: {{ course.credits }}</p>
-            <p class="text-sm">{{ course.description }}</p>
+            <!-- <p class="text-sm">{{ course.description }}</p> -->
             <p class="text-sm">Corequisite: {{ course.corequisite }}</p>
             <p class="text-sm">Prerequisite: {{ course.prerequisite }}</p>
             <p class="text-sm">Instructor: {{ course.instructor }}</p>
@@ -99,6 +105,7 @@ export default {
       searchQuery: "",
       username: "@username",
       profilePicture: null,
+      userData: {},
       courses: [
         { id: 1, name: "Course 1", image: "url-to-course-1-image" },
         { id: 2, name: "Course 2", image: "url-to-course-2-image" },
@@ -127,6 +134,14 @@ export default {
         console.log("empty search query");
       }
     },
+
+    // callProfile() {
+
+    // },
+    logout() {
+      this.authStore.logout();
+      this.$router.push("/login");
+    },
   },
   async mounted() {
     // Check if the user is logged in or not
@@ -139,13 +154,14 @@ export default {
       this.$router.push("/manage-course");
       return;
     } else {
-      const data = await this.userProfileStore.fetchProfile();
+      const studentProfile = await this.userProfileStore.fetchProfile();
 
-      console.log(data);
-
-      if (data) {
-        const { user } = data;
+      if (studentProfile) {
+        const { user } = studentProfile;
         this.username = `@${user["username"]}`;
+
+        this.courses = await this.userProfileStore.fetchStudentCourses();
+        // console.log(studentCourses);
 
         const pfpSvg = await this.userProfileStore.fetchProfilePicture(
           this.username

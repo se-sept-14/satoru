@@ -6,6 +6,9 @@
         'mt-24': courses.length <= 3,
       }"
     >
+      <h1 v-if="courses.length == 0" class="text-4xl font-bold text-white">
+        No results found
+      </h1>
       <div
         v-for="course in courses"
         :key="course.id"
@@ -17,7 +20,9 @@
               <p class="font-semibold text-2xl mb-1">
                 {{ course.name }}
               </p>
-              <p class="font-light text-lg text-gray-400">by {{ course.instructor_name }}</p>
+              <p class="font-light text-lg text-gray-400">
+                by {{ course.instructor_name }}
+              </p>
             </div>
             <p class="text-gray-400 mb-6">
               {{ course.description }}
@@ -62,15 +67,7 @@ export default {
   data() {
     return {
       userName: "username",
-      courses: [
-        { id: 1, name: "Course 1", image: "url-to-course-1-image" },
-        { id: 2, name: "Course 2", image: "url-to-course-2-image" },
-        { id: 3, name: "Course 3", image: "url-to-course-3-image" },
-        { id: 2, name: "Course 2", image: "url-to-course-2-image" },
-        { id: 3, name: "Course 3", image: "url-to-course-3-image" },
-        { id: 2, name: "Course 2", image: "url-to-course-2-image" },
-        { id: 3, name: "Course 3", image: "url-to-course-3-image" },
-      ],
+      courses: [],
     };
   },
   async created() {
@@ -87,7 +84,10 @@ export default {
     this.courses = await this.searchStore.searchCourse(
       this.$route.params.query
     );
-    console.log(this.courses);
+    // console.log(this.courses);
+    if (this.courses.length == 0) {
+      console.log("No courses found");
+    }
   },
 };
 </script>
