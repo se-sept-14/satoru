@@ -30,6 +30,12 @@
                   <span class="mr-1"><i class="fa-solid fa-play"></i></span>
                   Get Started
                 </button>
+                <button
+                  @click="submitForm"
+                  class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Submit
+                </button>
               </div>
 
               <div v-else-if="step === 2" key="2">
@@ -403,29 +409,29 @@ export default {
   data() {
     return {
       step: 1,
-      category: "",
-      dob: "",
-      gender: "",
-      name: "",
-      profile_picture_url: "",
+      category: "general",
+      dob: "2000-01-01",
+      gender: "femela",
+      name: "nanami",
+      profile_picture_url: "ergfc",
       pwd: false,
-      roll_no: "",
+      roll_no: "534213",
 
-      careerGoals: "",
-      completionDate: "",
-      numCourses: "",
-      hoursPerWeek: "",
-      preferences: "",
+      careerGoals: "chop chop chop",
+      completionDate: "2024-01-01",
+      numCourses: "3",
+      hoursPerWeek: "15",
+      preferences: "datasciecne",
 
-      subject1: "",
-      subject2: "",
-      subject3: "",
+      subject1: "a",
+      subject2: "b",
+      subject3: "c",
 
-      address: "",
-      contact_no: "",
+      address: "iugskhj",
+      contact_no: "685343213",
       level: 1,
-      term: "",
-      cgpa: "",
+      term: "4",
+      cgpa: "8.9",
     };
   },
   methods: {
@@ -452,22 +458,28 @@ export default {
     submitForm() {},
     async submitForm() {
       const profileData = {
-        category: this.category,
-        dob: this.dob,
-        gender: this.gender,
-        name: this.name,
-        profile_picture_url: this.profile_picture_url,
-        pwd: this.pwd,
-        roll_no: this.roll_no,
-        career_goals: this.career_goals,
-        completion_deadline: this.completion_deadline,
-        courses_willing_to_take: this.courses_willing_to_take,
-        hours_per_week: this.hours_per_week,
-        learning_preferences: this.learning_preferences,
-        address: this.address,
-        contact_no: this.contact_no,
-        level: this.level,
-        term: this.term,
+        student_update: {
+          category: this.category,
+          dob: this.dob,
+          gender: this.gender,
+          name: this.name,
+          profile_picture_url: this.profile_picture_url,
+          pwd: this.pwd,
+          roll_no: this.roll_no,
+        },
+        student_profile_update: {
+          career_goals: this.career_goals,
+          completion_deadline: this.completion_deadline,
+          courses_willing_to_take: this.courses_willing_to_take,
+          hours_per_week: this.hours_per_week,
+          learning_preferences: this.learning_preferences,
+        },
+        student_about_me_update: {
+          address: this.address,
+          contact_no: this.contact_no,
+          level: this.level,
+          term: this.term,
+        },
       };
 
       const response = await this.profileStore.createProfile(profileData);
@@ -477,7 +489,7 @@ export default {
         console.log("created profile");
       } else {
         // Handle failed profile creation
-        log("failed to create profile");
+        console.log("failed to create profile");
       }
     },
   },

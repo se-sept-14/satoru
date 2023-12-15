@@ -25,11 +25,12 @@ export const useProfileStore = defineStore("profileStore", {
           Authorization: authToken,
         };
 
-        const { payload } = profileData;
-
+        // const { payload } = profileData;
+        console.log(apiUrl);
+        console.log(authToken);
         try {
-          const response = await axios.post(apiUrl, payload, { headers });
-
+          const response = await axios.post(apiUrl, profileData, { headers });
+          console.log(response);
           if (response.status == 200) {
             return response.data["data"];
           }
