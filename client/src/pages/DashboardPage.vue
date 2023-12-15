@@ -116,17 +116,17 @@ export default {
   },
   methods: {
     callSearch() {
-      if(this.searchQuery.length != 0) {
+      if (this.searchQuery.length != 0) {
         this.$router.push({
           name: "SearchPage",
           params: {
-            query: this.searchQuery
-          }
+            query: this.searchQuery,
+          },
         });
       } else {
         console.log("empty search query");
       }
-    }
+    },
   },
   async mounted() {
     // Check if the user is logged in or not
@@ -140,7 +140,10 @@ export default {
       return;
     } else {
       const data = await this.userProfileStore.fetchProfile();
-      if (Object.keys(data).length != 0) {
+
+      console.log(data);
+
+      if (data) {
         const { user } = data;
         this.username = `@${user["username"]}`;
 
@@ -155,6 +158,8 @@ export default {
             this.$router.push("/profile");
           }
         }
+      } else {
+        this.$router.push("/profile");
       }
     }
   },
