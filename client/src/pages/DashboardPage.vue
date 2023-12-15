@@ -186,10 +186,10 @@ export default {
       this.$router.push({
         name: "ViewCourse",
         params: {
-          id: id
-        }
+          id: id,
+        },
       });
-    }
+    },
   },
   async mounted() {
     // Check if the user is logged in or not
