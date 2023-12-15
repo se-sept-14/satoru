@@ -19,7 +19,7 @@
             <transition name="slide" mode="out-in">
               <div v-if="step === 1" key="1">
                 <h2 class="text-3xl font-bold mb-2">Let's get you set up!</h2>
-                <p class="text-2xl mb-6">
+                <p class="text-lg mb-6">
                   It only takes a moment. And it'll make your time with us even
                   better.💪
                 </p>
@@ -27,33 +27,25 @@
                   @click="nextStep"
                   class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
+                  <span class="mr-1"><i class="fa-solid fa-play"></i></span>
                   Get Started
                 </button>
               </div>
 
               <div v-else-if="step === 2" key="2">
-                <button @click="prevStep" class="my-2">
-                  <svg
-                    class="w-6 h-6 inline-block mr-1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"
-                    ></path>
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                  </svg>
-                  Previous
+                <button @click="prevStep" class="my-2 hover:text-blue-900">
+                  <i class="fa-solid fa-arrow-left mr-1"></i>
+                  Go back
                 </button>
                 <h2 class="text-2xl font-bold mb-4">
-                  Step 2: What is your learning preference?
+                  What is your learning preference?
                 </h2>
                 <label class="block mb-2">
                   <input
                     type="radio"
                     v-model="preferences"
                     value="programming"
+                    class="mr-1"
                   />
                   Programming courses
                 </label>
@@ -62,16 +54,22 @@
                     type="radio"
                     v-model="preferences"
                     value="dataScience"
+                    class="mr-1"
                   />
                   Data Science courses
                 </label>
                 <label class="block mb-2">
-                  <input type="radio" v-model="preferences" value="mix" />
+                  <input
+                    type="radio"
+                    v-model="preferences"
+                    value="mix"
+                    class="mr-1"
+                  />
                   Mix of both
                 </label>
                 <button
                   @click="nextStep"
-                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  class="mt-2 bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
                 >
                   Next
                 </button>
@@ -80,22 +78,10 @@
                 ></button>
               </div>
 
-              <!-- Repeat the pattern for other steps -->
-
               <div v-else-if="step === 3" key="3">
-                <button @click="prevStep" class="my-2">
-                  <svg
-                    class="w-6 h-6 inline-block mr-1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"
-                    ></path>
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                  </svg>
-                  Previous
+                <button @click="prevStep" class="my-2 hover:text-blue-900">
+                  <i class="fa-solid fa-arrow-left mr-1"></i>
+                  Go back
                 </button>
                 <h2 class="text-2xl font-bold mb-4">Step 3: Your CGPA</h2>
                 <input
@@ -328,7 +314,6 @@ export default {
       numCourses: "",
       careerGoals: "",
       completionDate: "",
-      // Add other form data properties here
     };
   },
   methods: {
@@ -339,11 +324,6 @@ export default {
       this.step--;
     },
     submitForm() {
-      // Handle form submission logic here
-      // You can access form data from this.dataProperty
-      // For example: console.log(this.preferences, this.cgpa, ...);
-
-      // For demonstration purposes, let's just log the form data
       console.log("Form Data:", {
         preferences: this.preferences,
         cgpa: this.cgpa,
@@ -371,13 +351,13 @@ export default {
 }
 /* your-component.css */
 @font-face {
-  font-family: "ApercuProRegular"; /* Provide a name for your font */
+  font-family: "ApercuProRegular";
   src: url("@/assets/fonts/ApercuProRegular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 .custom-font {
-  font-family: "ApercuProRegular", sans-serif; /* Use the font-family name you specified in @font-face */
+  font-family: "ApercuProRegular", sans-serif;
 }
 </style>
