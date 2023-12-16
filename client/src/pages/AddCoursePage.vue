@@ -438,4 +438,5 @@ export default {
   margin-top: 1rem;
   cursor: pointer;
 }
+
 </style>
