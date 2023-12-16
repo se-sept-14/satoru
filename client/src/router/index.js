@@ -51,9 +51,9 @@ export default createRouter({
       component: () => import("@/pages/Courses/AddCourse.vue"),
     },
     {
-      path: "/admin-course-view",
+      path: "/admin-course-view/:id",
       name: "Admin Course details",
-      component: () => import("@/pages/AdminCourseView.vue"),
+      component: () => import("@/pages/Courses/Edit.vue"),
     },
     {
       path: "/recommend/:numberOfCourses",
