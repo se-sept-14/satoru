@@ -47,6 +47,12 @@ export default createRouter({
       component: () => import("@/pages/AddCoursePage.vue"),
     },
     {
+      path: "/add-course-new",
+      name: "AddCourseNew",
+      component: () => import("@/pages/AddCourseNew.vue"),
+    },
+
+    {
       path: "/admin-course-view",
       name: "AdminCourseView",
       component: () => import("@/pages/AdminCourseView.vue"),
