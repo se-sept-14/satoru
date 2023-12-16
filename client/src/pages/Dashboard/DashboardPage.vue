@@ -1,5 +1,7 @@
 <template>
   <div>
+    <navbar />
+
     <div class="h-screen flex mx-24">
       <!-- Left sidebar -->
       <div class="w-1/4 flex flex-col" v-if="username">
@@ -10,23 +12,16 @@
           v-html="profilePicture"
         ></div>
 
-        <div class="flex justify-between">
+        <div class="flex justify-around">
           <div class="flex flex-col">
             <!-- Student's name and username -->
             <h1 class="text-2xl font-bold text-white">{{ name }}</h1>
-            <h2 class="text-lg text-gray-400">{{ username }}</h2>
+            <h2 class="text-center text-lg text-gray-400">{{ username }}</h2>
           </div>
-
-          <!-- Logout button -->
-          <button
-            class="bg-transparent text-gray-200 rounded px-6 py-2 hover:bg-slate-900"
-            @click="logout"
-          >
-            Logout
-          </button>
         </div>
 
-        <div class="flex mt-6">
+        <!-- Number of courses taken and credits -->
+        <div class="flex mt-6 self-center">
           <div class="flex items-end">
             <h2 class="text-2xl font-semibold text-white">
               {{ courses.length }}
@@ -43,6 +38,8 @@
         </div>
 
         <button
+          v-if="courses.length == 0"
+          @click="redirectRecommendCourses"
           class="text-white text-xl font-serif bg-transparent p-4 rounded-md border-2 border-slate-200 mt-20 mx-8 hover:bg-white hover:text-black"
         >
           Get recommendations
@@ -58,38 +55,6 @@
               Welcome
               <span class="font-semibold italic">{{ username }}</span> 👋
             </h1>
-          </div>
-
-          <!-- Search box -->
-          <div id="search-box" class="flex">
-            <div class="flex items-center justify-center my-8">
-              <div class="relative">
-                <input
-                  type="text"
-                  class="bg-black text-white border border-gray-700 rounded-full py-3 px-6 pl-14 placeholder-#000101 focus:outline-none focus:shadow-outline w-96"
-                  placeholder="Search ..."
-                  v-model="searchQuery"
-                  v-on:keyup.enter="callSearch"
-                />
-                <div class="absolute inset-y-0 left-0 flex items-center pl-5">
-                  <svg
-                    class="w-3/4 h-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -150,8 +115,12 @@
 </template>
 
 <script>
-import { useUserProfileStore } from "@/stores/UserProfileStore";
+// Stores
 import { useAuthStore } from "@/stores/AuthStore";
+import { useUserProfileStore } from "@/stores/UserProfileStore";
+
+// Components
+import AuthenticatedNavbarComponent from "@/components/AuthenticatedNavbarComponent.vue";
 
 export default {
   setup() {
@@ -161,39 +130,36 @@ export default {
     return { authStore, userProfileStore };
   },
   name: "DashboardPage",
+  components: {
+    navbar: AuthenticatedNavbarComponent,
+  },
   data() {
     return {
       name: "",
       username: "",
-      searchQuery: "",
       profilePicture: null,
       courses: [],
       userData: {},
+      studentProfile: {},
     };
   },
   methods: {
-    callSearch() {
-      if (this.searchQuery.length != 0) {
-        this.$router.push({
-          name: "SearchPage",
-          params: {
-            query: this.searchQuery,
-          },
-        });
-      } else {
-        console.log("empty search query");
-      }
-    },
     logout() {
       this.authStore.logout();
       this.$router.push("/login");
     },
     viewCourse(id) {
       this.$router.push({
-        name: "ViewCourse",
+        name: "Course details",
         params: {
           id: id,
         },
+      });
+    },
+    redirectRecommendCourses() {
+      this.$router.push({
+        name: "Recommended Courses",
+        params: { numberOfCourses: this.studentProfile.courses_willing_to_take },
       });
     },
   },
@@ -212,7 +178,8 @@ export default {
       const studentProfile = await this.userProfileStore.fetchProfile();
 
       if (studentProfile) {
-        const { user, name } = studentProfile;
+        this.studentProfile = studentProfile;
+        const { user, name } = this.studentProfile;
         this.username = `@${user["username"]}`;
         this.name = name;
 

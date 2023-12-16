@@ -2,26 +2,16 @@
   <div>
     <navbar />
 
-    <div class="w-7/12 mx-auto flex flex-col text-white">
-      <div class="flex justify-between">
-        <h1 class="text-2xl font-bold font-serif">
-          Based on your profile, we recommend the following courses
-        </h1>
-
-        <p
-          @click="rerollRecommendations"
-          class="italic text-emerald-200 cursor-pointer border px-4 py-2 rounded-full hover:bg-emerald-200 hover:text-black"
-        >
-          Re-roll recommendations
-        </p>
-      </div>
-
+    <div class="container px-16">
       <div
         :class="{
-          'mt-12 grid grid-cols-2 gap-4': courses.length > 3,
-          'mt-12': courses.length <= 3,
+          'mt-24 grid grid-cols-2 gap-4': courses.length > 3,
+          'mt-24': courses.length <= 3,
         }"
       >
+        <h1 v-if="courses.length == 0" class="text-4xl font-bold text-white">
+          No results found
+        </h1>
         <div
           v-for="course in courses"
           :key="course.id"
@@ -52,8 +42,7 @@
           <div class="flex justify-between items-center w-full mt-6">
             <div class="text-xl font-light">{{ course.credits }} credits</div>
             <button
-              @click="chooseCourse(course.id)"
-              class="bg-slate-100 text-black rounded px-6 py-2 transition-colors duration-200 hover:bg-slate-500"
+              class="bg-slate-100 text-black rounded px-6 py-2 transition-colors duration-200 hover:bg-slate-700 hover:text-white"
             >
               <i class="fa-solid fa-cart-plus"></i>
               Get this course
@@ -62,15 +51,13 @@
         </div>
       </div>
     </div>
-
-    <!-- Blank space at the bottom -->
-    <p class="text-black my-8">.</p>
   </div>
 </template>
 
 <script>
 // Stores
 import { useAuthStore } from "@/stores/AuthStore";
+import { useSearchStore } from "@/stores/SearchStore";
 import { useCourseStore } from "@/stores/courseStore";
 
 // Components
@@ -79,61 +66,49 @@ import AuthenticatedNavbarComponent from "@/components/AuthenticatedNavbarCompon
 export default {
   setup() {
     const authStore = useAuthStore();
+    const searchStore = useSearchStore();
     const courseStore = useCourseStore();
 
-    return { authStore, courseStore };
+    return { authStore, searchStore };
   },
-  name: "Recommend Courses",
+  name: "SearchPage",
   components: {
     navbar: AuthenticatedNavbarComponent,
   },
   data() {
     return {
-      numberOfCourses: -1,
+      userName: "username",
       courses: [],
     };
   },
   methods: {
     viewCoursePage(courseId) {
       this.$router.push({
-        name: "ViewCourse",
+        name: "Course details",
         params: {
           id: courseId,
         },
       });
     },
-    async chooseCourse(courseId) {
-      const data = await this.courseStore.studentCourseMapById(courseId);
-
-      if (data.message.length != 0) {
-        const idx = this.courses.findIndex((course) => course.id === courseId);
-
-        if (idx !== -1) {
-          this.courses.splice(idx, 1);
-
-          if (this.courses.length == 0) {
-            this.$router.push("/dashboard");
-          }
-        }
-      }
-    },
-    async rerollRecommendations() {
-      this.numberOfCourses = this.$route.params["numberOfCourses"];
-      this.courses = await this.courseStore.recommendCourses(
-        this.numberOfCourses
-      );
-    },
   },
   async created() {
+    if (this.$route.params.query.toString().length == 0) {
+      console.log("Empty query");
+      return;
+    }
+
     if (!this.authStore.isLoggedIn()) {
       this.$router.push("/login");
       return;
     }
 
-    this.numberOfCourses = this.$route.params["numberOfCourses"];
-    this.courses = await this.courseStore.recommendCourses(
-      this.numberOfCourses
+    this.courses = await this.searchStore.searchCourse(
+      this.$route.params.query
     );
+
+    if (this.courses.length == 0) {
+      console.log("No courses found");
+    }
   },
 };
 </script>
