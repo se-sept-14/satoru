@@ -14,7 +14,7 @@ export const useUserProfileStore = defineStore("userProfileStore", {
       },
     },
     profilePicture: {
-      api: "https://api.dicebear.com/7.x/pixel-art/svg?seed=",
+      api: "https://api.dicebear.com/7.x/thumbs/svg?seed=",
     },
   }),
   getters: {},
