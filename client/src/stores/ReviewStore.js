@@ -54,5 +54,37 @@ export const useReviewStore = defineStore("reviewStore", {
         return this.$router.push("/login")
       }
     },
+    async flagReviewById(id) {
+      const tokenType = localStorage.getItem("token_type");
+      const accessToken = localStorage.getItem("access_token");
+
+      if(tokenType && accessToken) {
+        const authToken = `${tokenType} ${accessToken}`;
+        const apiUrl = `${this.api.server}${this.api.endpoints.flag}${id}`;
+        const headers = {
+          Authorization: authToken,
+          accept: "application/json",
+          "Content-Type": "application/json"
+        }
+
+        try {
+          const response = await axios.post(apiUrl, {}, { headers });
+
+          if(response.status == 200) {
+            return response.data;
+          }
+        } catch(err) {
+          if (err.response && err.response.status === 404) {
+            console.error("No such course found");
+            return null;
+          } else {
+            console.error("Error fetching reviews:", err.message);
+            return false;
+          }
+        }
+      } else {
+        return this.$router.push("/login")
+      }
+    }
   },
 });

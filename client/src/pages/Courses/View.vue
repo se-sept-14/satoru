@@ -75,7 +75,7 @@
     </div>
 
     <!-- Lower section, 2 sections -->
-    <div class="flex flex-row mt-24 justify-around">
+    <div class="flex flex-row mt-24 justify-around basis-8/12">
       <!-- Left column -->
       <div class="flex flex-col text-white">
         <p class="font-serif font-bold text-3xl">Reviews</p>
@@ -89,13 +89,15 @@
           v-for="(courseReview, i) in courseReviews"
           :key="courseReview.id"
         >
-          <p class="basis-4/5">{{ courseReview.content }}</p>
+          <p class="w-[500px]">{{ courseReview.content }}</p>
           <span class="flex flex-row basis-1/5">
             <p class="mr-1">{{ courseReview.ratings }}</p>
             <i class="fa-solid fa-star text-sm mr-4"></i>
 
+            <!-- Flagged review -->
             <i class="fa-solid fa-flag" v-if="courseReview.is_flagged"></i>
-            <i class="fa-regular fa-flag" v-else></i>
+            <!-- Not flagged review -->
+            <i class="fa-regular fa-flag cursor-pointer hover:text-yellow-300" v-else @click="flagReview(courseReview.id, i)"></i>
           </span>
         </div>
       </div>
@@ -117,6 +119,9 @@
         <p class="text-lg font-extralight">Average rating</p>
       </div>
     </div>
+
+    <!-- Empty div to add margin at the bottom -->
+    <div class="my-8"></div> 
   </div>
 </template>
 
@@ -137,6 +142,15 @@ export default {
       courseData: {},
       courseReviews: [],
     };
+  },
+  methods: {
+    async flagReview(id, idx) {
+      const data = await this.reviewStore.flagReviewById(id);
+
+      if(data.message.length != 0) {
+        this.courseReviews[idx].is_flagged = true;
+      }
+    }
   },
   async created() {
     this.courseId = this.$route.params.id;
