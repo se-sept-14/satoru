@@ -25,7 +25,7 @@
             List of all available courses
           </p>
 
-          <button class="bg-cyan-400 text-black px-4 py-2 rounded-full mt-4">
+          <button class="bg-cyan-400 text-black px-4 py-2 rounded-full mt-4" @click="manageCourses">
             View courses
           </button>
         </div>
@@ -46,6 +46,11 @@ export default {
   data() {
     return {};
   },
+  methods: {
+    manageCourses() {
+      this.$router.push("/manage-course");
+    }
+  }
 };
 </script>
 

@@ -13,12 +13,12 @@ export default createRouter({
     {
       path: "/login",
       name: "Login",
-      component: () => import("@/pages/LoginPage.vue"),
+      component: () => import("@/pages/Auth/LoginPage.vue"),
     },
     {
       path: "/register",
       name: "Register",
-      component: () => import("@/pages/RegisterPage.vue"),
+      component: () => import("@/pages/Auth/RegisterPage.vue"),
     },
     {
       path: "/profile",
@@ -48,7 +48,7 @@ export default createRouter({
     {
       path: "/add-course",
       name: "Admin Add Course",
-      component: () => import("@/pages/AddCoursePage.vue"),
+      component: () => import("@/pages/Courses/AddCourse.vue"),
     },
     {
       path: "/admin-course-view",
