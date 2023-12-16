@@ -2,10 +2,19 @@
   <div>
     <navbar />
 
-    <div class="w-[960px] mx-auto flex flex-col text-white">
-      <h1 class="text-2xl font-bold font-serif">
-        Based on your profile, we recommend the following courses
-      </h1>
+    <div class="w-7/12 mx-auto flex flex-col text-white">
+      <div class="flex justify-between">
+        <h1 class="text-2xl font-bold font-serif">
+          Based on your profile, we recommend the following courses
+        </h1>
+
+        <p
+          @click="rerollRecommendations"
+          class="italic text-emerald-200 cursor-pointer border px-4 py-2 rounded-full hover:bg-emerald-200 hover:text-black"
+        >
+          Re-roll recommendations
+        </p>
+      </div>
 
       <div
         :class="{
@@ -96,13 +105,23 @@ export default {
     async chooseCourse(courseId) {
       const data = await this.courseStore.studentCourseMapById(courseId);
 
-      if(data.message.length != 0) {
-        const idx = this.courses.findIndex(course => course.id === courseId);
+      if (data.message.length != 0) {
+        const idx = this.courses.findIndex((course) => course.id === courseId);
 
-        if(idx !== -1) {
+        if (idx !== -1) {
           this.courses.splice(idx, 1);
+
+          if (this.courses.length == 0) {
+            this.$router.push("/dashboard");
+          }
         }
       }
+    },
+    async rerollRecommendations() {
+      this.numberOfCourses = this.$route.params["numberOfCourses"];
+      this.courses = await this.courseStore.recommendCourses(
+        this.numberOfCourses
+      );
     },
   },
   async created() {
