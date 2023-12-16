@@ -5,7 +5,7 @@
       <form @submit.prevent="addCourse" class="form">
         <div
           v-show="currentStep === 1"
-          class="container bg-black mt-10 mb-10 p-10"
+          class="container bg-transparent mt-10 mb-10 p-10"
         >
           <div class="title mt-4 text-white">Step 1: Basic Information</div>
 
@@ -17,7 +17,7 @@
               v-model="courseData.name"
               id="courseName"
               type="text"
-              class="input-field"
+              class="input-field text-white"
               placeholder="Course Name"
               required
             />
@@ -31,7 +31,7 @@
             <textarea
               v-model="courseData.description"
               id="description"
-              class="textarea-field"
+              class="textarea-field text-white bg-black"
               placeholder="Course description goes here ..."
             ></textarea>
           </div>
@@ -43,7 +43,7 @@
               v-model="courseData.price"
               id="courseprice"
               type="text"
-              class="input-field"
+              class="input-field text-white"
               inputmode="numeric"
               placeholder="10000"
               required
@@ -67,7 +67,8 @@
               v-model="courseData.code"
               id="coursecode"
               type="text"
-              class="input-field"
+              class="input-field text-white"
+
               placeholder="BSCCS2001"
               required
             />
@@ -81,8 +82,8 @@
               v-model="courseData.prerequisites"
               id="prerequisite"
               type="text"
-              class="input-field"
-              placeholder="BSCCS2001, BSCCS2003, ..."
+              class="input-field text-white"
+              placeholder="BSCCS2001, BSCCS2003, .."
               required
             />
           </div>
@@ -94,7 +95,7 @@
               v-model="courseData.corequisite"
               id="corequisite"
               type="text"
-              class="input-field"
+              class="input-field text-white"
               placeholder="BSCCS2001, BSCCS2003, ..."
               required
             />
@@ -120,7 +121,7 @@
               v-model="courseData.instructor_name"
               id="taughtBy"
               type="text"
-              class="input-field"
+              class="input-field text-white"
               placeholder="Professor name here ..."
               required
             />
@@ -132,6 +133,7 @@
             <input
               type="file"
               id="imageInput"
+              
               accept="image/*"
               @change="handleImageChange"
             />
@@ -167,7 +169,7 @@
               v-model="courseData.hours_per_week"
               id="hours_per_week"
               type="text"
-              class="input-field"
+              class="input-field text-white"
               placeholder="10hrs"
               required
             />
@@ -178,7 +180,7 @@
             <input
               v-model="newTag"
               type="text"
-              class="input-field"
+              class="input-field text-white"
               placeholder="Programming"
               id="tags"
               @keydown.enter.prevent="addTag"
@@ -193,7 +195,8 @@
                 {{ tag }}
                 <button
                   type="button"
-                  class="w-24 h-10 bg-green-600 rounded-xl text-xl font-normal text-white"
+                  style="background-color: #f0efef;"
+                  class="w-24 h-10 rounded-xl text-xl font-normal text-black ml-5"
                   @click="removeTag(index)"
                 >
                   Remove
@@ -208,7 +211,7 @@
               v-model="courseData.credits"
               id="credits"
               type="text"
-              class="input-field"
+              class="input-field text-white"
               placeholder="4"
               required
             />
@@ -276,8 +279,7 @@ export default {
 
         console.log(newCourse);
 
-        this.$router.push('/manage-course');
-
+        this.$router.push("/manage-course");
       } catch (error) {
         alert("Please check if you have entered all the data correctly");
         console.error(error);
@@ -369,14 +371,15 @@ export default {
   margin-top: 0.25rem;
   border: 1px solid #ccc;
   border-radius: 0.375rem;
-  text: black;
+  background-color: black;
+  
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Green glow effect, adjust color as needed */
 }
 
 .container {
   max-width: 600px;
   width: 100%;
-  background-color: rgb(26, 25, 25);
+  border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(192, 165, 165, 0.6);
   border: rgb(248, 241, 241);
 }
@@ -410,9 +413,9 @@ export default {
   width: 100%;
   height: 3rem;
   text-align: center;
-  background-color: #02c4ff;
-  color: white;
-  border: none;
+  background-color: #f0efef;
+  color: black;
+  border:none;
   border-radius: 0.375rem;
   font-size: 1.5rem;
   margin-top: 1rem;
@@ -430,7 +433,7 @@ export default {
   width: 100%;
   height: 3rem;
   text-align: center;
-  background-color: #49b14c;
+  background-color: #073237;
   color: white;
   border: none;
   border-radius: 0.375rem;
@@ -438,4 +441,5 @@ export default {
   margin-top: 1rem;
   cursor: pointer;
 }
+
 </style>

@@ -46,6 +46,7 @@ export const useCourseStore = defineStore("courseStore", {
           }
         );
         this.courses = response.data;
+        return this.courses.data;
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
