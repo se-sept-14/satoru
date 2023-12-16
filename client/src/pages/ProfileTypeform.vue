@@ -474,7 +474,7 @@ export default {
         student_about_me_update: {
           address: this.address,
           contact_no: this.contact_no,
-          level: this.level,
+          level: parseInt(this.level),
           term: this.term,
         },
       };
