@@ -517,7 +517,6 @@ export default {
       if (response) {
         // Handle successful profile creation
         console.log("created profile");
-        console.log(this.gender);
       } else {
         // Handle failed profile creation
         console.log("failed to create profile");
@@ -532,7 +531,6 @@ export default {
     }
 
     this.availableCourses = await this.courseStore.fetchCourses();
-    console.log(toRaw(this.availableCourses));
   },
 };
 </script>
