@@ -65,5 +65,10 @@ export default createRouter({
       name: "Course details",
       component: () => import("@/pages/Courses/View.vue"),
     },
+    {
+      path: "/all-students",
+      name: "Admin View Students",
+      component: () => import("@/pages/Students/All.vue"),
+    }
   ],
 });
