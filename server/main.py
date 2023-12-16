@@ -15,6 +15,7 @@ from apis.course import course_router
 from apis.review import review_router
 from apis.profile import profile_router
 
+from utils.migrate import run_migrations
 from utils.openapi import description, version, summary, title
 from utils.cors import allowed_origins, allowed_credentials, allowed_methods, allowed_headers
 
@@ -23,6 +24,7 @@ from utils.cors import allowed_origins, allowed_credentials, allowed_methods, al
 async def lifecycle(app: FastAPI):
   try:
     db_connection.connect()
+    run_migrations()
     yield
   finally:
     db_connection.close()
