@@ -8,10 +8,10 @@
         <!-- Left column -->
         <div class="flex flex-col px-4">
           <p class="text-3xl font-bold font-serif text-emerald-300">
-            {{ courseData.name }}
+            {{ courseData.name }} <i class="fa-solid fa-pen-to-square"></i>
           </p>
           <p class="text-lg font-light text-white w-[768px] mt-6">
-            {{ courseData.description }}
+            {{ courseData.description }} <i class="fa-solid fa-pen-to-square"></i>
           </p>
 
           <div class="flex flex-row text-white text-lg justify-between mt-12">
@@ -20,13 +20,13 @@
                 Prerequisites
                 <span class="font-extralight text-2xl">{{
                   courseData.prerequisites
-                }}</span>
+                }} <i class="fa-solid fa-pen-to-square"></i></span>
               </p>
               <p class="font-semibold">
                 Corerequisites
                 <span class="font-extralight text-2xl">{{
                   courseData.corequisite
-                }}</span>
+                }} <i class="fa-solid fa-pen-to-square"></i></span>
               </p>
               <p class="font-semibold">
                 Credits
@@ -42,13 +42,13 @@
               <p class="font-semibold">
                 Hours per week
                 <span class="font-extralight text-2xl"
-                  >{{ courseData.hours_per_week }} hours</span
+                  >{{ courseData.hours_per_week }} hours <i class="fa-solid fa-pen-to-square"></i></span
                 >
               </p>
               <p class="font-semibold">
                 Price
                 <span class="font-extralight text-2xl"
-                  >₹{{ courseData.price }}/-</span
+                  >₹{{ courseData.price }}/- <i class="fa-solid fa-pen-to-square"></i></span
                 >
               </p>
             </div>
@@ -61,12 +61,12 @@
             :src="courseData.instructor_picture"
             :alt="courseData.instructor_name"
             class="rounded-full w-32 self-center"
-          />
+          /> <i class="fa-solid fa-pen-to-square text-white"></i>
 
           <p
             class="font-extralight text-xl text-center text-gray-400 mt-2 font-serif"
           >
-            {{ courseData.instructor_name }}
+            {{ courseData.instructor_name }} <i class="fa-solid fa-pen-to-square"></i>
           </p>
         </div>
       </div>
