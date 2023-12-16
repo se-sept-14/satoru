@@ -1,6 +1,5 @@
-import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
-import { useAuthStore } from "@/stores/AuthStore"; // adjust the path as needed
+import { createRouter, createWebHistory } from "vue-router";
 
 // Vue router docs: https://router.vuejs.org/guide/
 export default createRouter({
@@ -38,8 +37,8 @@ export default createRouter({
     },
     {
       path: "/manage-course",
-      name: "ManageCoursePage",
-      component: () => import("@/pages/ManageCoursePage.vue"),
+      name: "AdminManageCourses",
+      component: () => import("@/pages/Courses/Manage.vue"),
     },
     {
       path: "/add-course",
