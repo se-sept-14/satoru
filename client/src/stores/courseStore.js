@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 export const useCourseStore = defineStore("courseStore", {
   state: () => ({
     api: {
-      baseUrl: "https://api.pickmycourse.online",
+      baseUrl: import.meta.env.VITE_API_URL,
       endpoints: {
         studentCourseMap: "/api/course/student-course-map/",
         recommend: "/api/course/recommend/"
@@ -19,7 +19,7 @@ export const useCourseStore = defineStore("courseStore", {
       try {
         const accessToken = localStorage.getItem("access_token");
         const response = await axios.get(
-          "https://api.pickmycourse.online/api/auth/is-admin",
+          import.meta.env.VITE_API_URL + "/api/auth/is-admin",
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -38,7 +38,7 @@ export const useCourseStore = defineStore("courseStore", {
       const accessToken = localStorage.getItem("access_token");
       try {
         const response = await axios.get(
-          "https://api.pickmycourse.online/api/course/all",
+          import.meta.env.VITE_API_URL + "/api/course/all",
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -61,7 +61,7 @@ export const useCourseStore = defineStore("courseStore", {
           accept: "application/json",
           Authorization: authToken,
         };
-        const apiUrl = `https://api.pickmycourse.online/api/course/id/${id}`;
+        const apiUrl = `${import.meta.env.VITE_API_URL}/api/course/id/${id}`;
 
         try {
           const response = await axios.get(apiUrl, { headers });
@@ -81,7 +81,7 @@ export const useCourseStore = defineStore("courseStore", {
       const accessToken = localStorage.getItem("access_token");
       try {
         await axios.delete(
-          `https://api.pickmycourse.online/api/course/${courseId}`,
+          `${import.meta.env.VITE_API_URL}/api/course/${courseId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -108,7 +108,7 @@ export const useCourseStore = defineStore("courseStore", {
         };
         console.log(courseData);
         const response = await axios.post(
-          "https://api.pickmycourse.online/api/course/",
+          import.meta.env.VITE_API_URL + "/api/course/",
           courseData,
           { headers }
         );

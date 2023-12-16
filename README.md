@@ -40,7 +40,7 @@ Also need to migrate the peewee DB models to MariaDB, look into the [`peewee-mig
 <blockquote>
 You'll need MariaDB for this API to work.
 
-Follow the steps mentioned above to quickly spin up a MariaDB instance using docker, either on your local machine or some remote machine.
+Follow the steps mentioned above to quickly spin up a MariaDB instance using docker, either on your local machine or some remote machine. If you don't want to use Docker, follow the MariaDB documentation then.
 
 You'll also need to make a copy of `.env` file with proper details (`.env.example` is given). Follow the below steps next:
 </blockquote>

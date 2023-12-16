@@ -7,7 +7,7 @@ import { defineStore } from "pinia";
 export const useSearchStore = defineStore("searchStore", {
   state: () => ({
     api: {
-      server: "https://api.pickmycourse.online",
+      server: import.meta.env.VITE_API_URL,
       endpoints: { search: "/api/course/search" },
     },
   }),
