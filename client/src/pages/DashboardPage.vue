@@ -147,7 +147,7 @@ export default {
     },
     viewCourse(id) {
       this.$router.push({
-        name: "ViewCourse",
+        name: "Course details",
         params: {
           id: id,
         },

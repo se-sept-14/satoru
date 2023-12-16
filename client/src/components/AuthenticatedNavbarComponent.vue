@@ -7,11 +7,19 @@
         <div
           class="sm:flex items-stretch justify-between grow lg:mb-0 py-5 px-5"
         >
-          <div class="flex flex-col flex-wrap justify-center mb-5 mr-3 lg:mb-0">
+          <div class="flex flex-row flex-wrap justify-center mb-5 mr-3 lg:mb-0">
             <span
               class="my-0 flex text-dark font-semibold text-[1.35rem]/[1.2] flex-col justify-center"
             >
               {{ $route.name }}
+            </span>
+
+            <span
+              class="my-0 flex font-extralight text-md justify-center items-center ml-8 text-emerald-100 italic cursor-pointer"
+              @click="redirectDashboard"
+            >
+              <span class="hover:underline">go to dashboard</span>
+              <i class="fa-solid fa-location-arrow ml-2 text-xs"></i>
             </span>
           </div>
 
@@ -45,7 +53,10 @@
             </div>
 
             <!-- Logout button -->
-            <div class="relative flex items-center ml-2 lg:ml-4" @click="logout">
+            <div
+              class="relative flex items-center ml-2 lg:ml-4"
+              @click="logout"
+            >
               <a
                 href="javascript:void(0)"
                 class="flex items-center justify-center w-12 h-12 text-base font-medium leading-normal text-center align-middle transition-colors duration-150 ease-in-out bg-transparent shadow-none cursor-pointer text-stone-500 border-stone-200 hover:text-primary active:text-primary focus:text-primary"
@@ -67,7 +78,7 @@ import { useAuthStore } from "@/stores/AuthStore";
 export default {
   setup() {
     const authStore = useAuthStore();
-    return { authStore }
+    return { authStore };
   },
   name: "AuthenticatedNavbar",
   data() {
@@ -87,6 +98,9 @@ export default {
           params: { query: this.searchQuery },
         });
       }
+    },
+    redirectDashboard() {
+      this.$router.push("/dashboard");
     },
   },
 };
