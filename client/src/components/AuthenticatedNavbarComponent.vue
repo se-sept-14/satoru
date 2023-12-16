@@ -84,6 +84,7 @@ export default {
   data() {
     return {
       searchQuery: "",
+      dashboard: "/dashboard",
     };
   },
   methods: {
@@ -100,8 +101,12 @@ export default {
       }
     },
     redirectDashboard() {
-      this.$router.push("/dashboard");
+      this.$router.push(this.dashboard);
     },
+  },
+  async mounted() {
+    const isAdmin = await this.authStore.isAdmin();
+    this.dashboard = isAdmin ? "/admin-dashboard" : "/dashboard";
   },
 };
 </script>
