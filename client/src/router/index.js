@@ -28,7 +28,12 @@ export default createRouter({
     {
       path: "/dashboard",
       name: "Dashboard",
-      component: () => import("@/pages/DashboardPage.vue"),
+      component: () => import("@/pages/Dashboard/DashboardPage.vue"),
+    },
+    {
+      path: "/admin-dashboard",
+      name: "Admin Dashboard",
+      component: () => import("@/pages/Dashboard/AdminDashboard.vue"),
     },
     {
       path: "/search/:query",
@@ -37,17 +42,17 @@ export default createRouter({
     },
     {
       path: "/manage-course",
-      name: "AdminManageCourses",
+      name: "Admin Manage Courses",
       component: () => import("@/pages/Courses/Manage.vue"),
     },
     {
       path: "/add-course",
-      name: "AddCoursePage",
+      name: "Admin Add Course",
       component: () => import("@/pages/AddCoursePage.vue"),
     },
     {
       path: "/admin-course-view",
-      name: "AdminCourseView",
+      name: "Admin Course details",
       component: () => import("@/pages/AdminCourseView.vue"),
     },
     {

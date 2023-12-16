@@ -137,7 +137,11 @@ export default {
             localStorage.setItem("token_type", user.token_type);
             localStorage.setItem("access_token", user.access_token);
 
-            this.$router.push("/dashboard");
+            if(await this.authStore.isAdmin()) {
+              this.$router.push("/admin-dashboard");
+            } else {
+              this.$router.push("/dashboard");
+            }
           }
         } else {
           this.userDataError.username = true;
