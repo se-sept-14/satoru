@@ -116,7 +116,7 @@ export default {
   methods: {
     async login(e) {
       e.preventDefault(); // Prevents the default behaviour of submit button (to refresh the page)
-
+      
       if (this.userData.username.length == 0) this.userDataError.username = true;
       if (this.userData.password.length == 0) this.userDataError.password = true;
 

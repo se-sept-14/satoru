@@ -12,14 +12,17 @@
       <div
         v-for="course in courses"
         :key="course.id"
-        class="max-w-2xl mx-auto mt-6 p-4 rounded-xl border-2 border-slate-100/10 bg-[#000101] text-white shadow-lg transition-all duration-200 hover:scale-105"
+        class="max-w-2xl mx-auto mt-6 p-4 rounded-xl border-2 border-slate-100/10 bg-[#000101] text-white shadow-lg"
       >
         <div class="flex justify-between items-start">
           <div class="flex flex-col">
             <div class="mb-4">
-              <p class="font-semibold text-2xl mb-1">
+              <span
+                class="font-semibold text-2xl mb-1 cursor-pointer hover:text-yellow-200"
+                @click="viewCoursePage(course.id)"
+              >
                 {{ course.name }}
-              </p>
+              </span>
               <p class="font-light text-lg text-gray-400">
                 by {{ course.instructor_name }}
               </p>
@@ -35,7 +38,6 @@
         </div>
         <div class="flex justify-between items-center w-full mt-6">
           <div class="text-xl font-light">{{ course.credits }} credits</div>
-          <div class="text-xl font-light">75 students</div>
           <div class="flex items-center">
             <div class="w-4 h-4 bg-yellow-400 clip-star"></div>
             <div class="text-xl font-light ml-2">4.5</div>
@@ -44,7 +46,7 @@
             class="bg-slate-100 text-black rounded px-6 py-2 transition-colors duration-200 hover:bg-slate-200 hover:text-white"
           >
             <i class="fa-solid fa-cart-plus"></i>
-            Add to cart!
+            Get this course
           </button>
         </div>
       </div>
@@ -55,11 +57,13 @@
 <script>
 import { useAuthStore } from "@/stores/AuthStore";
 import { useSearchStore } from "@/stores/SearchStore";
+import { useCourseStore } from "@/stores/courseStore";
 
 export default {
   setup() {
     const authStore = useAuthStore();
     const searchStore = useSearchStore();
+    const courseStore = useCourseStore();
 
     return { authStore, searchStore };
   },
@@ -69,6 +73,16 @@ export default {
       userName: "username",
       courses: [],
     };
+  },
+  methods: {
+    viewCoursePage(courseId) {
+      this.$router.push({
+        name: "ViewCourse",
+        params: {
+          id: courseId,
+        },
+      });
+    },
   },
   async created() {
     if (this.$route.params.query.toString().length == 0) {
@@ -84,7 +98,7 @@ export default {
     this.courses = await this.searchStore.searchCourse(
       this.$route.params.query
     );
-    // console.log(this.courses);
+
     if (this.courses.length == 0) {
       console.log("No courses found");
     }
