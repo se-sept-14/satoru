@@ -9,6 +9,7 @@ export const useAuthStore = defineStore("authStore", {
         auth: {
           login: "/api/auth/login",
           register: "/api/auth/register",
+          isAdmin: "/api/auth/is-admin",
         },
       },
     },
@@ -102,6 +103,43 @@ export const useAuthStore = defineStore("authStore", {
           }
         } else throw err;
       }
+    },
+    async isAdmin() {
+      const tokenType = localStorage.getItem("token_type");
+      const accessToken = localStorage.getItem("access_token");
+
+      if (tokenType && accessToken) {
+        const authToken = `${tokenType} ${accessToken}`;
+        const apiUrl = `${this.api.server}${this.api.endpoints.auth.isAdmin}`;
+        const headers = {
+          accept: "application/json",
+          Authorization: authToken,
+        };
+
+        try {
+          const response = await axios.get(apiUrl, { headers });
+
+          if (response.status == 200) {
+            return response.data["is_admin"] == 1 ? true : false;
+          }
+        } catch (err) {
+          if (err.response && err.response.status === 404) {
+            console.error("Profile not found");
+            return null;
+          } else {
+            console.error("Error fetching profile:", err.message);
+            return false;
+          }
+        }
+      } else {
+        return false;
+      }
+    },
+    isLoggedIn() {
+      const tokenType = localStorage.getItem("token_type");
+      const accessToken = localStorage.getItem("access_token");
+
+      return tokenType && accessToken;
     },
   },
 });

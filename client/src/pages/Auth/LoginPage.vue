@@ -116,11 +116,9 @@ export default {
   methods: {
     async login(e) {
       e.preventDefault(); // Prevents the default behaviour of submit button (to refresh the page)
-
-      if (this.userData.username.length == 0)
-        this.userDataError.username = true;
-      if (this.userData.password.length == 0)
-        this.userDataError.password = true;
+      
+      if (this.userData.username.length == 0) this.userDataError.username = true;
+      if (this.userData.password.length == 0) this.userDataError.password = true;
 
       if (!this.userDataError.username && !this.userDataError.password) {
         const user = await this.authStore.login(this.userData);
@@ -129,19 +127,21 @@ export default {
           if (typeof user == "string") {
             console.log(user);
           } else if (typeof user == "number") {
-            if (parseInt(user) == 401) {
-              this.userDataError.password = true;
-            }
+            if (parseInt(user) == 401) this.userDataError.password = true;
 
             if (parseInt(user) == 404) {
               this.userDataError.username = true;
               this.userDataError.password = true;
             }
           } else {
-            localStorage.setItem("access_token", user.access_token);
             localStorage.setItem("token_type", user.token_type);
+            localStorage.setItem("access_token", user.access_token);
 
-            this.$router.push("/dashboard");
+            if(await this.authStore.isAdmin()) {
+              this.$router.push("/admin-dashboard");
+            } else {
+              this.$router.push("/dashboard");
+            }
           }
         } else {
           this.userDataError.username = true;
@@ -155,6 +155,12 @@ export default {
     clearPasswordError() {
       this.userDataError.password = false;
     },
+  },
+  mounted() {
+    if(this.authStore.isLoggedIn()) {
+      this.$router.push("/dashboard");
+      return;
+    }
   },
 };
 </script>

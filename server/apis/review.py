@@ -108,19 +108,16 @@ async def edit_review(review_id: int, review: ReviewsCreate, current_user: dict 
 
 @review_router.delete("/{review_id}", summary = "Delete a review 🗑️")
 async def delete_review(review_id: int, current_user: dict = Depends(decode_token)):
-  try:
-    with db_connection.atomic():
-      review_instance = Reviews.get_by_id(review_id)
+  with db_connection.atomic():
+    review_instance = Reviews.get_by_id(review_id)
+    print(review_instance.user_id != current_user['id'])
 
-      if review_instance.user_id != current_user['id']:
-          raise HTTPException(status_code = 403, detail = "Not authorized to delete this review 👤")
-      
-      db_connection.execute_sql(f"DELETE FROM reviews WHERE id={review_id}")
-    return {"message": "Review deleted successfully"}
-  except DoesNotExist:
-    raise HTTPException(status_code = 404, detail = "Review not found ❌")
-  except Exception as e:
-    raise HTTPException(status_code = 500, detail = str(e))
+    if review_instance.user_id != current_user['id']:
+        raise HTTPException(status_code = 403, detail = "Not authorized to delete this review 👤")
+    
+    db_connection.execute_sql(f"DELETE FROM reviews WHERE id={review_id}")
+    
+  return {"message": "Review deleted successfully"}
 
 
 @review_router.delete("/flagged/{review_id}", summary = "Delete a flagged review 🚮")
