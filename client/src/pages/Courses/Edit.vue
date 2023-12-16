@@ -68,15 +68,6 @@
           >
             {{ courseData.instructor_name }}
           </p>
-
-          <button
-            :disabled="disableRegistration"
-            class="bg-emerald-600 mt-16 p-4 rounded-md font-serif text-md self-center"
-            @click="mapStudentCourse"
-          >
-            <i class="fa-solid fa-book-bookmark mr-2"></i>
-            <span>Choose this course</span>
-          </button>
         </div>
       </div>
 
