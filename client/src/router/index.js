@@ -59,7 +59,7 @@ export default createRouter({
     {
       path: "/course/:id",
       name: "ViewCourse",
-      component: () => import("@/pages/Courses/View.vue")
-    }
+      component: () => import("@/pages/Courses/View.vue"),
+    },
   ],
 });

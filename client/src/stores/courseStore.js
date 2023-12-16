@@ -3,6 +3,12 @@ import { defineStore } from "pinia";
 
 export const useCourseStore = defineStore("courseStore", {
   state: () => ({
+    api: {
+      baseUrl: "https://api.pickmycourse.online",
+      endpoints: {
+        studentCourseMap: "/api/course/student-course-map/"
+      }
+    },
     courseList: [],
     courses: [],
   }),
@@ -58,11 +64,11 @@ export const useCourseStore = defineStore("courseStore", {
         try {
           const response = await axios.get(apiUrl, { headers });
 
-          if(response.status == 200) {
-            return response.data['data'];
+          if (response.status == 200) {
+            return response.data["data"];
           }
-        } catch(err) {
-          console.error(err)
+        } catch (err) {
+          console.error(err);
           return {};
         }
       } else {
@@ -111,6 +117,38 @@ export const useCourseStore = defineStore("courseStore", {
         // Handle errors appropriately
         console.error("Error adding course:", error);
         throw error;
+      }
+    },
+    async studentCourseMapById(courseId) {
+      const tokenType = localStorage.getItem("token_type");
+      const accessToken = localStorage.getItem("access_token");
+
+      if (tokenType && accessToken) {
+        const authToken = `${tokenType} ${accessToken}`;
+        const apiUrl = `${this.api.baseUrl}${this.api.endpoints.studentCourseMap}${courseId}`;
+        const headers = {
+          Authorization: authToken,
+          accept: "application/json",
+          "Content-Type": "application/json",
+        };
+
+        try {
+          const response = await axios.post(apiUrl, {}, { headers });
+
+          if (response.status == 200) {
+            return response.data;
+          }
+        } catch (err) {
+          if (err.response && err.response.status === 404) {
+            console.error("No such course found");
+            return null;
+          } else {
+            console.error("Error fetching reviews:", err.message);
+            return false;
+          }
+        }
+      } else {
+        return this.$router.push("/login");
       }
     },
   },

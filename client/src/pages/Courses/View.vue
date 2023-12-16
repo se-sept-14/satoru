@@ -67,9 +67,12 @@
         </p>
 
         <button
+          :disabled="disableRegistration"
           class="bg-emerald-600 mt-16 p-4 rounded-md font-serif text-md self-center"
+          @click="mapStudentCourse"
         >
-          <i class="fa-solid fa-cart-shopping"></i> <span>Add to cart</span>
+          <i class="fa-solid fa-book-bookmark mr-2"></i>
+          <span>Choose this course</span>
         </button>
       </div>
     </div>
@@ -97,7 +100,11 @@
             <!-- Flagged review -->
             <i class="fa-solid fa-flag" v-if="courseReview.is_flagged"></i>
             <!-- Not flagged review -->
-            <i class="fa-regular fa-flag cursor-pointer hover:text-yellow-300" v-else @click="flagReview(courseReview.id, i)"></i>
+            <i
+              class="fa-regular fa-flag cursor-pointer hover:text-yellow-300"
+              v-else
+              @click="flagReview(courseReview.id, i)"
+            ></i>
           </span>
         </div>
       </div>
@@ -121,7 +128,7 @@
     </div>
 
     <!-- Empty div to add margin at the bottom -->
-    <div class="my-8"></div> 
+    <div class="my-8"></div>
   </div>
 </template>
 
@@ -141,16 +148,24 @@ export default {
       courseId: -1,
       courseData: {},
       courseReviews: [],
+      disableRegistration: false,
     };
   },
   methods: {
     async flagReview(id, idx) {
       const data = await this.reviewStore.flagReviewById(id);
 
-      if(data.message.length != 0) {
+      if (data.message.length != 0) {
         this.courseReviews[idx].is_flagged = true;
       }
-    }
+    },
+    async mapStudentCourse() {
+      const data = await this.courseStore.studentCourseMapById(this.courseId);
+      if (data.message.length != 0) {
+        this.disableRegistration = true;
+        this.$router.push("/dashboard");
+      }
+    },
   },
   async created() {
     this.courseId = this.$route.params.id;
