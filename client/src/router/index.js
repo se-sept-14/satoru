@@ -56,9 +56,9 @@ export default createRouter({
       component: () => import("@/pages/AdminCourseView.vue"),
     },
     {
-      path: "/recommend",
-      name: "ReccomendationPage",
-      component: () => import("@/pages/ReccomendationPage.vue"),
+      path: "/recommend/:numberOfCourses",
+      name: "Recommended Courses",
+      component: () => import("@/pages/Courses/Recommend.vue"),
     },
     {
       path: "/course/:id",

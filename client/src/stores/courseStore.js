@@ -6,7 +6,8 @@ export const useCourseStore = defineStore("courseStore", {
     api: {
       baseUrl: "https://api.pickmycourse.online",
       endpoints: {
-        studentCourseMap: "/api/course/student-course-map/"
+        studentCourseMap: "/api/course/student-course-map/",
+        recommend: "/api/course/recommend/"
       }
     },
     courseList: [],
@@ -137,6 +138,38 @@ export const useCourseStore = defineStore("courseStore", {
 
           if (response.status == 200) {
             return response.data;
+          }
+        } catch (err) {
+          if (err.response && err.response.status === 404) {
+            console.error("No such course found");
+            return null;
+          } else {
+            console.error("Error fetching reviews:", err.message);
+            return false;
+          }
+        }
+      } else {
+        return this.$router.push("/login");
+      }
+    },
+    async recommendCourses(numberOfCourses) {
+      const tokenType = localStorage.getItem("token_type");
+      const accessToken = localStorage.getItem("access_token");
+
+      if (tokenType && accessToken) {
+        const authToken = `${tokenType} ${accessToken}`;
+        const apiUrl = `${this.api.baseUrl}${this.api.endpoints.recommend}${numberOfCourses}`;
+        const headers = {
+          Authorization: authToken,
+          accept: "application/json",
+          "Content-Type": "application/json",
+        };
+
+        try {
+          const response = await axios.get(apiUrl, { headers });
+
+          if (response.status == 200) {
+            return response.data.data;
           }
         } catch (err) {
           if (err.response && err.response.status === 404) {
