@@ -6,8 +6,8 @@ export const useCourseStore = defineStore("courseStore", {
     api: {
       baseUrl: "https://api.pickmycourse.online",
       endpoints: {
-        studentCourseMap: "/api/course/student-course-map/"
-      }
+        studentCourseMap: "/api/course/student-course-map/",
+      },
     },
     courseList: [],
     courses: [],
@@ -45,6 +45,7 @@ export const useCourseStore = defineStore("courseStore", {
           }
         );
         this.courses = response.data;
+        return this.courses.data;
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
