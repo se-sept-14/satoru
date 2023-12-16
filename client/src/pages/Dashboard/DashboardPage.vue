@@ -36,6 +36,14 @@
             <h1 class="text-lg text-gray-400 ml-1">credits</h1>
           </div>
         </div>
+
+        <button
+          v-if="courses.length == 0"
+          @click="redirectRecommendCourses"
+          class="text-white text-xl font-serif bg-transparent p-4 rounded-md border-2 border-slate-200 mt-20 mx-8 hover:bg-white hover:text-black"
+        >
+          Get recommendations
+        </button>
       </div>
 
       <!-- Right, main section -->
@@ -123,7 +131,7 @@ export default {
   },
   name: "DashboardPage",
   components: {
-    'navbar': AuthenticatedNavbarComponent
+    navbar: AuthenticatedNavbarComponent,
   },
   data() {
     return {
@@ -132,6 +140,7 @@ export default {
       profilePicture: null,
       courses: [],
       userData: {},
+      studentProfile: {},
     };
   },
   methods: {
@@ -145,6 +154,12 @@ export default {
         params: {
           id: id,
         },
+      });
+    },
+    redirectRecommendCourses() {
+      this.$router.push({
+        name: "Recommended Courses",
+        params: { numberOfCourses: this.studentProfile.courses_willing_to_take },
       });
     },
   },
@@ -163,7 +178,8 @@ export default {
       const studentProfile = await this.userProfileStore.fetchProfile();
 
       if (studentProfile) {
-        const { user, name } = studentProfile;
+        this.studentProfile = studentProfile;
+        const { user, name } = this.studentProfile;
         this.username = `@${user["username"]}`;
         this.name = name;
 

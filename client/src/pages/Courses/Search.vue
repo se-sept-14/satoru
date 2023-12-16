@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar />
-    
+
     <div class="container px-16">
       <div
         :class="{
@@ -41,12 +41,8 @@
           </div>
           <div class="flex justify-between items-center w-full mt-6">
             <div class="text-xl font-light">{{ course.credits }} credits</div>
-            <div class="flex items-center">
-              <div class="w-4 h-4 bg-yellow-400 clip-star"></div>
-              <div class="text-xl font-light ml-2">4.5</div>
-            </div>
             <button
-              class="bg-slate-100 text-black rounded px-6 py-2 transition-colors duration-200 hover:bg-slate-200 hover:text-white"
+              class="bg-slate-100 text-black rounded px-6 py-2 transition-colors duration-200 hover:bg-slate-700 hover:text-white"
             >
               <i class="fa-solid fa-cart-plus"></i>
               Get this course
@@ -88,7 +84,7 @@ export default {
   methods: {
     viewCoursePage(courseId) {
       this.$router.push({
-        name: "ViewCourse",
+        name: "Course details",
         params: {
           id: courseId,
         },

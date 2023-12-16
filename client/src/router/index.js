@@ -37,8 +37,8 @@ export default createRouter({
     },
     {
       path: "/search/:query",
-      name: "Search",
-      component: () => import("@/pages/SearchPage.vue"),
+      name: "Search Courses",
+      component: () => import("@/pages/Courses/Search.vue"),
     },
     {
       path: "/manage-course",

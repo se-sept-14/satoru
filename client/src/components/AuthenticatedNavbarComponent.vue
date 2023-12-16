@@ -94,7 +94,7 @@ export default {
     callSearch() {
       if (this.searchQuery.length != 0) {
         this.$router.push({
-          name: "Search",
+          name: "Search Courses",
           params: { query: this.searchQuery },
         });
       }
