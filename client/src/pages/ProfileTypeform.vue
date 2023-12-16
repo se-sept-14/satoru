@@ -30,13 +30,6 @@
                   <span class="mr-1"><i class="fa-solid fa-play"></i></span>
                   Get Started
                 </button>
-
-                <button
-                  @click="submitForm"
-                  class="bg-black hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Submit
-                </button>
               </div>
 
               <div v-else-if="step === 2" key="2">
@@ -127,7 +120,7 @@
                 />
 
                 <h2 class="text-2xl font-bold mb-4">In Which level are you?</h2>
-                <select v-model="term" class="w-full p-2 mb-4 rounded">
+                <select v-model="level" class="w-full p-2 mb-4 rounded">
                   <option disabled value="">Please select your level</option>
                   <option value="0">Foundational</option>
                   <option value="1">Diploma</option>
@@ -220,7 +213,7 @@
                 <h2 class="text-2xl font-bold mb-4">
                   Step 5: No. of Hours You Can Devote in a Week
                 </h2>
-                <!-- Add input for hours per week -->
+
                 <input
                   v-model="hoursPerWeek"
                   type="number"
@@ -292,7 +285,7 @@
                 <h2 class="text-2xl font-bold mb-4">
                   Step 7: Your Long-term Career Goals
                 </h2>
-                <!-- Add input for career goals -->
+
                 <textarea
                   v-model="careerGoals"
                   class="w-full p-2 mb-4 rounded"
@@ -325,7 +318,7 @@
                 <h2 class="text-2xl font-bold mb-4">
                   Step 8: When Do You Intend to Complete Your Degree?
                 </h2>
-                <!-- Add input for completion date -->
+
                 <input
                   v-model="completionDate"
                   type="date"
@@ -355,9 +348,11 @@
                   </svg>
                   Previous
                 </button>
+
                 <h2 class="text-2xl font-bold mb-4">
                   Step 9: Tell us a more about yourself(optional)
                 </h2>
+
                 <!-- Add input for completion date -->
                 <h3>Your date of birth</h3>
                 <input
@@ -365,13 +360,7 @@
                   type="date"
                   class="w-full p-2 mb-4 rounded"
                 />
-                <!-- <h3>Your Address</h3>
-                <input
-                  v-model="address"
-                  type="text"
-                  class="w-full p-2 mb-4 rounded"
-                  placeholder="Enter your address"
-                  /> -->
+
                 <h3>Your Category</h3>
                 <select v-model="category" class="w-full p-2 mb-4 rounded">
                   <option disabled value="">Please choose an option</option>
@@ -396,13 +385,6 @@
                   class="w-full p-2 mb-4 rounded"
                   placeholder="Enter your address"
                 />
-                <!-- <h3>Your phone Number</h3>
-                <input
-                  v-model="contact_no"
-                  type="number"
-                  class="w-full p-2 mb-4 rounded"
-                  placeholder="Enter your phone number"
-                /> -->
 
                 <button
                   @click="submitForm"
@@ -411,26 +393,6 @@
                   Submit
                 </button>
               </div>
-
-              <!-- <div v-else key="11">
-                <h2 class="text-2xl font-bold mb-4">Summary</h2>
-                <p>Learning Preferences: {{ preferences }}</p>
-                <p>CGPA: {{ cgpa }}</p>
-                <p>
-                  Favourite Subjects: {{ subject1 }}, {{ subject2 }},
-                  {{ subject3 }}
-                </p>
-                <p>Hours Per Week: {{ hoursPerWeek }}</p>
-                <p>Number of Courses: {{ numCourses }}</p>
-                <p>Career Goals: {{ careerGoals }}</p>
-                <p>Completion Date: {{ completionDate }}</p>
-                <button
-                  @click="submitForm"
-                  class="bg-black hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Submit
-                </button>
-              </div> -->
             </transition>
           </div>
         </div>
@@ -460,12 +422,12 @@ export default {
       dob: "2000-01-01",
       gender: "",
       name: "",
-      profile_picture_url: "ergfc",
+      profile_picture_url: "",
       pwd: false,
-      roll_no: "534213",
+      roll_no: "10000",
 
-      careerGoals: "chop chop chop",
-      completionDate: "2024-01-01",
+      careerGoals: "",
+      completionDate: "2024-10-10",
       numCourses: "",
       hoursPerWeek: "",
       preferences: "",
@@ -474,10 +436,10 @@ export default {
       subject2: "",
       subject3: "",
 
-      address: "iugskhj",
-      contact_no: "685343213",
+      address: ".",
+      contact_no: ".",
       level: "",
-      term: "",
+      term: ".",
       cgpa: "",
       availableCourses: [],
     };
@@ -503,11 +465,11 @@ export default {
           roll_no: this.roll_no,
         },
         student_profile_update: {
-          career_goals: this.career_goals,
-          completion_deadline: this.completion_deadline,
-          courses_willing_to_take: this.courses_willing_to_take,
-          hours_per_week: this.hours_per_week,
-          learning_preferences: this.learning_preferences,
+          career_goals: this.careerGoals,
+          completion_deadline: this.completionDate,
+          courses_willing_to_take: this.numCourses,
+          hours_per_week: this.hoursPerWeek,
+          learning_preferences: this.preferences,
         },
         student_about_me_update: {
           address: this.address,
@@ -520,8 +482,12 @@ export default {
       const response = await this.profileStore.createProfile(profileData);
 
       if (response) {
-        // Handle successful profile creation
-        console.log("created profile");
+        console.log(this.numCourses);
+
+        this.$router.push({
+          name: "Recommended Courses",
+          params: { numberOfCourses: this.numCourses },
+        });
       } else {
         // Handle failed profile creation
         console.log("failed to create profile");

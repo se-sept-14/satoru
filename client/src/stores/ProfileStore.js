@@ -14,6 +14,8 @@ export const useProfileStore = defineStore("profileStore", {
   getters: {},
   actions: {
     async createProfile(profileData) {
+      console.log(profileData);
+
       const tokenType = localStorage.getItem("token_type");
       const accessToken = localStorage.getItem("access_token");
 
@@ -25,9 +27,6 @@ export const useProfileStore = defineStore("profileStore", {
           Authorization: authToken,
         };
 
-        // const { payload } = profileData;
-        console.log(apiUrl);
-        console.log(authToken);
         try {
           const response = await axios.post(apiUrl, profileData, { headers });
           console.log(response);
