@@ -56,12 +56,10 @@
                 <button
                   @click="nextStep"
                   class="mt-2 bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  :disabled="!name"
                 >
                   Next
                 </button>
-                <button
-                  class="text-gray-300 hover:bg-gray-700 px-4 py-2 rounded font-bold"
-                ></button>
               </div>
 
               <div v-else-if="step === 3" key="3">
@@ -104,6 +102,7 @@
                 <button
                   @click="nextStep"
                   class="mt-2 bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  :disabled="!preferences"
                 >
                   Next
                 </button>
@@ -121,78 +120,30 @@
                 <input
                   v-model="cgpa"
                   type="text"
+                  min="0"
+                  max="10"
                   class="w-full p-2 mb-4 rounded"
                   placeholder="Enter your CGPA"
                 />
 
                 <h2 class="text-2xl font-bold mb-4">In Which level are you?</h2>
-                <p>(0:foundational, 1:diploma, 2:degree, 3:bs)</p>
-                <input
-                  v-model="term"
-                  type="number"
-                  class="w-full p-2 mb-4 rounded"
-                  placeholder="Enter your current level"
-                />
+                <select v-model="term" class="w-full p-2 mb-4 rounded">
+                  <option disabled value="">Please select your level</option>
+                  <option value="0">Foundational</option>
+                  <option value="1">Diploma</option>
+                  <option value="2">Degree</option>
+                  <option value="3">BS</option>
+                </select>
 
-                <!-- <h2 class="text-2xl font-bold mb-4">In Which term are you?</h2>
-                <input
-                  v-model="term"
-                  type="text"
-                  class="w-full p-2 mb-4 rounded"
-                  placeholder="Enter your current term"
-                /> -->
                 <button
                   @click="nextStep"
                   class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  :disabled="!cgpa || !term || cgpa < 0 || cgpa > 10"
                 >
                   Next
                 </button>
               </div>
 
-              <!-- <div v-else-if="step === 5" key="5">
-                <button @click="prevStep" class="my-2">
-                  <svg
-                    class="w-6 h-6 inline-block mr-1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"
-                    ></path>
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                  </svg>
-                  Previous
-                </button>
-                <h2 class="text-2xl font-bold mb-4">
-                  Step 4: Your Favourite 3 Subjects (in order)
-                </h2>
-               
-                <input
-                  v-model="subject1"
-                  type="text"
-                  class="w-full p-2 mb-2 rounded"
-                  placeholder="1st Favorite Subject"
-                />
-                <input
-                  v-model="subject2"
-                  type="text"
-                  class="w-full p-2 mb-2 rounded"
-                  placeholder="2nd Favorite Subject"
-                />
-                <input
-                  v-model="subject3"
-                  type="text"
-                  class="w-full p-2 mb-4 rounded"
-                  placeholder="3rd Favorite Subject"
-                />
-                <button
-                  @click="nextStep"
-                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
-                >
-                  Next
-                </button>
-              </div> -->
               <div v-else-if="step === 5" key="5">
                 <button @click="prevStep" class="my-2">
                   <svg
@@ -245,6 +196,7 @@
                 <button
                   @click="nextStep"
                   class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  :disabled="!subject1 || !subject2 || !subject3"
                 >
                   Next
                 </button>
@@ -278,6 +230,9 @@
                 <button
                   @click="nextStep"
                   class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  :disabled="
+                    !hoursPerWeek || hoursPerWeek < 0 || hoursPerWeek > 168
+                  "
                 >
                   Next
                 </button>
@@ -301,21 +256,24 @@
                 <h2 class="text-2xl font-bold mb-4">
                   Step 6: No. of Courses You're Willing to Take
                 </h2>
-                <!-- Add input for number of courses -->
-                <input
-                  v-model="numCourses"
-                  type="number"
-                  class="w-full p-2 mb-4 rounded"
-                  placeholder="Enter number of courses"
-                />
+                <!-- Add dropdown for number of courses -->
+                <select v-model="numCourses" class="w-full p-2 mb-4 rounded">
+                  <option disabled value="">
+                    Please select number of courses
+                  </option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
                 <button
                   @click="nextStep"
                   class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  :disabled="!numCourses"
                 >
                   Next
                 </button>
               </div>
-
               <div v-else-if="step === 8" key="8">
                 <button @click="prevStep" class="my-2">
                   <svg
@@ -343,6 +301,7 @@
                 <button
                   @click="nextStep"
                   class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  :disabled="!careerGoals"
                 >
                   Next
                 </button>
@@ -375,6 +334,7 @@
                 <button
                   @click="nextStep"
                   class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  :disabled="!completionDate"
                 >
                   Next
                 </button>
@@ -445,14 +405,14 @@
                 /> -->
 
                 <button
-                  @click="nextStep"
-                  class="bg-black hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+                  @click="submitForm"
+                  class="bg-black hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
                 >
-                  Next
+                  Submit
                 </button>
               </div>
 
-              <div v-else key="11">
+              <!-- <div v-else key="11">
                 <h2 class="text-2xl font-bold mb-4">Summary</h2>
                 <p>Learning Preferences: {{ preferences }}</p>
                 <p>CGPA: {{ cgpa }}</p>
@@ -470,7 +430,7 @@
                 >
                   Submit
                 </button>
-              </div>
+              </div> -->
             </transition>
           </div>
         </div>
@@ -499,26 +459,26 @@ export default {
       category: "",
       dob: "2000-01-01",
       gender: "",
-      name: "nanami",
+      name: "",
       profile_picture_url: "ergfc",
       pwd: false,
       roll_no: "534213",
 
       careerGoals: "chop chop chop",
       completionDate: "2024-01-01",
-      numCourses: "3",
-      hoursPerWeek: "15",
-      preferences: "datasciecne",
+      numCourses: "",
+      hoursPerWeek: "",
+      preferences: "",
 
-      subject1: "a",
-      subject2: "b",
-      subject3: "c",
+      subject1: "",
+      subject2: "",
+      subject3: "",
 
       address: "iugskhj",
       contact_no: "685343213",
-      level: 1,
-      term: "4",
-      cgpa: "8.9",
+      level: "",
+      term: "",
+      cgpa: "",
       availableCourses: [],
     };
   },
