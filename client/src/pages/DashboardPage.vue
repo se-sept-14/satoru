@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-screen flex mx-auto px-10">
+    <div class="h-screen flex mx-24">
       <!-- Left sidebar -->
       <div class="w-1/4 flex flex-col" v-if="username">
         <!-- Student's randomly generated profile picture -->
@@ -41,6 +41,12 @@
             <h1 class="text-lg text-gray-400 ml-1">credits</h1>
           </div>
         </div>
+
+        <button
+          class="text-white text-xl font-serif bg-transparent p-4 rounded-md border-2 border-slate-200 mt-20 mx-8 hover:bg-white hover:text-black"
+        >
+          Get recommendations
+        </button>
       </div>
 
       <!-- Right, main section -->
@@ -95,11 +101,13 @@
           Your courses 🔻
         </h2>
         <div class="grid auto-rows-[192px] grid-cols-3 gap-7">
+          <!-- Each course box -->
           <div
             v-for="(course, i) in courses"
             :key="i"
-            class="row-span-1 rounded-xl border-2 border-slate-100/10 bg-[#000101] p-5 dark:bg-[#000101] text-white"
+            class="row-span-1 rounded-xl border-2 border-slate-100/10 bg-[#000101] p-5 dark:bg-[#000101] text-white cursor-pointer hover:scale-105 transform transition duration-300"
             :class="{ 'col-span-2': i === 3 || i === 6 }"
+            @click="viewCourse(course.id)"
           >
             <div class="flex items-end mb-4">
               <h2 class="text-xl font-bold">{{ course.name }}</h2>
@@ -176,13 +184,17 @@ export default {
         console.log("empty search query");
       }
     },
-
-    // callProfile() {
-
-    // },
     logout() {
       this.authStore.logout();
       this.$router.push("/login");
+    },
+    viewCourse(id) {
+      this.$router.push({
+        name: "ViewCourse",
+        params: {
+          id: id,
+        },
+      });
     },
   },
   async mounted() {
