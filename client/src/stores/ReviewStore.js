@@ -7,7 +7,7 @@ import { defineStore } from "pinia";
 export const useReviewStore = defineStore("reviewStore", {
   state: () => ({
     api: {
-      server: "https://api.pickmycourse.online",
+      server: import.meta.env.VITE_API_URL,
       endpoints: {
         create: "/api/review/",
         fetchAll: "/api/review/all",

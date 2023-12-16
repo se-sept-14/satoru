@@ -41,12 +41,6 @@
           </div>
           <div class="flex justify-between items-center w-full mt-6">
             <div class="text-xl font-light">{{ course.credits }} credits</div>
-            <button
-              class="bg-slate-100 text-black rounded px-6 py-2 transition-colors duration-200 hover:bg-slate-700 hover:text-white"
-            >
-              <i class="fa-solid fa-cart-plus"></i>
-              Get this course
-            </button>
           </div>
         </div>
       </div>
@@ -90,6 +84,9 @@ export default {
         },
       });
     },
+    async searchCourses(query) {
+      this.courses = await this.searchStore.searchCourse(query);
+    }
   },
   async created() {
     if (this.$route.params.query.toString().length == 0) {
@@ -102,13 +99,14 @@ export default {
       return;
     }
 
-    this.courses = await this.searchStore.searchCourse(
-      this.$route.params.query
-    );
-
-    if (this.courses.length == 0) {
-      console.log("No courses found");
-    }
+    this.searchCourses(this.$route.params.query);
   },
+  watch: {
+    '$route.params.query'(newQuery, oldQuery) {
+      if(newQuery != oldQuery) {
+        this.searchCourses(newQuery);
+      }
+    }
+  }
 };
 </script>

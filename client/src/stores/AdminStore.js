@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 export const useAdminStore = defineStore("adminStore", {
   state: () => ({
     api: {
-      baseUrl: "https://api.pickmycourse.online",
+      baseUrl: import.meta.env.VITE_API_URL,
       endpoints: {
         allStudents: "/api/admin/all-students",
       },
