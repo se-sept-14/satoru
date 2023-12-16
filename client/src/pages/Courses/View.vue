@@ -138,6 +138,7 @@
 
 <script>
 // Stores
+import { useAuthStore } from "@/stores/AuthStore";
 import { useCourseStore } from "@/stores/courseStore";
 import { useReviewStore } from "@/stores/ReviewStore";
 
@@ -146,9 +147,10 @@ import AuthenticatedNavbarComponent from "@/components/AuthenticatedNavbarCompon
 
 export default {
   setup() {
+    const authStore = useAuthStore();
     const courseStore = useCourseStore();
     const reviewStore = useReviewStore();
-    return { courseStore, reviewStore };
+    return { authStore, courseStore, reviewStore };
   },
   name: "ViewCourse",
   components: {
@@ -179,6 +181,10 @@ export default {
     },
   },
   async created() {
+    if(await this.authStore.isAdmin()) {
+      this.disableRegistration = true;
+    }
+
     this.courseId = this.$route.params.id;
     this.courseData = await this.courseStore.fetchCourseById(this.courseId);
     this.courseReviews = await this.reviewStore.getReviewsByCourseId(

@@ -28,7 +28,7 @@
 
         <div class="flex flex-col mx-4">
           <button
-            @click="redirectToAdminCourseView"
+            @click="redirectToAdminCourseView(course.id)"
             class="w-24 h-8 rounded hover:bg-slate-600 mx-auto text-white text-md font-normal my-1"
           >
             <i class="fa-solid fa-pen-to-square text-xs"></i>
@@ -84,8 +84,13 @@ export default {
     async fetchCourses() {
       await useCourseStore().fetchCourses();
     },
-    redirectToAdminCourseView() {
-      this.$router.push("/admin-course-view");
+    redirectToAdminCourseView(courseId) {
+      this.$router.push({
+        name: "Admin Course details",
+        params: {
+          id: courseId,
+        },
+      });
     },
     confirmDeleteCourse(courseId) {
       const confirmDelete = window.confirm(
