@@ -12,12 +12,12 @@ export default createRouter({
     },
     {
       path: "/login",
-      name: "LoginPage",
+      name: "Login",
       component: () => import("@/pages/LoginPage.vue"),
     },
     {
       path: "/register",
-      name: "RegisterPage",
+      name: "Register",
       component: () => import("@/pages/RegisterPage.vue"),
     },
     {
@@ -27,12 +27,12 @@ export default createRouter({
     },
     {
       path: "/dashboard",
-      name: "DashboardPage",
+      name: "Dashboard",
       component: () => import("@/pages/DashboardPage.vue"),
     },
     {
       path: "/search/:query",
-      name: "SearchPage",
+      name: "Search",
       component: () => import("@/pages/SearchPage.vue"),
     },
     {
