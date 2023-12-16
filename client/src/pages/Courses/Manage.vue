@@ -3,7 +3,10 @@
     <div class="flex mb-12 justify-between">
       <p class="text-white text-3xl font-bold font-serif">Manage Courses</p>
 
-      <p class="text-lg self-end text-yellow-100 cursor-pointer" @click="redirectToAddCourse">
+      <p
+        class="text-lg self-end text-yellow-100 cursor-pointer"
+        @click="redirectToAddCourse"
+      >
         <i class="fa-solid fa-circle-plus text-md mr-1"></i>
         <span class="hover:underline"> Create a new course </span>
       </p>
@@ -103,7 +106,7 @@ export default {
     },
     redirectToAddCourse() {
       this.$router.push("/add-course");
-    }
+    },
   },
 };
 </script>
