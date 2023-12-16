@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-screen flex mx-auto px-10">
+    <div class="h-screen flex mx-24">
       <!-- Left sidebar -->
       <div class="w-1/4 flex flex-col" v-if="username">
         <!-- Student's randomly generated profile picture -->
@@ -41,6 +41,12 @@
             <h1 class="text-lg text-gray-400 ml-1">credits</h1>
           </div>
         </div>
+
+        <button
+          class="text-white text-xl font-serif bg-transparent p-4 rounded-md border-2 border-slate-200 mt-20 mx-8 hover:bg-white hover:text-black"
+        >
+          Get recommendations
+        </button>
       </div>
 
       <!-- Right, main section -->
