@@ -8,5 +8,5 @@ fi
 
 pm2 delete fastapi
 pip install --no-cache-dir --upgrade -r requirements.txt
-pm2 start "uvicorn main:app --host 0.0.0.0 --port 80" -n fastapi
+sudo pm2 start "uvicorn main:app --host 0.0.0.0 --port 80" -n fastapi
 cd -
