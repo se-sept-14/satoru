@@ -42,27 +42,7 @@ from utils.cors import (
 async def lifecycle(app: FastAPI):
   try:
     db_connection.connect()
-
-    # Migrate the DB tables
-    db_connection.create_tables(
-      [
-        Courses,
-        Tags,
-        CourseTagMap,
-        Users,
-        StudentProfile,
-        FavoriteCoursesOrder,
-        Levels,
-        Reviews,
-        ReviewTagMap,
-        Students,
-        StudentAboutMe,
-        StudentCourseMap,
-      ]
-    )
     yield
-  except OperationalError as oexc:
-    print(f"Tables already exist: {oexc}")
   finally:
     db_connection.close()
 

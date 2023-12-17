@@ -76,6 +76,8 @@ export const useAuthStore = defineStore("authStore", {
       const { username, email, password } = await userData;
       const payload = { email, username, password };
 
+      console.log(apiUrl);
+
       try {
         const { data } = await axios.post(apiUrl, payload, { headers });
 

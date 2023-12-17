@@ -153,10 +153,18 @@ export default {
         if (typeof user == "string") {
           console.error(user);
         } else {
+          console.log(user);
+          
           localStorage.setItem("access_token", user.access_token);
           localStorage.setItem("token_type", user.token_type);
 
-          this.$router.push("/profile");
+          console.log(await this.authStore.isAdmin());
+
+          if(await this.authStore.isAdmin()) {
+            this.$router.push("/admin-dashboard");
+          } else {
+            this.$router.push("/profile");
+          }
         }
       } else {
         console.log(user);
