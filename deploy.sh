@@ -7,7 +7,6 @@ if [ ! -f .env ]; then
 fi
 
 pm2 delete fastapi
-conda activate deploy
 pip install --no-cache-dir --upgrade -r requirements.txt
 pm2 start "uvicorn main:app --host 0.0.0.0 --port 80" -n fastapi
 cd -
