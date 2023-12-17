@@ -56,6 +56,10 @@ You'll also need to make a copy of `.env` file with proper details (`.env.exampl
   - `pip install -r requirements.txt`
 - Run it using the shell script
   - `sh run.sh`
+- To run the client
+  - `cd client`
+  - `npm install`
+  - `npm run dev`
 
 ## 🩺 **To test the API endpoints**
 - Create and activate the environment as described above, install requirements
