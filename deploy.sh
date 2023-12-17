@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Stop running containers
-docker compose down
-
-# Check if .env file exists in 'server' directory
-if [ ! -f ./server/.env ]; then
-  echo "Error: .env file not found. Please create the .env file inside \`server\` directory before running this script. Check the README"
+cd server
+if [ ! -f .env ]; then
+  echo "[ERROR] .env file not found"
   exit 1
 fi
 
-# Run the docker compose service
-docker compose up --build -d
+pm2 delete fastapi
+conda activate deploy
+pip install --no-cache-dir --upgrade -r requirements.txt
+pm2 start "uvicorn main:app --host 0.0.0.0 --port 80" -n fastapi
+cd -
