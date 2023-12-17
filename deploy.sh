@@ -1,12 +1,11 @@
 #!/bin/bash
 
-cd server
-if [ ! -f .env ]; then
-  echo "[ERROR] .env file not found"
-  exit 1
-fi
+# Checkout the `main` branch
+git checkout main
 
-pm2 delete fastapi
-pip install --no-cache-dir --upgrade -r requirements.txt
-sudo pm2 start "uvicorn main:app --host 0.0.0.0 --port 80" -n fastapi
-cd -
+# Pull the changes from main
+git pull
+
+# Run the deploy.sh script inside `server` directory
+cd server/
+sh deploy.sh

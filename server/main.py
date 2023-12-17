@@ -9,33 +9,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from apis.auth import auth_router
 from apis.tags import tags_router
+from models.db import db_connection
 from apis.admin import admin_router
 from apis.course import course_router
 from apis.review import review_router
 from apis.profile import profile_router
-from models.db import (
-  db_connection, OperationalError,
-  Courses,
-  Tags,
-  CourseTagMap,
-  Users,
-  StudentProfile,
-  FavoriteCoursesOrder,
-  Levels,
-  Reviews,
-  ReviewTagMap,
-  Students,
-  StudentAboutMe,
-  StudentCourseMap,
-)
 
 from utils.openapi import description, version, summary, title
-from utils.cors import (
-  allowed_origins,
-  allowed_credentials,
-  allowed_methods,
-  allowed_headers,
-)
+from utils.cors import allowed_origins, allowed_credentials, allowed_methods, allowed_headers
 
 # Lifecycle context (keep the DB connection alive till the FastAPI server is running)
 @asynccontextmanager
@@ -47,12 +28,12 @@ async def lifecycle(app: FastAPI):
     db_connection.close()
 
 app = FastAPI(lifespan = lifecycle, redoc_url = None, summary = summary, version = version)
-app.include_router(auth_router, prefix = "/api/auth")  # Auth endpoints
-app.include_router(admin_router, prefix = "/api/admin")  # Admin endpoints
-app.include_router(course_router, prefix = "/api/course")  # Course management endpoints
-app.include_router(profile_router, prefix = "/api/profile")  # Profile management endpoints
-app.include_router(review_router, prefix = "/api/review")  # Review management endpoints
-app.include_router(tags_router, prefix = "/api/tags")  # Tag management endpoints
+app.include_router(auth_router, prefix = "/api/auth")         # Auth endpoints
+app.include_router(admin_router, prefix = "/api/admin")       # Admin endpoints
+app.include_router(course_router, prefix = "/api/course")     # Course management endpoints
+app.include_router(profile_router, prefix = "/api/profile")   # Profile management endpoints
+app.include_router(review_router, prefix = "/api/review")     # Review management endpoints
+app.include_router(tags_router, prefix = "/api/tags")         # Tag management endpoints
 
 # Add a middleware to allow certain origins only (and credentials, methods and headers)
 app.add_middleware(
