@@ -226,6 +226,18 @@ export default {
     });
 
     window.addEventListener("scroll", () => {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollTop = document.documentElement.scrollTop;
+      const clientHeight = document.documentElement.clientHeight;
+
+      const isBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+      if (isBottom) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
+
       canvas.style.top = `${window.scrollY}px`;
     });
 

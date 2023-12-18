@@ -157,13 +157,16 @@ export default {
       });
     },
     redirectRecommendCourses() {
-      if(!this.studentProfile.courses_willing_to_take) {
-        this.studentProfile.courses_willing_to_take = Math.floor(Math.random() * 4) + 1;
+      if (!this.studentProfile.courses_willing_to_take) {
+        this.studentProfile.courses_willing_to_take =
+          Math.floor(Math.random() * 4) + 1;
       }
 
       this.$router.push({
         name: "Recommended Courses",
-        params: { numberOfCourses: this.studentProfile.courses_willing_to_take },
+        params: {
+          numberOfCourses: this.studentProfile.courses_willing_to_take,
+        },
       });
     },
   },
