@@ -65,7 +65,7 @@
         >
           Your courses 🔻
         </h2>
-        <div class="grid auto-rows-[192px] grid-cols-3 gap-7">
+        <div class="grid auto-rows-[240px] grid-cols-3 gap-7">
           <!-- Each course box -->
           <div
             v-for="(course, i) in courses"

@@ -6,23 +6,32 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import HTTPException
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
 
 from apis.auth import auth_router
 from apis.tags import tags_router
-from models.db import db_connection
+# from models.db import db_connection
 from apis.admin import admin_router
 from apis.course import course_router
 from apis.review import review_router
 from apis.profile import profile_router
 
+
+
 from utils.openapi import description, version, summary, title
 from utils.cors import allowed_origins, allowed_credentials, allowed_methods, allowed_headers
+
+from models.db import db_connection, Courses, Tags, CourseTagMap, Users, StudentProfile, FavoriteCoursesOrder, Levels, Reviews, ReviewTagMap, Students, StudentAboutMe, StudentCourseMap
+
+
 
 # Lifecycle context (keep the DB connection alive till the FastAPI server is running)
 @asynccontextmanager
 async def lifecycle(app: FastAPI):
   try:
     db_connection.connect()
+    db_connection.create_tables([Courses, Tags, CourseTagMap, Users, StudentProfile, FavoriteCoursesOrder, Levels, Reviews, ReviewTagMap, Students, StudentAboutMe, StudentCourseMap])
     yield
   finally:
     db_connection.close()
