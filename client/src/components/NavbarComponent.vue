@@ -10,13 +10,18 @@
       <span class="font-redacted ml-2">{{ title }}</span>
     </router-link>
 
-    <div class="collapse md:visible md:basis-1/2 flex flex-row">
-    </div>
+    <div class="collapse md:visible md:basis-1/2 flex flex-row"></div>
     <button
       @click="goToRegisterPage"
       class="collapse md:visible basis-1/4 lg:basis-1/6 bg-white text-black p-2 rounded-lg shadow-md hover:shadow-lg hover:shadow-yellow-200/90 hover:text-md"
     >
       Get Started
+    </button>
+    <button
+      @click="goToRegisterPage"
+      class="collapse md:visible basis-1/4 lg:basis-1/6 bg-white text-black p-2 rounded-lg shadow-md hover:shadow-lg hover:shadow-yellow-200/90 hover:text-md"
+    >
+      Snow
     </button>
   </nav>
 </template>

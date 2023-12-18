@@ -165,8 +165,8 @@ export default {
     }
 
     const NUMBER_OF_SNOWFLAKES = 300;
-    const MAX_SNOWFLAKE_SIZE = 5;
-    const MAX_SNOWFLAKE_SPEED = 2;
+    const MAX_SNOWFLAKE_SIZE = 2;
+    const MAX_SNOWFLAKE_SPEED = 1;
     const SNOWFLAKE_COLOUR = "#ddd";
     const snowflakes = [];
 
@@ -219,6 +219,15 @@ export default {
     for (let i = 0; i < NUMBER_OF_SNOWFLAKES; i++) {
       snowflakes.push(createSnowflake());
     }
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    window.addEventListener("scroll", () => {
+      canvas.style.top = `${window.scrollY}px`;
+    });
 
     // setInterval(animate, 15);
     animate();
