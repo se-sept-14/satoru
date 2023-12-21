@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
-from jose import jwt, JWTError
+from jose import jwt
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
@@ -66,11 +66,5 @@ def decode_token(token: str = Depends(oauth2_scheme)) -> dict:
       "id": user_id,
       "is_admin": is_admin
     }
-  except jwt.ExpiredSignatureError:
-    raise HTTPException(status_code = 401, detail = "Expired token")
-  except jwt.InvalidTokenError:
-    raise HTTPException(status_code = 403, detail = "Invalid token")
-  except jwt.AlgorithMismatchError:
-    raise HTTPException(status_code = 403, detail = "Token algorithm mismatch")
   except Exception as e:
     raise HTTPException(status_code = 403, detail = "Invalid credentials")

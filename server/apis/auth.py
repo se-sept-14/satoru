@@ -2,7 +2,7 @@ from models.db import db_connection, Users, DoesNotExist
 from models.api import UserRegistration, UserResponse, UserLogin
 from utils.crypto import (
   hash_password, verify_password,
-  create_access_token, decode_token, JWTError
+  create_access_token, decode_token
 )
 
 from typing_extensions import Annotated
@@ -107,8 +107,6 @@ async def change_password(
       raise credentials_exception
   except HTTPException as exc:
     raise exc
-  except JWTError:
-    raise credentials_exception
   
   # If valid credentials, check if the user exists in the DB or not
   user = Users.get_or_none(Users.id == user_id)
