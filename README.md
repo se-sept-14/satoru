@@ -1,13 +1,14 @@
 # 🚧 **Software Engineering Project (Group 14)**
 
-## 🖧 **API details**
+## 🖧 **API details (API NOT RUNNING)**
+**RUN IT LOCALLY, API IS NOT LIVE**
 
 | 🌱 Prod Environment | 🔗 URL                                                              |
 |---------------------|---------------------------------------------------------------------|
 | 🏭 Base URL         |[api.pickmycourse.online](https://api.pickmycourse.online)           |
 | 🖥️ Swagger Doc      |[api.pickmycourse.online/docs](https://api.pickmycourse.online/docs) |
 
-## 💻 **Web app details**
+## 💻 **Web app details (FRONTEND IS LIVE, API IS NOT)**
 
 | 🌱 Environment  | 🔗 URL                                           |
 |-----------------|---------------------------------------------------|
