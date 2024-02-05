@@ -16,6 +16,13 @@
 
 ### **[⛏️ Check Projects board](https://github.com/orgs/se-sept-14-draft-work/projects/1)**
 
+## **To run the database and the fastapi instance using Docker Compose**
+```sh
+git clone https://github.com/se-sept-14/satoru
+cd satoru
+docker compose up --build -d
+```
+
 ## 💫 **To deploy the API using Docker**
 > Well it goes without saying, make sure you have [Docker installed on your system](https://docs.docker.com/engine/install)
 
