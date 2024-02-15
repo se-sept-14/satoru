@@ -1,54 +1,28 @@
 # 🚧 **Software Engineering Project (Group 14)**
 
-## 🖧 **API details (API NOT RUNNING)**
-**RUN IT LOCALLY, API IS NOT LIVE**
-
-| 🌱 Prod Environment | 🔗 URL                                                              |
-|---------------------|---------------------------------------------------------------------|
-| 🏭 Base URL         |[api.pickmycourse.online](https://api.pickmycourse.online)           |
-| 🖥️ Swagger Doc      |[api.pickmycourse.online/docs](https://api.pickmycourse.online/docs) |
-
-## 💻 **Web app details (FRONTEND IS LIVE, API IS NOT)**
-
-| 🌱 Environment  | 🔗 URL                                           |
-|-----------------|---------------------------------------------------|
-| 📱 Vue frontend |[pickmycourse.online](https://pickmycourse.online) |
-
 ### **[⛏️ Check Projects board](https://github.com/orgs/se-sept-14-draft-work/projects/1)**
 
-## **To run the database and the fastapi instance using Docker Compose**
-```sh
-git clone https://github.com/se-sept-14/satoru
-cd satoru
-docker compose up --build -d
-```
+## 🖧 **API details**
+| 🌱 Prod Environment | 🔗 URL |
+|----------------------|--------|
+| 🖥️ Swagger Doc      | /docs   |
 
-## 💫 **To deploy the API using Docker**
-> Well it goes without saying, make sure you have [Docker installed on your system](https://docs.docker.com/engine/install)
-
-### 🛢️ **Run a MariaDB instance**
-> To quickly get a MariaDB instance running, run the following 👇️
+## 🛢️ **Run a MariaDB instance**
 ```sh
 docker run --name mariadb-dev \
   -v /path/on/your/system:/var/lib/mysql:Z \
-  -e MARIADB_DATABASE=some-db-name \
+  -e MARIADB_DATABASE=db_name \
   -e MARIADB_ROOT_PASSWORD=strong-root-password \
   -p 3306:3306 \
   -d mariadb:latest
 ```
-Also need to migrate the peewee DB models to MariaDB, look into the [`peewee-migrate` tool](https://github.com/klen/peewee_migrate)
-
-👉️ **Then, follow the steps to deploy the ⚡️ FastAPI server**
-- `cd server`
-- `cp .env.example .env`
-- Make sure to edit the `.env` file with proper details
-- `sh deploy.sh`
+If you are on Windows and don't have docker installed on your system, you can download and install [MariaDB from here](https://dev.mysql.com/downloads/installer) (MariaDB and MySQL are more or less the same thing)
 
 ## 🏃‍♀️ **To run this locally on your machine**
 <blockquote>
-You'll need MariaDB for this API to work.
+You'll need MariaDB/MySQL for this API to work.
 
-Follow the steps mentioned above to quickly spin up a MariaDB instance using docker, either on your local machine or some remote machine. If you don't want to use Docker, follow the MariaDB documentation then.
+Follow the steps mentioned above to quickly spin up a MariaDB/MySQL instance using docker, either on your local machine or some remote machine. If you don't want to use Docker, follow the MariaDB/MySQL documentation then.
 
 You'll also need to make a copy of `.env` file with proper details (`.env.example` is given). Follow the below steps next:
 </blockquote>
@@ -69,9 +43,18 @@ You'll also need to make a copy of `.env` file with proper details (`.env.exampl
   - `npm install`
   - `npm run dev`
 
+## 💫 **To deploy the API**
+
+👉️ **Then, follow the steps to deploy the ⚡️ FastAPI server**
+- `cd server`
+- `cp .env.example .env`
+- Make sure to edit the `.env` file with proper details
+- `sh deploy.sh`
+
 ## 🩺 **To test the API endpoints**
 - Create and activate the environment as described above, install requirements
 - Run the `pytest.sh` script
+  - `cd server`
   - `sh pytest.sh`
 
 ## 💉 **For writing tests**
