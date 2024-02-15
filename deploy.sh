@@ -20,6 +20,5 @@ npm install
 npm run build
 cd -
 
-# Run the deploy.sh script inside `server` directory
-cd server/
-sh deploy.sh
+docker compose down -v
+docker compose up --build -d
