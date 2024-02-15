@@ -7,7 +7,18 @@ cd "$(dirname "$0")"
 git checkout main
 
 # Pull the changes from main
-git pull
+git pull origin main
+
+# Remove old vite build files
+echo "Delete the existing vue build ..."
+rm -fr ./client/dist/
+
+# Build a fresh copy of vite for production
+echo "Building production build of vue ..."
+cd ./client/
+npm install
+npm run build
+cd -
 
 # Run the deploy.sh script inside `server` directory
 cd server/

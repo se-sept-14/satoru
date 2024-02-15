@@ -28,6 +28,13 @@ services:
       - CRYPTO_ACCESS_TOKEN_EXPIRE_MINUTES=600
     ports:
       - "8000:8000"
+  vue:
+    container_name: satoru-vue
+    build:
+      context: ./client/
+    command: sh -c "uvicorn server:app --host 0.0.0.0 --port 4242"
+    ports:
+      - 4242:4242
 
 volumes:
   mariadb-volume:
