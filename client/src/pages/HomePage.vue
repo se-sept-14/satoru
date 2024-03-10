@@ -235,7 +235,7 @@
             </p>
           </div>
 
-          <div class="basis-1/3 flex flex-col items-center my-4 lg:my-0">
+          <!-- <div class="basis-1/3 flex flex-col items-center my-4 lg:my-0">
             <div
               class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
             >
@@ -244,14 +244,13 @@
                 alt="Ananya"
               />
             </div>
-            <p class="font-semibold mt-2">lol</p>
-            <p class="text-sm font-light">lolol</p>
+            <p class="font-semibold mt-2">Ananya</p>
+            <p class="text-sm font-light">Developer</p>
             <p class="text-center text-sm mt-3 w-56">
-              Transforming ideas into innovative features for an enhanced
-              learning experience
+              Passionate about helping students achieve their full potential
             </p>
           </div>
-        </div>
+        </div> -->
 
         <div class="flex flex-col lg:flex-row justify-center">
           <div class="basis-1/3 flex flex-col items-center my-4 lg:my-0">
