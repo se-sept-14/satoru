@@ -241,10 +241,10 @@
             >
               <img
                 src="https://avatars.githubusercontent.com/u/91440435?v=4"
-                alt="Ananya Modugula"
+                alt="Ananya"
               />
             </div>
-            <p class="font-semibold mt-2">Ananya Modugula</p>
+            <p class="font-semibold mt-2">Ananya M</p>
             <p class="text-sm font-light">Data Scientist</p>
             <p class="text-center text-sm mt-3 w-56">
               Transforming ideas into innovative features for an enhanced
@@ -294,7 +294,9 @@
         <div class="basis-8/12 flex flex-col">
           <h1 class="text-2xl font-semibold">Recommender System</h1>
           <p class="text-md font-semibold mt-4">Address</p>
-          <p class="text-sm font-light">123 Cross Road, ABC Layout, Bengaluru</p>
+          <p class="text-sm font-light">
+            123 Cross Road, ABC Layout, Bengaluru
+          </p>
           <p class="text-md font-semibold mt-8">Contact</p>
           <p class="text-sm font-light">contact@pickmycourse.online</p>
           <div class="flex flex-row mt-6">
