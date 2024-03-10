@@ -240,12 +240,12 @@
               class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mr-2"
             >
               <img
-                src="https://avatars.githubusercontent.com/u/91440435?v=4"
+                src="https://avatars.githubusercontent.com/u/91440435?v=14"
                 alt="Ananya"
               />
             </div>
-            <p class="font-semibold mt-2">Ananya M</p>
-            <p class="text-sm font-light">Data Scientist</p>
+            <p class="font-semibold mt-2">lol</p>
+            <p class="text-sm font-light">lolol</p>
             <p class="text-center text-sm mt-3 w-56">
               Transforming ideas into innovative features for an enhanced
               learning experience
